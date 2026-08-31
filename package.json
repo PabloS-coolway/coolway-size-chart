@@ -19,7 +19,9 @@
     "vite": "vite",
     "typecheck": "react-router typegen && tsc --noEmit",
     "deploy:metaobjects": "node scripts/deploy-metaobject-definitions.js",
-    "deploy:metaobjects:dry-run": "node scripts/deploy-metaobject-definitions.js --dry-run"
+    "deploy:metaobjects:dry-run": "node scripts/deploy-metaobject-definitions.js --dry-run",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "type": "module",
   "engines": {
@@ -59,7 +61,8 @@
     "graphql-config": "^5.1.1",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
-    "vite": "^6.3.6"
+    "vite": "^6.3.6",
+    "vitest": "^2.1.9"
   },
   "workspaces": [
     "extensions/*"
