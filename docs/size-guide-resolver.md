@@ -1,8 +1,8 @@
 # Motor de resolución de reglas — `app/lib/size-guide-resolver.ts`
 
 **Tarea:** 2.2 — Motor de resolución de reglas
-**Estado:** ✅ Completada y verificada — función pura implementada, con 15 tests unitarios en Vitest, **ejecutados por Juanmi con resultado 15/15 en verde** (12-ago-2026).
-**Fecha:** 12-ago-2026
+**Estado:** ✅ Completada y verificada — función pura implementada, con 15 tests unitarios en Vitest, **ejecutados por Juanmi con resultado 15/15 en verde** (31-ago-2026).
+**Fecha:** 31-ago-2026
 
 ## Qué hace
 
