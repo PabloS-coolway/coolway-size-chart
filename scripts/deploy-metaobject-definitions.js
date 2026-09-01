@@ -2,10 +2,15 @@
  * scripts/deploy-metaobject-definitions.js
  *
  * Tarea 1.4 — Estrategia de despliegue de definiciones multi-tienda.
+ * Tarea 2.3 — Ampliado para incluir también la definición del metafield
+ * `custom.resolved_size_guide` (producto → referencia a size_guide), que
+ * escribe el motor de resolución. Mismo patrón idempotente, misma decisión
+ * de arquitectura ("las definiciones se crean por script, nunca a mano").
  *
  * Script idempotente contra la Admin GraphQL API para crear/actualizar las 6
  * definiciones de metaobject del proyecto (size_guide, los 4 size_guide_block_*,
- * y size_guide_rule) en cualquier tienda donde esté instalada la app.
+ * y size_guide_rule) y la definición del metafield resolved_size_guide, en
+ * cualquier tienda donde esté instalada la app.
  *
  * USO
  * ---
@@ -17,15 +22,19 @@
  *
  * IDEMPOTENCIA
  * ------------
- * Antes de crear cada definición, el script consulta si ya existe (por `type`).
- * - Si no existe: la crea completa (metaobjectDefinitionCreate).
- * - Si existe: compara los campos declarados aquí contra los que ya tiene la
- *   definición real, y SOLO añade los campos que falten (metaobjectDefinitionUpdate
- *   con fieldDefinitions: { create: [...] }).
- * - Si un campo ya existe pero con un tipo distinto al de este fichero, el script
- *   NO lo toca — Shopify no permite cambiar el tipo de un campo ya guardado (lo
- *   comprobamos a mano en la 1.1 con `description`). Se imprime un aviso para
- *   revisión manual en vez de fallar o intentar un cambio destructivo.
+ * Antes de crear cada definición, el script consulta si ya existe (por `type`,
+ * o por namespace+key+ownerType en el caso del metafield).
+ * - Si no existe: la crea completa (metaobjectDefinitionCreate / metafieldDefinitionCreate).
+ * - Si existe (metaobjects): compara los campos declarados aquí contra los que ya
+ *   tiene la definición real, y SOLO añade los campos que falten
+ *   (metaobjectDefinitionUpdate con fieldDefinitions: { create: [...] }).
+ * - Si existe (metafield): no hace nada — un metafield no tiene "campos" que
+ *   añadir, solo existe o no existe.
+ * - Si un campo de metaobject ya existe pero con un tipo distinto al de este
+ *   fichero, el script NO lo toca — Shopify no permite cambiar el tipo de un
+ *   campo ya guardado (lo comprobamos a mano en la 1.1 con `description`). Se
+ *   imprime un aviso para revisión manual en vez de fallar o intentar un
+ *   cambio destructivo.
  * Esto cumple el criterio de aceptación: ejecutar el script dos veces seguidas
  * no crea duplicados ni genera errores — la segunda vez no encuentra nada que
  * añadir y termina sin hacer cambios.
@@ -59,9 +68,12 @@
  *      que la Theme App Extension pueda leer estos datos por Storefront API en el
  *      render SSR). Este script lo declara vía `access: { storefront: "PUBLIC_READ" }`
  *      en DEFINITION_OPTIONS — es la mejor estimación del nombre de campo/valor de
- *      la API; no verificado contra el schema real. Si el primer despliegue de
- *      prueba falla en cualquiera de estos 4 puntos, confirmar el nombre exacto
- *      con el Shopify Dev MCP conectado en Claude Code antes de corregir el script.
+ *      la API; no verificado contra el schema real.
+ *   5. (Nuevo, 2.3) Estructura exacta de MetafieldDefinitionInput para el
+ *      metafield resolved_size_guide — no verificado contra el schema real.
+ *   Si el primer despliegue de prueba falla en cualquiera de estos puntos,
+ *   confirmar el nombre exacto con el Shopify Dev MCP conectado en Claude Code
+ *   antes de corregir el script.
  */
 
 const args = Object.fromEntries(
@@ -291,8 +303,86 @@ async function reconcileDefinition({ type, name, fields }) {
 }
 
 // ---------------------------------------------------------------------------
+// GraphQL: definición del metafield resolved_size_guide (tarea 2.3)
+// ---------------------------------------------------------------------------
+
+const GET_METAFIELD_DEFINITION_QUERY = `
+  query GetMetafieldDefinition($namespace: String!, $key: String!, $ownerType: MetafieldOwnerType!) {
+    metafieldDefinitions(namespace: $namespace, key: $key, ownerType: $ownerType, first: 1) {
+      nodes {
+        id
+        namespace
+        key
+      }
+    }
+  }
+`;
+
+const CREATE_METAFIELD_DEFINITION_MUTATION = `
+  mutation CreateMetafieldDefinition($definition: MetafieldDefinitionInput!) {
+    metafieldDefinitionCreate(definition: $definition) {
+      createdDefinition {
+        id
+        namespace
+        key
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+/**
+ * Crea (si no existe) la definición del metafield custom.resolved_size_guide
+ * en productos, apuntando a size_guide. Un metafield no tiene "campos" que
+ * ampliar como un metaobject — o existe con la forma correcta, o no existe.
+ */
+async function reconcileResolvedSizeGuideMetafield(sizeGuideDefinitionId) {
+  const NAMESPACE = "custom";
+  const KEY = "resolved_size_guide";
+  const OWNER_TYPE = "PRODUCT";
+
+  const existingData = await shopifyGraphQL(GET_METAFIELD_DEFINITION_QUERY, {
+    namespace: NAMESPACE,
+    key: KEY,
+    ownerType: OWNER_TYPE,
+  });
+
+  if (existingData.metafieldDefinitions.nodes.length > 0) {
+    console.log(`↔️  Metafield "${NAMESPACE}.${KEY}" (producto) ya existe — nada que hacer.`);
+    return existingData.metafieldDefinitions.nodes[0];
+  }
+
+  if (DRY_RUN) {
+    console.log(`[dry-run] Crearía el metafield "${NAMESPACE}.${KEY}" (producto) → referencia a size_guide.`);
+    return { id: "dry-run-resolved_size_guide" };
+  }
+
+  const definition = {
+    name: "Guía de tallas resuelta",
+    namespace: NAMESPACE,
+    key: KEY,
+    type: "metaobject_reference",
+    ownerType: OWNER_TYPE,
+    // NOTA (punto 5 de la cabecera): nombre de validación no verificado.
+    validations: [{ name: "metaobject_definition_id", value: sizeGuideDefinitionId }],
+  };
+
+  const data = await shopifyGraphQL(CREATE_METAFIELD_DEFINITION_MUTATION, { definition });
+  const { createdDefinition, userErrors } = data.metafieldDefinitionCreate;
+  if (userErrors.length) {
+    throw new Error(`Error creando el metafield "${NAMESPACE}.${KEY}": ${JSON.stringify(userErrors, null, 2)}`);
+  }
+  console.log(`✅ Creado el metafield "${NAMESPACE}.${KEY}" (${createdDefinition.id})`);
+  return createdDefinition;
+}
+
+// ---------------------------------------------------------------------------
 // Orquestación — el orden importa: los bloques y size_guide deben existir
-// antes de poder referenciarlos desde size_guide_rule / el campo blocks.
+// antes de poder referenciarlos desde size_guide_rule / el campo blocks /
+// el metafield resolved_size_guide.
 // ---------------------------------------------------------------------------
 
 async function main() {
@@ -362,6 +452,10 @@ async function main() {
     ],
   };
   await reconcileDefinition(sizeGuideRuleDef);
+
+  // 4) (2.3) Metafield custom.resolved_size_guide en productos — referencia
+  //    simple a size_guide, necesita su GID real (igual que size_guide_rule).
+  await reconcileResolvedSizeGuideMetafield(sizeGuideResult.id);
 
   console.log("\n== Despliegue terminado ==\n");
 }

@@ -20,6 +20,32 @@ api_version = "2026-10"
   uri = "/webhooks/app/uninstalled"
   topics = [ "app/uninstalled" ]
 
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/products/update"
+  topics = [ "products/update" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/products/create"
+  topics = [ "products/create" ]
+
+  # Tarea 2.4 — recálculo masivo al cambiar una regla o guía.
+  # NOTA: nombre de topic sin verificar contra el schema real, ver
+  # docs/bulk-recalculate.md. El filtrado por type (size_guide_rule /
+  # size_guide) se hace dentro del propio handler, no aquí, porque no está
+  # confirmado que Shopify permita filtrar suscripciones de metaobjects por
+  # tipo a este nivel.
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/metaobjects/update"
+  topics = [ "metaobjects/update" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/metaobjects/create"
+  topics = [ "metaobjects/create" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/metaobjects/delete"
+  topics = [ "metaobjects/delete" ]
+
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "write_products,write_metaobjects,write_metaobject_definitions"
