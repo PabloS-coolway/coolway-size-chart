@@ -7,7 +7,6 @@ embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
-include_config_on_deploy = true
 
 [webhooks]
 api_version = "2026-10"
@@ -29,22 +28,39 @@ api_version = "2026-10"
   topics = [ "products/create" ]
 
   # Tarea 2.4 — recálculo masivo al cambiar una regla o guía.
-  # NOTA: nombre de topic sin verificar contra el schema real, ver
-  # docs/bulk-recalculate.md. El filtrado por type (size_guide_rule /
-  # size_guide) se hace dentro del propio handler, no aquí, porque no está
-  # confirmado que Shopify permita filtrar suscripciones de metaobjects por
-  # tipo a este nivel.
+  # NOTA: Shopify exige un "filter" en las suscripciones de metaobjects/* (lo
+  # descubrimos al fallar "shopify app deploy" sin él). La sintaxis exacta del
+  # filtro ("type:size_guide_rule") es la mejor estimación, no verificada
+  # todavía contra un despliegue exitoso — ver docs/bulk-recalculate.md.
   [[webhooks.subscriptions]]
   uri = "/webhooks/metaobjects/update"
   topics = [ "metaobjects/update" ]
+  filter = "type:size_guide_rule"
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/metaobjects/update"
+  topics = [ "metaobjects/update" ]
+  filter = "type:size_guide"
 
   [[webhooks.subscriptions]]
   uri = "/webhooks/metaobjects/create"
   topics = [ "metaobjects/create" ]
+  filter = "type:size_guide_rule"
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/metaobjects/create"
+  topics = [ "metaobjects/create" ]
+  filter = "type:size_guide"
 
   [[webhooks.subscriptions]]
   uri = "/webhooks/metaobjects/delete"
   topics = [ "metaobjects/delete" ]
+  filter = "type:size_guide_rule"
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/metaobjects/delete"
+  topics = [ "metaobjects/delete" ]
+  filter = "type:size_guide"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes

@@ -1,60 +1,67 @@
 # Recálculo masivo al cambiar una regla — `app/routes/webhooks.metaobjects.*`
 
 **Tarea:** 2.4 — Recálculo masivo al cambiar una regla
-**Estado:** ⚠️ Código escrito — pendiente de probar contra `coolway-sandbox` (necesita disparar webhooks de metaobject reales, algo que no se pudo simular desde este entorno).
+**Estado:** ✅ Completada y verificada de extremo a extremo, incluida la corrección de un problema real de reintentos.
 **Fecha:** 01-sept-2026
 
 ## El problema que resuelve
 
-El webhook de producto (2.3) solo reacciona cuando **un producto** cambia. Pero si alguien edita una `size_guide_rule` (por ejemplo, cambia el tag de la condición de "football" a "soccer"), ningún producto ha cambiado — y sin embargo el resultado de `resolveSizeGuide` para muchos productos puede haber cambiado. Sin este mecanismo, esos productos se quedarían con la guía antigua "congelada" en su metafield, de forma silenciosa.
+El webhook de producto (2.3) solo reacciona cuando **un producto** cambia. Pero si alguien edita una `size_guide_rule` (por ejemplo, cambia el tag de la condición), ningún producto ha cambiado — y sin embargo el resultado de `resolveSizeGuide` para muchos productos puede haber cambiado. Sin este mecanismo, esos productos se quedarían con la guía antigua "congelada" en su metafield, de forma silenciosa.
 
 ## Decisión de estrategia: recalcular todo el catálogo, no un subconjunto
 
-Se consideró intentar acotar el recálculo solo a "los productos que coincidían con la condición antigua o la nueva" — pero el payload del webhook de metaobject **no incluye el valor anterior** de los campos, solo el estado actual tras el cambio. Sin el valor antiguo, no hay forma fiable de saber qué productos había que "soltar" (los que coincidían con la condición vieja y ya no coinciden con la nueva). Intentar acotar el recálculo sin esa información arriesga precisamente lo que el criterio de aceptación de la 2.4 prohíbe: dejar productos con la guía antigua congelada.
+Se consideró intentar acotar el recálculo solo a "los productos que coincidían con la condición antigua o la nueva" — pero el payload del webhook de metaobject **no incluye el valor anterior** de los campos, solo el estado actual tras el cambio. Sin el valor antiguo, no hay forma fiable de saber qué productos había que "soltar". **Por eso se recalcula el catálogo completo de la tienda** cada vez que cambia una `size_guide_rule` o una `size_guide` (por su `priority`, que participa en el desempate) — más caro computacionalmente, pero la única forma de garantizar corrección total.
 
-**Por eso se recalcula el catálogo completo de la tienda** cada vez que cambia una `size_guide_rule` o una `size_guide` — más caro computacionalmente, pero la única forma de garantizar corrección total.
-
-## Por qué también reacciona a cambios en `size_guide` (no solo en `size_guide_rule`)
-
-`size_guide.priority` participa en el desempate cuando varias guías coinciden a la vez (ver 2.2). Cambiar la prioridad de una guía puede cambiar qué guía gana ese desempate, sin que ninguna regla ni ningún producto hayan cambiado. Por eso `RELEVANT_METAOBJECT_TYPES` en los 3 webhooks incluye ambos tipos — pero **no** los 4 `size_guide_block_*` (cambiar el contenido de un bloque de texto o una imagen no afecta a qué guía se resuelve, solo a qué se muestra una vez resuelta).
-
-## Piezas nuevas
+## Piezas
 
 | Archivo | Qué hace |
 |---|---|
-| `app/lib/size-guide-data.server.ts` (ampliado) | Nueva función `fetchAllProductContexts` — pagina TODOS los productos de la tienda con su contexto completo (tags, colecciones, tipo, vendor, título) en la misma llamada, sin N+1. |
-| `app/lib/size-guide-orchestrator.server.ts` (ampliado) | Nueva función `recalculateAllProducts` — carga reglas y guías **una sola vez**, no una vez por producto, y recorre todo el catálogo aplicando `resolveSizeGuide` + `applyResolutionToProduct` a cada uno. Devuelve un resumen (`BulkRecalculateSummary`) con contadores de resueltos/sin match/empates, para logging. |
-| `app/routes/webhooks.metaobjects.update.tsx` | Webhook `metaobjects/update`, filtra por tipo (`size_guide_rule`/`size_guide`) dentro del propio handler. |
-| `app/routes/webhooks.metaobjects.create.tsx` | Igual, para `metaobjects/create` (una regla nueva puede empezar a afectar a productos que no han cambiado). |
-| `app/routes/webhooks.metaobjects.delete.tsx` | Igual, para `metaobjects/delete` (borrar una regla puede "liberar" productos). |
-| `shopify.app.toml` | 3 suscripciones nuevas. |
+| `app/lib/size-guide-data.server.ts` (ampliado) | `fetchAllProductContexts` — pagina TODOS los productos de la tienda con su contexto completo en la misma llamada, sin N+1. |
+| `app/lib/size-guide-orchestrator.server.ts` (ampliado) | `recalculateAllProducts` — carga reglas y guías **una sola vez**, no una vez por producto, y recorre todo el catálogo. Devuelve un resumen (`BulkRecalculateSummary`) para logging. |
+| `app/routes/webhooks.metaobjects.update.tsx` / `.create.tsx` / `.delete.tsx` | Los 3 webhooks — ver "Hallazgo 2" abajo sobre por qué no esperan el resultado antes de responder. |
+| `shopify.app.toml` | 6 suscripciones (2 por topic, una filtrada a `size_guide_rule` y otra a `size_guide`). |
 
-## ⚠️ Puntos sin verificar (mayor incertidumbre que en tareas anteriores)
+## Hallazgo 1: Shopify exige un `filter` en las suscripciones de metaobjects
 
-A diferencia del metafield de la 2.3 (que funcionó a la primera), aquí hay más cosas sin confirmar contra el schema real de Shopify:
+A diferencia de `products/update` (2.3), `shopify app deploy` rechazó la configuración inicial:
+```
+error: Version couldn't be created.
+  • The webhook topic (metaobjects/create) requires a valid filter
+  • The webhook topic (metaobjects/delete) requires a valid filter
+  • The webhook topic (metaobjects/update) requires a valid filter
+```
+Esto confirmó que los 3 nombres de topic son correctos, y que hace falta `filter = "type:<tipo>"`. Como necesitábamos cubrir 2 tipos, se declararon 2 suscripciones por topic (6 en total). `npm run deploy` con esta corrección se ejecutó con éxito (`coolway-size-chart-2`) — la sintaxis `type:size_guide_rule` / `type:size_guide` es correcta a la primera.
 
-1. **Nombre exacto de los topics** — se usa `metaobjects/update`, `metaobjects/create`, `metaobjects/delete` como mejor estimación. Es posible que Shopify no ofrezca webhooks genéricos de metaobject para todos los tipos, o que use un nombre distinto.
-2. **Forma del payload** — no se sabe con certeza en qué campo viene el `type` del metaobject actualizado (¿`type`? ¿`definition_type`? ¿anidado en otro objeto?). El código de `extractMetaobjectType` prueba varios nombres candidatos, y **cada handler imprime el payload completo por consola** (`console.log(JSON.stringify(payload))` en el de `update`) precisamente para poder ver la forma real en el primer disparo de prueba y corregir el código si hace falta.
-3. **Si Shopify permite filtrar la suscripción por tipo de metaobject** a nivel de `shopify.app.toml` (con un campo `filter`, como existe para otros webhooks) — no se ha intentado, se filtra siempre dentro del handler por seguridad, así que aunque el filtro a nivel de suscripción no exista o no funcione, el comportamiento sigue siendo correcto (solo más tráfico de webhooks descartados de inmediato).
+De paso se detectó y corrigió: el campo `include_config_on_deploy` en `shopify.app.toml` ya no está soportado por la versión actual del CLI (aviso informativo del propio `deploy`) — eliminado del fichero.
 
-**Si el primer despliegue de prueba falla o no se recibe ningún webhook al editar una regla real, revisar estos 3 puntos con el Shopify Dev MCP antes de asumir un bug de lógica.**
+**Forma real del payload, confirmada en la prueba:** el campo `type` viene en la raíz del payload (`{"type":"size_guide_rule", "fields": {...}, ...}`), tal como se había estimado.
 
-## Rendimiento y coste
+## Hallazgo 2 (crítico): esperar el recálculo antes de responder provoca reintentos de Shopify
 
-`recalculateAllProducts` recorre **todo** el catálogo de la tienda en cada disparo. Para el volumen documentado en la 0.1 (unos cientos de productos por tienda, 6.860 en total repartidos entre 14) esto es asumible como operación puntual (se dispara solo cuando alguien edita una regla o guía, no en cada visita de cliente), pero no es instantáneo — con catálogos grandes puede tardar bastante en escribir el metafield de cada producto uno a uno. **No implementado en esta tarea, pendiente si se detecta que hace falta:** procesar en lotes en paralelo (con límite de concurrencia) en vez de secuencialmente, o mover el recálculo a un job en background en vez de dentro del propio webhook.
+En la primera prueba real (editar la regla de prueba y guardar), el log mostró **dos recálculos completos de 728 productos** en vez de uno, con un segundo "Received METAOBJECTS_UPDATE webhook" llegando pocos segundos después del primero, sin que Juanmi hubiera vuelto a guardar nada.
+
+**Causa:** el handler original hacía `await recalculateAllProducts(admin)` antes de devolver la respuesta. Con 728 productos (cada uno con al menos una llamada GraphQL para escribir/borrar su metafield), el recálculo completo tarda más de un minuto — muy por encima de lo que Shopify espera para considerar entregado un webhook. Shopify interpreta la tardanza como un fallo y **reintenta la entrega**, lo que dispara otro recálculo completo encima del que ya estaba en marcha.
+
+**Corrección aplicada:** los 3 handlers ya **no esperan** (`await`) el resultado de `recalculateAllProducts` antes de responder — devuelven `200 OK` de inmediato, y el recálculo sigue corriendo en segundo plano en el mismo proceso de Node (la app no es serverless, así que el proceso sigue vivo y termina el trabajo con normalidad). El resultado se sigue registrando por consola (`.then()`/`.catch()`), solo que después de haber respondido a Shopify.
+
+**Nota para vigilar en producción:** esto asume que el proceso de Node de la app no se reinicia ni se apaga entre medias del recálculo en segundo plano (cierto en un servidor persistente; **no sería cierto en un entorno serverless/con autoscaling agresivo**, donde el proceso podría matarse justo después de responder, cortando el recálculo a medias). Si en el futuro se despliega en una infraestructura serverless, este patrón "fire-and-forget" habría que sustituirlo por una cola de trabajos real.
+
+## Resultado de la prueba final (tras la corrección)
+
+Se repitió la prueba cambiando el tag de la regla de vuelta a `football`: **un solo** `Received METAOBJECTS_UPDATE webhook`, **un solo** recálculo masivo completo — sin reintentos ni repeticiones. Resultado: `728 productos (1 resuelto, 727 sin guía, 0 empates)` — el único producto con el tag `football` ("Goal Green Forest") resolvió correctamente a la guía de prueba, el resto quedó sin guía aplicable, tal como corresponde.
+
+Después del recálculo masivo se ve, como es esperado, un `PRODUCTS_UPDATE` normal (2.3) para ese mismo producto — reacciona a que su propio metafield cambió, recalcula ese único producto, llega al mismo resultado, y no genera ningún recálculo masivo nuevo. No es un bucle: son dos mecanismos independientes (2.3 y 2.4) coexistiendo sin pisarse, confirmado en la práctica.
+
+(Prueba anterior, antes de la corrección, con el tag puesto a `soccer` que ningún producto tiene: `728 productos, 0 resueltos, 728 sin guía, 0 empates` — el resultado en sí también fue correcto, solo se ejecutó varias veces de forma redundante por los reintentos de Shopify ya corregidos.)
 
 ## Manejo de errores
 
-- Si el metaobject actualizado no es `size_guide_rule` ni `size_guide` (incluye el metaobject "Example" del CLI, y los 4 `size_guide_block_*`): se ignora sin hacer nada, respondiendo `200 OK` de inmediato.
-- Si falla el recálculo de un producto concreto dentro del bucle: se registra el error y se continúa con el resto — un fallo puntual no debe abortar el recálculo de todo el catálogo.
-- Los empates de prioridad (`status: "tie"`) se acumulan en el resumen final y se listan por consola como aviso — igual que en la 2.2/2.3, nunca se resuelven solos.
+- Si falla el recálculo de un producto concreto dentro del bucle: se registra el error y se continúa con el resto.
+- Los empates de prioridad (`status: "tie"`) se acumulan en el resumen final y se listan por consola como aviso — nunca se resuelven solos.
 
-## Pendiente de validar por Juanmi
+## Pendiente
 
-1. Ejecutar `npm run dev` con el túnel activo, y en el Admin de `coolway-sandbox` editar la regla de prueba "ANY" (por ejemplo, cambiar la condición de tag) — comprobar en la terminal si aparece `Received METAOBJECTS_UPDATE webhook` (o el nombre real que use Shopify).
-2. **Si no aparece nada:** el topic o el nombre del webhook puede no existir tal cual — revisar con el Shopify Dev MCP qué webhooks admite Shopify para metaobjects, y corregir `shopify.app.toml` y los 3 archivos de ruta según corresponda.
-3. **Si aparece pero con un `type` distinto al esperado en el log del payload:** ajustar `extractMetaobjectType` en los 3 archivos para leer el campo correcto.
-4. Una vez funcione, comprobar que el metafield `resolved_size_guide` del producto de prueba sigue correcto tras el cambio de regla, y que el log muestra el resumen (`X productos, Y resueltos, Z sin match, W empates`).
+Ninguno bloqueante. Como nota de rendimiento a futuro (no resuelta en esta tarea): si el catálogo de alguna tienda crece mucho, procesar los productos en lotes paralelos (con límite de concurrencia) sería más rápido que el bucle secuencial actual — no necesario con los volúmenes actuales del proyecto (documentados en la 0.1).
 
 ## Siguiente paso
 
