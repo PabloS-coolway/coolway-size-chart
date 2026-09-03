@@ -124,6 +124,29 @@ El enlace inicial ("Editar regla de asignación") no navegaba a ningún sitio vi
 
 Confirmado que tanto `metaobjectCreate` como `metaobjectUpdate` para entradas de `size_guide_rule` funcionan correctamente — se guardó una regla con éxito, con el aviso de confirmación mostrándose como se esperaba (mismo patrón `useFetcher` + toast que la Pieza B). Los 2 puntos que estaban marcados como "sin verificar" (nombres de las mutaciones para entradas, y que el guardado es un PATCH parcial) quedan confirmados correctos.
 
+---
+
+## Pieza F — Settings mínimo
+
+**Estado:** ✅ Completada y verificada — guardado y persistencia confirmados.
+**Fecha:** 01-sept-2026
+
+### Qué hace
+
+`app/routes/app.settings.tsx` — nueva pantalla "Configuración", enlace añadido en la navegación. Un único ajuste: casilla "Detectar automáticamente la unidad (cm/pulgadas) según la ubicación del comprador" — corresponde a la decisión 4 de la 2.9 (confirmada: "sí" hace falta).
+
+### Deliberadamente NO implementa la detección real
+
+Esta pieza solo guarda la preferencia (activado/desactivado) en un metafield de la tienda (`custom.auto_unit_detection`, tipo `boolean`, `ownerType: SHOP`). **La lógica real de detectar la ubicación del comprador y elegir la unidad correspondiente vive en la Fase 3** (Theme App Extension, todavía sin empezar) — activar esta casilla no tiene ningún efecto visible en la tienda todavía, solo deja la preferencia guardada para cuando se construya esa lógica.
+
+### Decisión de alcance: sin definición formal de metafield
+
+A diferencia de `resolved_size_guide` (2.3), que sí tiene una definición creada por el script de despliegue de la 1.4, este metafield se escribe **sin definición previa** — Shopify lo permite. Es menos "formal" (no aparecería con un nombre bonito en el Admin nativo si alguien lo mirara desde fuera de este panel), pero evita ampliar el script de despliegue solo para un ajuste de configuración interno. Se puede formalizar más adelante si hace falta.
+
+### Validación realizada
+
+Confirmado: al marcar la casilla y guardar, apareció el aviso "Configuración guardada correctamente"; al recargar la página, la casilla siguió marcada — confirma que el metafield se escribió y se está leyendo correctamente, con el mismo patrón (`useFetcher` + toast) ya probado en las Piezas B y D.
+
 ## Siguiente paso
 
-Pieza C — Gestión de bloques de contenido (la más compleja del desglose).
+Pieza C — Gestión de bloques de contenido (la más compleja del desglose, última pieza funcional antes de la G de pulido visual).
