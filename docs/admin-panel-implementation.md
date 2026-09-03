@@ -61,6 +61,35 @@ Con el estado real de `coolway-sandbox` (1 producto con el tag `football` resuel
 
 - **Cargar más / scroll infinito.** Con 727 productos en una sola carga, la lista actual es muy larga para desplazarse a mano — anotado por Juanmi tras la prueba real. La consulta ya está paginada internamente (100 por página, vía cursor) para traer los datos del servidor; falta la parte de UI: paginar también la *visualización* (botón "Cargar más" o scroll infinito), en vez de renderizar los 727 de golpe en el navegador.
 
+---
+
+## Pieza B — Editor de guía: datos básicos
+
+**Estado:** ✅ Completada y verificada — guardado confirmado correcto, sin tocar campos que no debía.
+**Fecha:** 01-sept-2026
+
+### Qué hace
+
+`app/routes/app.size-guides.$id.tsx` — ruta dinámica (`/app/size-guides/:id`), la que ya enlazaba el botón "Editar" de la Pieza A. Formulario para título, descripción, prioridad y estado (Activa/Borrador) de una guía, con guardado real vía mutación `metaobjectUpdate`.
+
+### Validación realizada (01-sept-2026, contra la guía de prueba real)
+
+Los 2 puntos que estaban marcados como "sin verificar" quedaron confirmados correctos:
+1. **La forma de `MetaobjectUpdateInput`** (`fields` + `capabilities.publishable.status`) es correcta — el guardado funciona sin errores.
+2. **Es un PATCH parcial, no un reemplazo completo.** Se cambió la prioridad varias veces (0→1→0) y se comprobó en el Admin nativo (Contenido → Metaobjetos) que tanto `legacy_kiwi_id` ("Football") como el campo `Blocks` (el bloque de tabla enlazado desde la 1.2) siguieron intactos tras cada guardado. Este era el riesgo más importante de esta pieza, y queda descartado.
+
+### Corrección de UX tras la primera prueba: no se veía ningún mensaje de guardado
+
+Con `<Form method="post">` de react-router, el guardado funcionaba (confirmado al volver a entrar en la guía, el valor nuevo ya estaba ahí) pero no aparecía ningún mensaje de "guardado correctamente" ni de error en pantalla. Se sustituyó por `useFetcher` + un aviso vía App Bridge (`shopify.toast.show(...)`) — el mismo patrón ya usado y probado en `app._index.tsx` (el ejemplo del propio scaffold), en vez de introducir un mecanismo nuevo sin confirmar.
+
+### Limitación conocida y documentada: descripción como texto plano
+
+`description` es un campo de texto enriquecido (`rich_text_field`), guardado como una estructura JSON. Esta pieza lo trata como texto plano en el formulario — al guardar, se reconstruye como un único párrafo sin formato. **Riesgo real:** si la guía tuviera negrita o enlaces en su descripción, se perderían al guardar desde este editor. Aceptable ahora porque la guía de prueba real no usa ningún formato enriquecido. Si en el futuro alguna guía real sí lo necesita, esta pieza requeriría un editor de texto enriquecido de verdad antes de poder usarse con esa guía sin riesgo.
+
+### Componentes de formulario: HTML nativo, no componentes de Shopify
+
+`<input>`, `<textarea>`, `<select>`, `<button>` normales — no se ha visto ningún input de Polaris Web Components (`s-text-field` y similares) probado en el resto del repo, así que se prefiere HTML nativo, garantizado a funcionar. Mismo criterio que `<strong>` en la Pieza A.
+
 ## Siguiente paso
 
-Pieza B — Editor de guía: datos básicos (título, descripción, prioridad, estado).
+Pieza D — Editor de la regla de asignación (ANY/ALL + condiciones), antes de la Pieza C (gestión de bloques, la más compleja).
