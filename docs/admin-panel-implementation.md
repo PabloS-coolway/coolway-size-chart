@@ -84,12 +84,46 @@ Con `<Form method="post">` de react-router, el guardado funcionaba (confirmado a
 
 ### Limitación conocida y documentada: descripción como texto plano
 
-`description` es un campo de texto enriquecido (`rich_text_field`), guardado como una estructura JSON. Esta pieza lo trata como texto plano en el formulario — al guardar, se reconstruye como un único párrafo sin formato. **Riesgo real:** si la guía tuviera negrita o enlaces en su descripción, se perderían al guardar desde este editor. Aceptable ahora porque la guía de prueba real no usa ningún formato enriquecido. Si en el futuro alguna guía real sí lo necesita, esta pieza requeriría un editor de texto enriquecido de verdad antes de poder usarse con esa guía sin riesgo.
+`description` es un campo de texto enriquecido (`rich_text_field`), guardado como una estructura JSON. Esta pieza lo trata como texto plano en el formulario — al guardar, se reconstruye como un único párrafo sin formato. **Riesgo real:** si la guía tuviera negrita o enlaces en su descripción, se perderían al guardar desde este editor. Aceptable ahora porque la guía de prueba real no usa ningún formato enriquecido.
 
 ### Componentes de formulario: HTML nativo, no componentes de Shopify
 
-`<input>`, `<textarea>`, `<select>`, `<button>` normales — no se ha visto ningún input de Polaris Web Components (`s-text-field` y similares) probado en el resto del repo, así que se prefiere HTML nativo, garantizado a funcionar. Mismo criterio que `<strong>` en la Pieza A.
+`<input>`, `<textarea>`, `<select>`, `<button>` normales — mismo criterio que `<strong>` en la Pieza A.
+
+---
+
+## Pieza D — Editor de la regla de asignación
+
+**Estado:** ✅ Completada y verificada — guardado confirmado correcto.
+**Fecha:** 01-sept-2026
+
+### Qué hace
+
+`app/routes/app.size-guides.$id_.rule.tsx` — ruta anidada bajo la guía (`/app/size-guides/:id/rule`), enlazada desde el editor de la Pieza B ("Editar regla de asignación"). Formulario para el `root_operator` (ANY/ALL) y las condiciones de la regla asociada a esa guía.
+
+### Decisiones de alcance (para no disparar el coste de esta pieza)
+
+1. **Solo gestiona UNA regla por guía en esta primera versión.** El modelo de datos (1.3) permite varias reglas por guía combinadas como OR entre ellas, pero la guía de prueba real solo tiene 1 — cubre el caso actual. Gestionar varias reglas por guía (añadir/quitar reglas completas, no solo condiciones) queda como mejora futura explícita.
+2. **Hasta 5 condiciones fijas por regla**, no una lista dinámica de "añadir fila" con JavaScript — las filas vacías se ignoran al guardar. Mantiene el formulario en HTML nativo puro, sin necesitar estado de cliente. Si algún día hace falta más de 5 condiciones en una regla real, es una ampliación pequeña (subir el número), no una reescritura.
+
+### Cómo encuentra la regla de una guía
+
+No existe forma de filtrar la consulta de `metaobjects` directamente por el valor de un campo de referencia — se recorren TODAS las `size_guide_rule` (paginado) y se busca la primera cuyo campo `size_guide` apunte a esta guía, igual que hace el motor de resolución (2.2). Volumen bajo, aceptable.
+
+### Crear vs. actualizar
+
+Si la guía no tiene ninguna regla todavía, el formulario aparece vacío y al guardar se **crea** una regla nueva (`metaobjectCreate`, con el campo `size_guide` apuntando a esta guía). Si ya existe una, el formulario se rellena con sus datos y al guardar se **actualiza** (`metaobjectUpdate`), reutilizando el mismo patrón de la Pieza B (`useFetcher` + toast de confirmación).
+
+### Hallazgo real: nombre de archivo de la ruta — convención de escape `$id_`
+
+El enlace inicial ("Editar regla de asignación") no navegaba a ningún sitio visible al hacer clic — la URL cambiaba pero la pantalla no cambiaba. Causa: en React Router (convención de rutas planas por nombre de archivo), un segmento fijo tras un parámetro dinámico en el mismo nombre de archivo (`app.size-guides.$id.rule.tsx`) se interpreta por defecto como **anidado dentro** de la ruta padre (`app.size-guides.$id.tsx`) — y como esa página padre es una hoja sin `<Outlet>` donde encajar la hija, la ruta hija nunca llegaba a renderizarse aunque la URL cambiara.
+
+**Corrección:** renombrar el archivo con el sufijo de escape `$id_` (guion bajo tras el parámetro): `app.size-guides.$id_.rule.tsx` — le dice a React Router que esta ruta es independiente, no anidada. Tras el renombrado, hizo falta además **reiniciar `npm run dev`** (parar con `q` y volver a lanzar) porque el recargado en caliente no asimiló bien el cambio de estructura de rutas por sí solo — con el reinicio, funcionó a la primera.
+
+### Validación realizada
+
+Confirmado que tanto `metaobjectCreate` como `metaobjectUpdate` para entradas de `size_guide_rule` funcionan correctamente — se guardó una regla con éxito, con el aviso de confirmación mostrándose como se esperaba (mismo patrón `useFetcher` + toast que la Pieza B). Los 2 puntos que estaban marcados como "sin verificar" (nombres de las mutaciones para entradas, y que el guardado es un PATCH parcial) quedan confirmados correctos.
 
 ## Siguiente paso
 
-Pieza D — Editor de la regla de asignación (ANY/ALL + condiciones), antes de la Pieza C (gestión de bloques, la más compleja).
+Pieza C — Gestión de bloques de contenido (la más compleja del desglose).

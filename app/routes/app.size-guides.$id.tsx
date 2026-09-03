@@ -2,8 +2,9 @@
  * app/routes/app.size-guides.$id.tsx
  *
  * Tarea 2.10 (Pieza B) — Editor de guía: datos básicos (título, descripción,
- * prioridad, estado). NO incluye todavía la gestión de bloques de contenido
- * (Pieza C) ni la regla de asignación (Pieza D).
+ * prioridad, estado). La gestión de bloques de contenido es la Pieza C
+ * (todavía pendiente); la regla de asignación ya tiene su propia pantalla
+ * (Pieza D, enlazada desde aquí abajo).
  *
  * VALIDADO (01-sept-2026, contra la guía de prueba real en coolway-sandbox):
  * - El guardado (metaobjectUpdate con `fields` + `capabilities.publishable`)
@@ -260,8 +261,13 @@ export default function SizeGuideEditor() {
       <s-section slot="aside" heading="Sobre este editor">
         <s-paragraph>
           Guarda los datos básicos de la guía. Los bloques de contenido
-          (tabla, texto, imagen, vídeo) y la regla de asignación se añaden en
-          los siguientes pasos de la tarea 2.10.
+          (tabla, texto, imagen, vídeo) se añaden en un paso posterior de la
+          tarea 2.10.
+        </s-paragraph>
+        <s-paragraph>
+          <s-link href={`/app/size-guides/${encodeURIComponent(guide.id)}/rule`}>
+            Editar regla de asignación
+          </s-link>
         </s-paragraph>
         <s-paragraph>
           <s-link href="/app/size-guides">Volver al listado</s-link>
