@@ -3,8 +3,8 @@
  *
  * Tarea 2.10 (Pieza B) — Editor de guía: datos básicos (título, descripción,
  * prioridad, estado). La gestión de bloques de contenido es la Pieza C
- * (todavía pendiente); la regla de asignación ya tiene su propia pantalla
- * (Pieza D, enlazada desde aquí abajo).
+ * (enlazada desde aquí abajo); la regla de asignación tiene su propia
+ * pantalla (Pieza D, también enlazada desde aquí abajo).
  *
  * VALIDADO (01-sept-2026, contra la guía de prueba real en coolway-sandbox):
  * - El guardado (metaobjectUpdate con `fields` + `capabilities.publishable`)
@@ -260,9 +260,9 @@ export default function SizeGuideEditor() {
 
       <s-section slot="aside" heading="Sobre este editor">
         <s-paragraph>
-          Guarda los datos básicos de la guía. Los bloques de contenido
-          (tabla, texto, imagen, vídeo) se añaden en un paso posterior de la
-          tarea 2.10.
+          <s-link href={`/app/size-guides/${encodeURIComponent(guide.id)}/blocks`}>
+            Gestionar bloques de contenido
+          </s-link>
         </s-paragraph>
         <s-paragraph>
           <s-link href={`/app/size-guides/${encodeURIComponent(guide.id)}/rule`}>

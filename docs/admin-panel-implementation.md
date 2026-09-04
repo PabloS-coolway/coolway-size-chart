@@ -2,6 +2,8 @@
 
 Documento acumulativo: cada pieza del desglose de la 2.10 se añade aquí a medida que se completa.
 
+**Estado global: las 6 piezas funcionales (A, B, C, D, E, F) están completadas y verificadas. Solo queda la Pieza G (pulido visual), opcional y posterior.**
+
 ---
 
 ## Pieza A — Dashboard (listado de guías)
@@ -147,6 +149,48 @@ A diferencia de `resolved_size_guide` (2.3), que sí tiene una definición cread
 
 Confirmado: al marcar la casilla y guardar, apareció el aviso "Configuración guardada correctamente"; al recargar la página, la casilla siguió marcada — confirma que el metafield se escribió y se está leyendo correctamente, con el mismo patrón (`useFetcher` + toast) ya probado en las Piezas B y D.
 
+---
+
+## Pieza C — Gestión de bloques de contenido
+
+**Estado:** ✅ Completada y verificada — las 3 operaciones (editar, crear+enlazar, quitar) confirmadas correctas.
+**Fecha:** 01-sept-2026
+
+### Qué hace
+
+Dos rutas nuevas:
+- `app/routes/app.size-guides.$id_.blocks.tsx` — lista los bloques de una guía (tipo + resumen), con enlaces para editar cada uno, quitarlo de la guía, y añadir uno nuevo de cada uno de los 4 tipos.
+- `app/routes/app.size-guides.$id_.blocks_.$type.$blockId.tsx` — un único editor que gestiona los 4 tipos de bloque (table/text/image/video) con campos condicionales según `:type`. `:blockId = "new"` crea un bloque nuevo y lo añade a la lista `blocks` de la guía; cualquier otro valor edita ese bloque existente.
+
+### Decisiones de alcance (coste alto de la pieza, acotado deliberadamente)
+
+1. **Sin selector visual de imágenes.** Para el bloque de imagen, solo se editan `alt_text` y `caption` desde el panel — el archivo de imagen en sí (campo `image`, `file_reference`) no se puede cambiar desde aquí, requeriría un selector de recursos de Shopify (App Bridge resource picker) no construido en esta pieza. **Consecuencia práctica:** crear un bloque de imagen nuevo desde el panel puede fallar si `image` es un campo obligatorio en la definición — para crear un bloque de imagen hay que hacerlo desde el editor nativo de Shopify, y luego editar alt_text/caption desde aquí.
+2. **Tabla: `headers`/`rows` como JSON en un textarea**, no un editor visual de filas/columnas — mismo patrón ya usado en las condiciones de la regla (Pieza D).
+3. **Sin reordenar bloques** — se pueden añadir y quitar, pero el orden queda fijo según se fueron añadiendo. Pendiente como mejora futura (Pieza G).
+4. **"Quitar de la guía" no borra el bloque en sí** — solo lo desvincula del campo `blocks` de la guía. Más seguro: evita perder contenido por error.
+
+### Aplicando la lección de la Pieza D desde el principio
+
+Ambos archivos usan el sufijo de escape (`$id_`, y también `blocks_` en el editor de bloque) desde su creación — sin esperar a descubrir el mismo bug de "no navega al hacer clic" que ya nos costó una ronda de depuración en la Pieza D. Funcionó a la primera gracias a esto.
+
+### Puntos que estaban sin verificar, confirmados correctos tras la prueba real
+
+- `field(key:"blocks") { references(first: N) { nodes {...} } }` para leer una lista de referencia mixta — **confirmado correcto**: el bloque de tabla existente cargó bien en la lista y en el editor.
+- Reescribir la lista completa de `blocks` (`metaobjectUpdate` con el array de IDs restante) para "quitar" o "añadir" un bloque — **confirmado correcto** tanto al crear un bloque nuevo como al quitarlo.
+
+### Validación realizada (completa)
+
+1. **Lista de bloques:** el bloque de tabla existente ("Calzado adulto") apareció correctamente.
+2. **Edición de bloque existente:** se editó el `label` de la tabla, se guardó, y el cambio persistió al volver a entrar — confirma `metaobjectUpdate` sobre entradas de `size_guide_block_table`.
+3. **Creación de bloque nuevo:** se creó un bloque de texto de prueba ("Bloque de prueba") — se guardó con éxito y quedó añadido a la lista `blocks` de la guía.
+4. **Quitar bloque de la guía:** se quitó el bloque de texto de prueba — desapareció correctamente de la lista de la guía (la entrada en sí sigue existiendo, solo se desvinculó, tal como estaba diseñado).
+
+### Pendiente para la Pieza G (pulido visual)
+
+- **Resumen genérico para bloques de texto en el listado.** El listado muestra siempre el texto fijo "(texto enriquecido)" para cualquier bloque de tipo texto, en vez de un fragmento real de su contenido — detectado al crear el bloque de prueba ("Bloque de prueba" no aparecía, solo el texto genérico). Mejora de bajo coste: reutilizar `extractPlainTextFromRichText` (ya existe, usado en las Piezas B y C) para mostrar los primeros caracteres reales del contenido en vez del texto fijo.
+- Selector visual de imágenes (App Bridge resource picker) — ver decisión de alcance 1 de arriba.
+- Reordenar bloques — ver decisión de alcance 3 de arriba.
+
 ## Siguiente paso
 
-Pieza C — Gestión de bloques de contenido (la más compleja del desglose, última pieza funcional antes de la G de pulido visual).
+**Las 6 piezas funcionales de la 2.10 están cerradas.** Queda solo la Pieza G (pulido visual: badges, chips, Duplicate/Delete, paginación de A/E, resumen real de bloques de texto, reordenar bloques y selector de imágenes de C) como trabajo opcional/posterior, o pasar directamente a la tarea 2.11 (qué hacer con el editor nativo de metaobjects) para cerrar la Fase 2 por completo.
