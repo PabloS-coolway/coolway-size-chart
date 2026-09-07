@@ -1,18 +1,25 @@
 {%- comment -%}
   Guía de tallas — App Block (Theme App Extension).
 
-  Tarea 3.2 (change OpenSpec: size-guide-app-block-base): esqueleto base.
-  Este bloque todavía NO renderiza el contenido real de la guía (título,
-  bloques de tabla/texto/imagen/vídeo) — eso llega en la 3.3 (lectura vía
-  Storefront API) y la 3.4 (renderizado por tipo de bloque).
+  Tarea 3.2 (change OpenSpec: size-guide-app-block-base): esqueleto base
+  (comprobar existencia de resolved_size_guide, sin leer su contenido).
+
+  Tarea 3.3 (change OpenSpec: size-guide-storefront-read): lee el contenido
+  real del metaobject referenciado (title, description, blocks) usando la
+  resolución NATIVA de metaobjects en Liquid —
+  `product.metafields.custom.resolved_size_guide.value.<campo>` — sin
+  ninguna llamada explícita a la Storefront GraphQL API. Todavía NO
+  renderiza visualmente cada tipo de bloque (tabla/texto/imagen/vídeo) —
+  eso es la 3.4. Aquí solo se confirma que el dato llega, mostrando el
+  título como placeholder de depuración.
 
   Lo único que hace aquí:
   - Comprobar si el producto tiene `resolved_size_guide` (lo escribe el
     backend en la Fase 2 — este bloque nunca evalúa reglas de asignación).
-  - Si lo tiene, mostrar un placeholder visual mínimo (texto fijo, sin
-    traducción real todavía — eso es la 3.8) para validar visualmente en
-    el editor de temas que el bloque se coloca en el sitio correcto, junto
-    al selector de variantes.
+  - Si lo tiene Y el metaobject referenciado resuelve correctamente, mostrar
+    el enlace con el título real de la guía.
+  - Si lo tiene pero el metaobject NO resuelve (referencia rota/huérfana),
+    tratarlo igual que "sin guía" — no renderizar nada ni romper la página.
   - Si no lo tiene, no renderizar nada visible (caso "sin guía asignada" —
     ver 3.5) NI ocupar espacio.
 
@@ -31,11 +38,19 @@
   rechaza con "Theme app extension blocks cannot contain 'stylesheet'
   tags". El CSS va en un `<style>` inline normal, único mecanismo válido
   aquí.
+
+  NOTA (hallazgo real 3.3, ver docs/storefront-read.md): la resolución
+  nativa de Liquid SÍ funcionó a la primera contra coolway-sandbox, gracias
+  al acceso `storefront: PUBLIC_READ` ya activado en las 6 definiciones de
+  metaobject desde la 1.4 — no hizo falta ningún cambio de configuración
+  adicional. Pregunta crítica de la 3.3 confirmada: SÍ funciona.
 {%- endcomment -%}
 
+{%- assign resolved_guide = product.metafields.custom.resolved_size_guide.value -%}
+
 <div class="coolway-size-guide-block">
-  {%- if product.metafields.custom.resolved_size_guide -%}
-    <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog">Guía de tallas</a>
+  {%- if resolved_guide -%}
+    <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog">Guía de tallas: {{ resolved_guide.title }}</a>
   {%- endif -%}
 </div>
 
