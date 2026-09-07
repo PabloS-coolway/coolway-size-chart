@@ -1,49 +1,48 @@
 {%- comment -%}
   Guía de tallas — App Block (Theme App Extension).
 
-  Tarea 3.2 (change OpenSpec: size-guide-app-block-base): esqueleto base
-  (comprobar existencia de resolved_size_guide, sin leer su contenido).
+  Tarea 3.2 (change: size-guide-app-block-base): esqueleto base.
+  Tarea 3.3 (change: size-guide-storefront-read): lectura del metaobject
+  referenciado vía Liquid nativo (sin Storefront GraphQL explícita).
+  Tarea 3.4 (change: size-guide-render-blocks): renderizado real de cada
+  tipo de bloque (tabla/texto/imagen/vídeo). Todavía NO es el modal/overlay
+  interactivo final (decisión UX 3.1) — aquí solo se genera el HTML de
+  contenido que iría dentro; el modal en sí es trabajo aparte.
 
-  Tarea 3.3 (change OpenSpec: size-guide-storefront-read): lee el contenido
-  real del metaobject referenciado (title, description, blocks) usando la
-  resolución NATIVA de metaobjects en Liquid —
-  `product.metafields.custom.resolved_size_guide.value.<campo>` — sin
-  ninguna llamada explícita a la Storefront GraphQL API. Todavía NO
-  renderiza visualmente cada tipo de bloque (tabla/texto/imagen/vídeo) —
-  eso es la 3.4. Aquí solo se confirma que el dato llega, mostrando el
-  título como placeholder de depuración.
+  NOTA (hallazgo real 3.2): Shopify envuelve SIEMPRE este bloque en su
+  propio contenedor (`shopify-block shopify-app-block`), que reserva
+  espacio en la sección aunque el bloque no renderice nada dentro.
+  Solución: CSS `:has()` para colapsar ese contenedor cuando nuestro <div>
+  interno está vacío. `{% stylesheet %}` no está permitido en blocks de
+  Theme App Extension — el CSS va en un `<style>` inline normal.
 
-  Lo único que hace aquí:
-  - Comprobar si el producto tiene `resolved_size_guide` (lo escribe el
-    backend en la Fase 2 — este bloque nunca evalúa reglas de asignación).
-  - Si lo tiene Y el metaobject referenciado resuelve correctamente, mostrar
-    el enlace con el título real de la guía.
-  - Si lo tiene pero el metaobject NO resuelve (referencia rota/huérfana),
-    tratarlo igual que "sin guía" — no renderizar nada ni romper la página.
-  - Si no lo tiene, no renderizar nada visible (caso "sin guía asignada" —
-    ver 3.5) NI ocupar espacio.
+  NOTA (hallazgo real 3.3): la resolución nativa de metaobjects en Liquid
+  funciona sin más gracias al acceso `storefront: PUBLIC_READ` de la 1.4.
 
-  NOTA (hallazgo real, 07-sept-2026, confirmado con el DOM real en
-  coolway-sandbox): Shopify envuelve SIEMPRE este bloque en su propio
-  contenedor, con clase fija `shopify-block shopify-app-block` —
-  independiente de lo que este fichero renderice dentro. Colapsar solo
-  nuestro <div> interno con `:empty` NO era suficiente: el contenedor de
-  Shopify seguía ocupando su espacio en la sección (variant-picker/
-  buy-buttons) aunque quedara vacío por dentro. Solución: usar el
-  selector relacional CSS `:has()` para colapsar el propio contenedor de
-  Shopify cuando nuestro <div> interno está vacío.
-
-  NOTA aparte: `{% stylesheet %}` (el tag normal de secciones de tema) no
-  está permitido dentro de blocks de Theme App Extension — Shopify lo
-  rechaza con "Theme app extension blocks cannot contain 'stylesheet'
-  tags". El CSS va en un `<style>` inline normal, único mecanismo válido
-  aquí.
-
-  NOTA (hallazgo real 3.3, ver docs/storefront-read.md): la resolución
-  nativa de Liquid SÍ funcionó a la primera contra coolway-sandbox, gracias
-  al acceso `storefront: PUBLIC_READ` ya activado en las 6 definiciones de
-  metaobject desde la 1.4 — no hizo falta ningún cambio de configuración
-  adicional. Pregunta crítica de la 3.3 confirmada: SÍ funciona.
+  NOTA (hallazgos reales 3.4, ver docs/render-blocks.md):
+  - `resolved_guide.blocks` (sin `.value`) da la lista CRUDA de GIDs sin
+    resolver. Hay que acceder a `.value` (`resolved_guide.blocks.value`,
+    un `MetaobjectListDrop`) para iterar los metaobjects ya resueltos.
+  - Ese `.value` SOLO incluye los bloques en estado Active — un bloque en
+    Draft desaparece de la lista sin más (probado con una guía real que
+    tenía 4 de 5 bloques en Draft: `.value` solo devolvió el activo).
+  - `block.type` viene vacío en este contexto (no sirve para el `{% case %}`
+    que se intentó primero) — el tipo de cada bloque se detecta por la
+    presencia de su campo distintivo (`headers`/`content`/`image`/
+    `video_url`), no por `.type`.
+  - Campos JSON (`headers`, `rows`) y de texto enriquecido (`content`,
+    `description`) necesitan `.value` para obtener la estructura Liquid ya
+    parseada (array/hash nativo) — el acceso directo (sin `.value`) da el
+    JSON en bruto sin parsear. No existe el filtro `parse_json` en el
+    Liquid de Shopify.
+  - Campos de texto plano (`label`, `unit_primary`) SÍ funcionan con acceso
+    directo, sin `.value`.
+  - Imagen (`image`) y vídeo (`video_url`) se han implementado siguiendo el
+    mismo patrón de `.value` para referencias, pero NO se han podido
+    validar con datos reales en esta tarea: la única guía de prueba con
+    contenido Active era la de tabla — sus bloques de imagen/texto estaban
+    en Draft. Queda como pendiente de validación cuando haya un bloque de
+    ese tipo en estado Active.
 {%- endcomment -%}
 
 {%- assign resolved_guide = product.metafields.custom.resolved_size_guide.value -%}
@@ -51,6 +50,76 @@
 <div class="coolway-size-guide-block">
   {%- if resolved_guide -%}
     <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog">Guía de tallas: {{ resolved_guide.title }}</a>
+
+    <div class="coolway-size-guide-block__content">
+      {%- if resolved_guide.description.value != blank -%}
+        <div class="coolway-size-guide-block__description">
+          {%- render 'coolway-rich-text', value: resolved_guide.description.value -%}
+        </div>
+      {%- endif -%}
+
+      {%- for block in resolved_guide.blocks.value -%}
+
+        {%- if block.headers != blank and block.rows != blank -%}
+          {%- assign headers = block.headers.value -%}
+          {%- assign rows = block.rows.value -%}
+          <table class="coolway-size-guide-block__table">
+            <caption>
+              {{ block.label }}
+              {%- if block.has_dual_unit_selector -%}
+                ({{ block.unit_primary }} / {{ block.unit_secondary }})
+              {%- elsif block.unit_primary != blank -%}
+                ({{ block.unit_primary }})
+              {%- endif -%}
+            </caption>
+            <thead>
+              <tr>
+                {%- for header in headers -%}
+                  <th>{{ header }}</th>
+                {%- endfor -%}
+              </tr>
+            </thead>
+            <tbody>
+              {%- for row in rows -%}
+                <tr>
+                  {%- for cell in row -%}
+                    <td>{{ cell }}</td>
+                  {%- endfor -%}
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+
+        {%- elsif block.content.value != blank -%}
+          <div class="coolway-size-guide-block__text">
+            {%- render 'coolway-rich-text', value: block.content.value -%}
+          </div>
+
+        {%- elsif block.image != blank -%}
+          <figure class="coolway-size-guide-block__image">
+            <img
+              src="{{ block.image | image_url: width: 800 }}"
+              alt="{{ block.alt_text | escape }}"
+              width="800"
+              height="{{ block.image.height | times: 800 | divided_by: block.image.width }}"
+              loading="lazy"
+            >
+            {%- if block.caption != blank -%}
+              <figcaption>{{ block.caption }}</figcaption>
+            {%- endif -%}
+          </figure>
+
+        {%- elsif block.video_url != blank -%}
+          <figure class="coolway-size-guide-block__video">
+            <video src="{{ block.video_url }}" controls></video>
+            {%- if block.caption != blank -%}
+              <figcaption>{{ block.caption }}</figcaption>
+            {%- endif -%}
+          </figure>
+        {%- endif -%}
+
+      {%- endfor -%}
+    </div>
   {%- endif -%}
 </div>
 

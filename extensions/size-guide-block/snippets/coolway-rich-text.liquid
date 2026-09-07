@@ -1,0 +1,35 @@
+{%- comment -%}
+  Render mínimo de un campo "rich_text_field" de metaobject (3.4).
+
+  Hallazgo real: el campo NO se auto-renderiza como HTML ni con acceso
+  directo ni con `.value` — ambos devuelven el árbol JSON en bruto (visto
+  como texto o como hash Ruby-like). Pero `.value` SÍ es una estructura
+  Liquid nativa navegable (root -> children -> paragraph/list -> children
+  -> text con `.value`), así que aquí se recorre a mano, sin ningún filtro
+  de parseo (no existe `parse_json` en el Liquid de Shopify).
+
+  Cobertura deliberadamente mínima (párrafos y listas, texto plano sin
+  negrita/cursiva) — suficiente para el requisito de esta tarea; ampliar
+  marks (bold/italic/link) queda fuera de alcance de la 3.4.
+
+  Uso: {% render 'coolway-rich-text', value: resolved_guide.description.value %}
+{%- endcomment -%}
+
+{%- for node in value.children -%}
+  {%- case node.type -%}
+    {%- when 'paragraph' -%}
+      <p>{%- for child in node.children -%}{{ child.value }}{%- endfor -%}</p>
+    {%- when 'list' -%}
+      <ul>
+        {%- for item in node.children -%}
+          <li>
+            {%- for item_child in item.children -%}
+              {%- for text in item_child.children -%}{{ text.value }}{%- endfor -%}
+            {%- endfor -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- when 'heading' -%}
+      <strong>{%- for child in node.children -%}{{ child.value }}{%- endfor -%}</strong>
+  {%- endcase -%}
+{%- endfor -%}
