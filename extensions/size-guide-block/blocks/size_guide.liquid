@@ -1,21 +1,53 @@
-{% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
-<span style="color:{{ block.settings.colour }}">
-  {% render 'stars', rating: avg_rating %}
-</span>
-{% if avg_rating >= 4 %}
-  <br>
-  <img src="{{ "thumbs-up.png" | asset_img_url: '15x' }}" height="15" width="15" loading="lazy">
-  {{ 'ratings.home.recommendationText' | t }}
-{% endif %}
+{%- comment -%}
+  Guía de tallas — App Block (Theme App Extension).
+
+  Tarea 3.2 (change OpenSpec: size-guide-app-block-base): esqueleto base.
+  Este bloque todavía NO renderiza el contenido real de la guía (título,
+  bloques de tabla/texto/imagen/vídeo) — eso llega en la 3.3 (lectura vía
+  Storefront API) y la 3.4 (renderizado por tipo de bloque).
+
+  Lo único que hace aquí:
+  - Comprobar si el producto tiene `resolved_size_guide` (lo escribe el
+    backend en la Fase 2 — este bloque nunca evalúa reglas de asignación).
+  - Si lo tiene, mostrar un placeholder visual mínimo (texto fijo, sin
+    traducción real todavía — eso es la 3.8) para validar visualmente en
+    el editor de temas que el bloque se coloca en el sitio correcto, junto
+    al selector de variantes.
+  - Si no lo tiene, no renderizar nada visible (caso "sin guía asignada" —
+    ver 3.5) NI ocupar espacio.
+
+  NOTA (hallazgo real, 07-sept-2026, confirmado con el DOM real en
+  coolway-sandbox): Shopify envuelve SIEMPRE este bloque en su propio
+  contenedor, con clase fija `shopify-block shopify-app-block` —
+  independiente de lo que este fichero renderice dentro. Colapsar solo
+  nuestro <div> interno con `:empty` NO era suficiente: el contenedor de
+  Shopify seguía ocupando su espacio en la sección (variant-picker/
+  buy-buttons) aunque quedara vacío por dentro. Solución: usar el
+  selector relacional CSS `:has()` para colapsar el propio contenedor de
+  Shopify cuando nuestro <div> interno está vacío.
+
+  NOTA aparte: `{% stylesheet %}` (el tag normal de secciones de tema) no
+  está permitido dentro de blocks de Theme App Extension — Shopify lo
+  rechaza con "Theme app extension blocks cannot contain 'stylesheet'
+  tags". El CSS va en un `<style>` inline normal, único mecanismo válido
+  aquí.
+{%- endcomment -%}
+
+<div class="coolway-size-guide-block">
+  {%- if product.metafields.custom.resolved_size_guide -%}
+    <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog">Guía de tallas</a>
+  {%- endif -%}
+</div>
+
+<style>
+  .shopify-block:has(> .coolway-size-guide-block:empty) {
+    display: none;
+  }
+</style>
 
 {% schema %}
 {
   "name": "Guía de tallas",
-  "target": "section",
-  "settings": [
-    { "type": "product", "id": "product", "label": "product", "autofill": true },
-    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" }
-  ]
+  "target": "section"
 }
 {% endschema %}
-
