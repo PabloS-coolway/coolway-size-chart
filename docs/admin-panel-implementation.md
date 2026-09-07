@@ -2,7 +2,7 @@
 
 Documento acumulativo: cada pieza del desglose de la 2.10 se añade aquí a medida que se completa.
 
-**Estado global: las 6 piezas funcionales (A, B, C, D, E, F) están completadas y verificadas. Solo queda la Pieza G (pulido visual), opcional y posterior.**
+**Estado global: las 6 piezas funcionales (A, B, C, D, E, F) y la Pieza G (pulido visual completo) están cerradas y verificadas. Tarea 2.10 al 100%.**
 
 ---
 
@@ -17,7 +17,7 @@ Documento acumulativo: cada pieza del desglose de la 2.10 se añade aquí a medi
 
 ### Decisiones de alcance (para no disparar el coste de esta pieza)
 
-- **No muestra la regla de asignación de cada guía.** Cruzar cada guía con sus `size_guide_rule` correspondientes requeriría cargar todas las reglas y relacionarlas en memoria (como hace el motor de resolución de la 2.2) — no aporta valor imprescindible solo para un listado.
+- **No muestra la regla de asignación de cada guía** en la primera versión (esto se añadió después, en la Pieza G2).
 - **Sin paginación.** Se cargan hasta 50 guías de una sola vez (el inventario de la 0.1 confirma que ninguna tienda se acerca a ese límite).
 - **El enlace "Editar" apunta a una ruta que todavía no existe** (`/app/size-guides/:id`) — se construye en la Pieza B. Da 404 esperado hasta entonces, confirmado al probarlo.
 
@@ -31,10 +31,6 @@ Documento acumulativo: cada pieza del desglose de la 2.10 se añade aquí a medi
 ### Componentes usados (verificados por uso real)
 
 `s-page`, `s-section`, `s-box`, `s-stack`, `s-text`, `s-link`, `s-paragraph` (del scaffold original) + `<strong>` (HTML nativo). Evitadas deliberadamente etiquetas sin confirmar como `s-table` o `s-badge`.
-
-### Pendiente para la Pieza G (pulido visual, al final)
-
-- Badges de color para el estado, chips de condiciones de la regla (requiere cargar y cruzar `size_guide_rule`), botones Duplicate/Delete (mutaciones nuevas), fecha relativa de actualización, barra de búsqueda/filtros. Coste estimado alto.
 
 ---
 
@@ -58,10 +54,6 @@ Es un informe de solo lectura. Si un producto aparece aquí por error, la forma 
 ### Validación realizada
 
 Con el estado real de `coolway-sandbox` (1 producto con el tag `football` resuelto, 727 sin guía tras la última prueba de la 2.4): la pantalla mostró correctamente **727 de 728 productos** sin guía, con el listado completo.
-
-### Pendiente para la Pieza G (pulido visual, al final)
-
-- **Cargar más / scroll infinito.** Con 727 productos en una sola carga, la lista actual es muy larga para desplazarse a mano — anotado por Juanmi tras la prueba real. La consulta ya está paginada internamente (100 por página, vía cursor) para traer los datos del servidor; falta la parte de UI: paginar también la *visualización* (botón "Cargar más" o scroll infinito), en vez de renderizar los 727 de golpe en el navegador.
 
 ---
 
@@ -164,9 +156,9 @@ Dos rutas nuevas:
 
 ### Decisiones de alcance (coste alto de la pieza, acotado deliberadamente)
 
-1. **Sin selector visual de imágenes.** Para el bloque de imagen, solo se editan `alt_text` y `caption` desde el panel — el archivo de imagen en sí (campo `image`, `file_reference`) no se puede cambiar desde aquí, requeriría un selector de recursos de Shopify (App Bridge resource picker) no construido en esta pieza. **Consecuencia práctica:** crear un bloque de imagen nuevo desde el panel puede fallar si `image` es un campo obligatorio en la definición — para crear un bloque de imagen hay que hacerlo desde el editor nativo de Shopify, y luego editar alt_text/caption desde aquí.
+1. **Sin selector visual de imágenes en la primera versión** (esto se resolvió después, en la Pieza G6).
 2. **Tabla: `headers`/`rows` como JSON en un textarea**, no un editor visual de filas/columnas — mismo patrón ya usado en las condiciones de la regla (Pieza D).
-3. **Sin reordenar bloques** — se pueden añadir y quitar, pero el orden queda fijo según se fueron añadiendo. Pendiente como mejora futura (Pieza G).
+3. **Sin reordenar bloques en la primera versión** (esto se añadió después, en la Pieza G5).
 4. **"Quitar de la guía" no borra el bloque en sí** — solo lo desvincula del campo `blocks` de la guía. Más seguro: evita perder contenido por error.
 
 ### Aplicando la lección de la Pieza D desde el principio
@@ -185,12 +177,54 @@ Ambos archivos usan el sufijo de escape (`$id_`, y también `blocks_` en el edit
 3. **Creación de bloque nuevo:** se creó un bloque de texto de prueba ("Bloque de prueba") — se guardó con éxito y quedó añadido a la lista `blocks` de la guía.
 4. **Quitar bloque de la guía:** se quitó el bloque de texto de prueba — desapareció correctamente de la lista de la guía (la entrada en sí sigue existiendo, solo se desvinculó, tal como estaba diseñado).
 
-### Pendiente para la Pieza G (pulido visual)
+---
 
-- **Resumen genérico para bloques de texto en el listado.** El listado muestra siempre el texto fijo "(texto enriquecido)" para cualquier bloque de tipo texto, en vez de un fragmento real de su contenido — detectado al crear el bloque de prueba ("Bloque de prueba" no aparecía, solo el texto genérico). Mejora de bajo coste: reutilizar `extractPlainTextFromRichText` (ya existe, usado en las Piezas B y C) para mostrar los primeros caracteres reales del contenido en vez del texto fijo.
-- Selector visual de imágenes (App Bridge resource picker) — ver decisión de alcance 1 de arriba.
-- Reordenar bloques — ver decisión de alcance 3 de arriba.
+## Pieza G — Pulido visual (completa)
+
+**Estado:** ✅ Completada — las 6 sub-piezas (G1-G6) cerradas y verificadas con pruebas reales.
+**Fecha:** 01-sept-2026
+
+### G1 — Mejoras baratas (Piezas A y C)
+- Resumen real de bloques de texto en el listado (antes decía siempre "(texto enriquecido)").
+- Fecha relativa de actualización en el listado de guías ("hace 3 días").
+- Buscador por título en el listado de guías, con "Limpiar búsqueda".
+- **Hallazgo real:** un `<form>` HTML normal para el buscador rompía la navegación embebida (perdía parámetros de contexto de la app, pantalla en blanco) — corregido con el componente `<Form>` de react-router. Mismo motivo por el que "Limpiar búsqueda" usa `<s-link>` en vez de una `<a>` normal.
+- El input de búsqueda no se vaciaba visualmente al limpiar (usa `defaultValue`, no controlado) — corregido con `key={query}` para forzar el remontaje del campo.
+
+### G2 — Badges y chips de regla (Pieza A)
+- Badge de color para el estado (verde "Activa" / ámbar "Borrador").
+- Chips de la regla de asignación de cada guía (operador ANY/ALL + condiciones), cargando **todas** las `size_guide_rule` de una sola consulta y agrupándolas por guía en memoria — evita N+1.
+- Badges implementados como `<span>` con estilo en línea, no un componente `<s-badge>` de Shopify sin verificar.
+
+### G3 — Duplicar y Eliminar (Pieza A)
+- **Duplicar copia la guía completa**: datos básicos + todos los bloques de contenido (incluida la referencia a la imagen, copiando su GID) + la regla de asignación, reapuntada a la guía nueva. La copia se crea siempre como Borrador.
+- **Eliminar** borra solo la entrada de la guía (`metaobjectDelete`), no sus bloques ni su regla, que quedan sin usar pero no se pierden.
+- **Hallazgo real:** `window.confirm()` en un contexto embebido muestra un texto añadido por el navegador ("Una página insertada en `<dominio del túnel>` dice...") — confuso y fuera de nuestro control. Sustituido por una ventana modal propia (HTML/CSS puro, fondo oscurecido + caja centrada), con el texto completamente bajo nuestro control.
+- Botones con estilo propio tipo "botón de Shopify" (fondo claro, borde, esquinas redondeadas; rojo para Eliminar). "Editar" pasó de `<s-link>` a `<Link>` de react-router para poder aplicarle el mismo estilo.
+- **Hallazgo real:** el botón "Duplicar" se veía más pequeño que los otros — el `<form>` que lo envolvía se convertía en el elemento flex en vez del propio botón. Corregido con `display: "contents"` en el form.
+
+### G4 — Paginación (Pieza E)
+- El informe de productos sin guía pasó de cargar los 727 productos de golpe a paginar de 100 en 100, con enlace "Cargar siguientes".
+- Encabezado con rango real ("Productos 1-100 de 728"), calculado pasando contadores acumulados (`scanned`, `withoutGuide`) como parámetros en la URL entre páginas — sin necesitar estado de cliente ni base de datos propia para esto.
+- Añadida una consulta de conteo total del catálogo (`productsCount`) para el denominador.
+
+### G5 — Reordenar bloques (Pieza C)
+- Botones "↑ Subir" / "↓ Bajar" por bloque (sin drag-and-drop, más caro de construir) — intercambian la posición del bloque con su vecino y reescriben la lista `blocks` completa, mismo patrón que "quitar".
+- Confirmado funcionando con 3 bloques de prueba.
+
+### G6 — Subida de imágenes (Pieza C, la de mayor incertidumbre de toda la Pieza G)
+- **Primer intento (fallido, informativo):** `shopify.resourcePicker({ type: "file" })` — Shopify devolvió un error explícito: *"The 'type' option for resourcePicker must be one of product, variant, collection"*. Confirma que `resourcePicker` de App Bridge solo sirve para **elegir entre recursos ya existentes** (producto/variante/colección), nunca para subir un archivo nuevo — no es la herramienta correcta para "subir una imagen nuestra".
+- **Segundo intento (correcto):** subida real de archivo vía la Admin API, con el mecanismo estándar de Shopify para que una app suba contenido nuevo:
+  1. `stagedUploadsCreate` — pide una URL de subida temporal.
+  2. `fetch POST` directo del archivo a esa URL (fuera de la Admin API).
+  3. `fileCreate` — crea el archivo real en Shopify a partir de la URL subida, devuelve su GID.
+  4. El GID se usa como valor del campo `image` (`file_reference`) del bloque.
+- **Hallazgo real:** `fileCreate` falló con *"Access denied... Required access: write_files access scope..."* — el scope `write_files` no estaba declarado en `shopify.app.toml`. Añadido, y tras `npm run deploy` + desinstalar/reinstalar la app (necesario para que la tienda autorizara el scope nuevo), funcionó a la primera.
+- Confirmado con una imagen real subida desde el propio panel: aparece la vista previa tanto dentro del editor del bloque como, tras un ajuste adicional, como miniatura en el listado de bloques de la guía.
+
+### Componentes de formulario para subida de archivos
+`<input type="file">` HTML nativo, con `encType="multipart/form-data"` en el `<fetcher.Form>` — sin ninguna librería de subida de terceros.
 
 ## Siguiente paso
 
-**Las 6 piezas funcionales de la 2.10 están cerradas.** Queda solo la Pieza G (pulido visual: badges, chips, Duplicate/Delete, paginación de A/E, resumen real de bloques de texto, reordenar bloques y selector de imágenes de C) como trabajo opcional/posterior, o pasar directamente a la tarea 2.11 (qué hacer con el editor nativo de metaobjects) para cerrar la Fase 2 por completo.
+Con la Pieza G completa, la tarea 2.10 (implementación del panel) queda **cerrada al 100%**, incluido el pulido visual. Queda la tarea 2.11 (qué hacer con el editor nativo de metaobjects) para cerrar la Fase 2 por completo.

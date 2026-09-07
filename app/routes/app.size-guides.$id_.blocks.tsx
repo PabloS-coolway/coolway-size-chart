@@ -1,21 +1,15 @@
 /**
  * app/routes/app.size-guides.$id_.blocks.tsx
  *
- * Tarea 2.10 (Pieza C, parte 1) — Lista de bloques de contenido de una guía,
- * con enlaces para añadir uno nuevo de cada tipo y quitar los existentes.
+ * Tarea 2.10 (Pieza C, parte 1) — Lista de bloques de contenido de una guía.
+ * Pieza G1: resumen real de bloques de texto. Pieza G5: reordenar bloques
+ * con botones "Subir"/"Bajar". Pieza G6: miniatura de imagen en el listado
+ * para bloques de tipo imagen (antes solo se veía la vista previa dentro
+ * del editor individual del bloque, no en esta lista).
  *
- * DECISIONES DE ALCANCE (coste alto de la pieza, acotado deliberadamente):
- * 1. "Quitar" un bloque de esta lista NO borra la entrada del bloque en sí
- *    (size_guide_block_*) — solo lo desvincula del campo `blocks` de la
- *    guía. Más seguro: evita perder contenido por error. Si de verdad hace
- *    falta borrar la entrada, se hace desde el editor nativo de Shopify.
- * 2. Sin reordenar bloques en esta versión — el orden queda fijo según se
- *    fueron añadiendo. Pendiente como mejora futura (Pieza G o posterior).
- *
- * ⚠️ PUNTO SIN VERIFICAR: se usa `field(key:"blocks") { references(first) }`
- * para leer una lista de referencia mixta — por analogía con `reference`
- * (singular, ya confirmado en la Pieza D para `size_guide`), pero no
- * probado directamente hasta esta pieza.
+ * DECISIONES DE ALCANCE (coste alto de la pieza C, acotado deliberadamente):
+ * 1. "Quitar" un bloque no borra la entrada, solo la desvincula.
+ * 2. Reordenar con botones ↑/↓, no arrastrar y soltar.
  */
 
 import type {
@@ -33,6 +27,7 @@ interface BlockSummary {
   id: string;
   type: string;
   summary: string;
+  imageUrl: string | null;
 }
 
 const GET_GUIDE_BLOCKS_QUERY = `#graphql
@@ -49,6 +44,13 @@ const GET_GUIDE_BLOCKS_QUERY = `#graphql
               content: field(key: "content") { value }
               videoUrl: field(key: "video_url") { value }
               altText: field(key: "alt_text") { value }
+              image: field(key: "image") {
+                reference {
+                  ... on MediaImage {
+                    image { url }
+                  }
+                }
+              }
             }
           }
         }
@@ -85,6 +87,29 @@ function shortTypeSlug(type: string): string {
   return type.replace("size_guide_block_", "");
 }
 
+function extractPlainTextFromRichText(rawValue: string | undefined): string {
+  if (!rawValue) return "";
+  try {
+    const doc = JSON.parse(rawValue);
+    const parts: string[] = [];
+    function walk(node: any) {
+      if (!node) return;
+      if (typeof node.value === "string") parts.push(node.value);
+      if (Array.isArray(node.children)) node.children.forEach(walk);
+    }
+    walk(doc);
+    return parts.join(" ");
+  } catch {
+    return "";
+  }
+}
+
+async function fetchCurrentBlockIds(admin: any, guideId: string): Promise<string[]> {
+  const response = await admin.graphql(GET_GUIDE_BLOCKS_QUERY, { variables: { id: guideId } });
+  const { data } = await response.json();
+  return (data.metaobject?.blocks?.references?.nodes ?? []).map((n: any) => n.id);
+}
+
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
   const guideId = decodeURIComponent(params.id!);
@@ -94,13 +119,19 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
   const nodes = data.metaobject?.blocks?.references?.nodes ?? [];
   const blocks: BlockSummary[] = nodes.map((node: any) => {
+    const textSnippet = extractPlainTextFromRichText(node.content?.value);
     const summary =
       node.label?.value ||
-      (node.content?.value ? "(texto enriquecido)" : "") ||
+      (textSnippet ? textSnippet.slice(0, 60) + (textSnippet.length > 60 ? "…" : "") : "") ||
       node.videoUrl?.value ||
       node.altText?.value ||
       "(sin resumen)";
-    return { id: node.id, type: node.type, summary };
+    return {
+      id: node.id,
+      type: node.type,
+      summary,
+      imageUrl: node.image?.reference?.image?.url ?? null,
+    };
   });
 
   return { guideId, blocks };
@@ -110,16 +141,34 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
   const guideId = decodeURIComponent(params.id!);
   const formData = await request.formData();
-  const removeBlockId = String(formData.get("removeBlockId") ?? "");
+  const intent = String(formData.get("intent") ?? "remove");
 
-  // Recarga la lista actual, quita el bloque indicado, y guarda la lista
-  // resultante — no hay una mutación de "quitar un elemento de la lista"
-  // directa, hay que reescribir la lista completa con el elemento fuera.
-  const response = await admin.graphql(GET_GUIDE_BLOCKS_QUERY, { variables: { id: guideId } });
-  const { data } = await response.json();
-  const currentIds: string[] = (data.metaobject?.blocks?.references?.nodes ?? []).map(
-    (n: any) => n.id,
-  );
+  if (intent === "move") {
+    const blockId = String(formData.get("blockId") ?? "");
+    const direction = String(formData.get("direction") ?? "");
+    const currentIds = await fetchCurrentBlockIds(admin, guideId);
+    const index = currentIds.indexOf(blockId);
+    if (index === -1) return { ok: false, errors: [{ message: "Bloque no encontrado en la lista" }] };
+
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= currentIds.length) {
+      return { ok: true, errors: [] };
+    }
+
+    const newIds = [...currentIds];
+    [newIds[index], newIds[targetIndex]] = [newIds[targetIndex], newIds[index]];
+
+    const updateResponse = await admin.graphql(UPDATE_GUIDE_BLOCKS_MUTATION, {
+      variables: { id: guideId, blocksJson: JSON.stringify(newIds) },
+    });
+    const { data: updateData } = await updateResponse.json();
+    const userErrors = updateData.metaobjectUpdate.userErrors;
+    if (userErrors.length > 0) return { ok: false, errors: userErrors };
+    return { ok: true, errors: [] };
+  }
+
+  const removeBlockId = String(formData.get("removeBlockId") ?? "");
+  const currentIds = await fetchCurrentBlockIds(admin, guideId);
   const newIds = currentIds.filter((id) => id !== removeBlockId);
 
   const updateResponse = await admin.graphql(UPDATE_GUIDE_BLOCKS_MUTATION, {
@@ -140,7 +189,7 @@ export default function GuideBlocksList() {
   useEffect(() => {
     if (!fetcher.data) return;
     if (fetcher.data.ok) {
-      shopify.toast.show("Bloque quitado de la guía");
+      shopify.toast.show("Hecho");
     } else {
       shopify.toast.show(`Error: ${JSON.stringify(fetcher.data.errors)}`, { isError: true });
     }
@@ -154,24 +203,53 @@ export default function GuideBlocksList() {
         {blocks.length === 0 && <s-paragraph>Esta guía no tiene ningún bloque todavía.</s-paragraph>}
 
         <s-stack direction="block" gap="base">
-          {blocks.map((block) => (
+          {blocks.map((block, index) => (
             <s-box key={block.id} padding="base" borderWidth="base" borderRadius="base">
-              <s-paragraph>
-                <strong>{typeLabel(block.type)}</strong>
-              </s-paragraph>
-              <s-paragraph>
-                <s-text>{block.summary} · </s-text>
+              <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                {block.imageUrl && (
+                  <img
+                    src={block.imageUrl}
+                    alt=""
+                    style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px", flexShrink: 0 }}
+                  />
+                )}
+                <div>
+                  <s-paragraph>
+                    <strong>{typeLabel(block.type)}</strong>
+                  </s-paragraph>
+                  <s-paragraph>
+                    <s-text>{block.summary}</s-text>
+                  </s-paragraph>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", alignItems: "center" }}>
+                <fetcher.Form method="post" style={{ display: "contents" }}>
+                  <input type="hidden" name="intent" value="move" />
+                  <input type="hidden" name="blockId" value={block.id} />
+                  <input type="hidden" name="direction" value="up" />
+                  <button type="submit" disabled={index === 0}>
+                    ↑ Subir
+                  </button>
+                </fetcher.Form>
+                <fetcher.Form method="post" style={{ display: "contents" }}>
+                  <input type="hidden" name="intent" value="move" />
+                  <input type="hidden" name="blockId" value={block.id} />
+                  <input type="hidden" name="direction" value="down" />
+                  <button type="submit" disabled={index === blocks.length - 1}>
+                    ↓ Bajar
+                  </button>
+                </fetcher.Form>
                 <s-link
                   href={`/app/size-guides/${encodedGuideId}/blocks/${shortTypeSlug(block.type)}/${encodeURIComponent(block.id)}`}
                 >
                   Editar
                 </s-link>
-                <s-text> · </s-text>
-                <fetcher.Form method="post" style={{ display: "inline" }}>
+                <fetcher.Form method="post" style={{ display: "contents" }}>
+                  <input type="hidden" name="intent" value="remove" />
                   <input type="hidden" name="removeBlockId" value={block.id} />
                   <button type="submit">Quitar de la guía</button>
                 </fetcher.Form>
-              </s-paragraph>
+              </div>
             </s-box>
           ))}
         </s-stack>
@@ -189,8 +267,8 @@ export default function GuideBlocksList() {
       <s-section slot="aside" heading="Sobre esta pantalla">
         <s-paragraph>
           "Quitar de la guía" no borra el bloque en sí, solo lo desvincula de
-          esta guía. El orden de los bloques no se puede cambiar todavía
-          desde aquí.
+          esta guía. "Subir"/"Bajar" cambian el orden en el que se muestran
+          los bloques en el storefront.
         </s-paragraph>
         <s-paragraph>
           <s-link href={`/app/size-guides/${encodedGuideId}`}>Volver a la guía</s-link>

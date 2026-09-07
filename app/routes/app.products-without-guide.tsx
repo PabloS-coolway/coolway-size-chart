@@ -1,29 +1,24 @@
 /**
  * app/routes/app.products-without-guide.tsx
  *
- * Tarea 2.10 (Pieza E) — Informe "productos sin guía de tallas asignada"
- * (decisión 6 de la 2.9: "sí, replicarlo" — equivalente a "View products
- * without size charts" de Kiwi).
+ * Tarea 2.10 (Pieza E) — Informe "productos sin guía de tallas asignada".
+ * Tarea 2.10 (Pieza G4) — paginación con "Cargar siguientes".
  *
- * Recorre TODO el catálogo de la tienda (paginado, igual que
- * fetchAllProductContexts de la 2.4) y comprueba, para cada producto, si
- * tiene valor en el metafield custom.resolved_size_guide (escrito por el
- * motor de resolución, 2.2/2.3/2.4). Si no lo tiene, aparece en este informe.
+ * CORRECCIÓN 2 (a petición de Juanmi): el encabezado mezclaba el conteo de
+ * "sin guía" con el de productos revisados, sin mostrar el rango exacto de
+ * la página actual dentro del catálogo total. Corregido: el encabezado
+ * ahora muestra el rango real ("Productos 1-100 de 728", "Productos
+ * 101-200 de 728"...), calculado a partir de cuántos se habían revisado
+ * ANTES de esta página (parámetro `scanned` de la URL) más los de esta
+ * página. El conteo de "sin guía" se muestra aparte, en una línea propia.
  *
- * Deliberadamente NO reutiliza fetchAllProductContexts (que trae tags,
- * colecciones, tipo, vendor — todo lo necesario para RESOLVER una guía) ni
- * llama al motor de resolución: aquí solo hace falta comprobar si el
- * metafield YA está poblado o no, una consulta mucho más ligera.
- *
- * Sin caché ni botón de "recalcular" en esta pieza — es un informe de
- * lectura, no dispara ningún recálculo. Si un producto lleva aquí por error
- * (por ejemplo, porque no coincide con ninguna regla todavía), la forma de
- * "arreglarlo" es crear o ajustar una regla (2.2/1.3), no algo que se haga
- * desde este informe.
+ * ⚠️ PUNTO SIN VERIFICAR: se asume que existe un campo `productsCount` en
+ * la raíz de la Admin GraphQL API que devuelve `{ count }` — no confirmado
+ * contra el schema real, es la mejor estimación del nombre.
  */
 
 import type { LoaderFunctionArgs, HeadersFunction } from "react-router";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
 
@@ -44,55 +39,92 @@ const PRODUCTS_GUIDE_STATUS_QUERY = `#graphql
       }
       pageInfo { hasNextPage endCursor }
     }
+    productsCount {
+      count
+    }
   }
 `;
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
+  const url = new URL(request.url);
+  const cursor = url.searchParams.get("after");
+  const scannedBefore = parseInt(url.searchParams.get("scanned") ?? "0", 10);
+  const withoutGuideBefore = parseInt(url.searchParams.get("withoutGuide") ?? "0", 10);
 
-  const withoutGuide: ProductWithoutGuide[] = [];
-  let totalProducts = 0;
-  let cursor: string | null = null;
-  let hasNextPage = true;
+  const response = await admin.graphql(PRODUCTS_GUIDE_STATUS_QUERY, {
+    variables: { cursor },
+  });
+  const { data } = await response.json();
+  const page = data.products;
+  const totalCount: number | null = data.productsCount?.count ?? null;
 
-  while (hasNextPage) {
-    const response = await admin.graphql(PRODUCTS_GUIDE_STATUS_QUERY, {
-      variables: { cursor },
-    });
-    const { data } = await response.json();
-    const page = data.products;
-
-    for (const node of page.nodes) {
-      totalProducts += 1;
-      if (!node.resolvedSizeGuide) {
-        withoutGuide.push({ id: node.id, title: node.title });
-      }
+  const withoutGuideThisPage: ProductWithoutGuide[] = [];
+  let scannedThisPage = 0;
+  for (const node of page.nodes) {
+    scannedThisPage += 1;
+    if (!node.resolvedSizeGuide) {
+      withoutGuideThisPage.push({ id: node.id, title: node.title });
     }
-
-    hasNextPage = page.pageInfo.hasNextPage;
-    cursor = page.pageInfo.endCursor;
   }
 
-  return { withoutGuide, totalProducts };
+  const rangeStart = scannedBefore + 1;
+  const rangeEnd = scannedBefore + scannedThisPage;
+  const scannedTotal = rangeEnd;
+  const withoutGuideTotal = withoutGuideBefore + withoutGuideThisPage.length;
+
+  return {
+    withoutGuideThisPage,
+    rangeStart,
+    rangeEnd,
+    scannedTotal,
+    withoutGuideTotal,
+    totalCount,
+    hasNextPage: page.pageInfo.hasNextPage,
+    nextCursor: page.pageInfo.endCursor,
+    isFirstPage: !cursor,
+  };
 };
 
 export default function ProductsWithoutGuide() {
-  const { withoutGuide, totalProducts } = useLoaderData<typeof loader>();
+  const {
+    withoutGuideThisPage,
+    rangeStart,
+    rangeEnd,
+    scannedTotal,
+    withoutGuideTotal,
+    totalCount,
+    hasNextPage,
+    nextCursor,
+    isFirstPage,
+  } = useLoaderData<typeof loader>();
+
+  const nextHref = `/app/products-without-guide?after=${encodeURIComponent(nextCursor)}&scanned=${scannedTotal}&withoutGuide=${withoutGuideTotal}`;
 
   return (
     <s-page heading="Productos sin guía de tallas">
       <s-section
-        heading={`${withoutGuide.length} de ${totalProducts} productos sin guía asignada`}
+        heading={
+          totalCount !== null
+            ? `Productos ${rangeStart}-${rangeEnd} de ${totalCount}`
+            : `Productos ${rangeStart}-${rangeEnd}`
+        }
       >
-        {withoutGuide.length === 0 && (
+        <s-paragraph>
+          <s-text>
+            {withoutGuideThisPage.length} sin guía en esta página · {withoutGuideTotal} sin guía en total (acumulado hasta ahora)
+          </s-text>
+        </s-paragraph>
+
+        {withoutGuideThisPage.length === 0 && (
           <s-paragraph>
-            Todos los productos de esta tienda tienen una guía de tallas
-            resuelta. Nada que revisar.
+            Ninguno de los productos de esta página tiene guía pendiente.
+            {hasNextPage ? " Sigue con la siguiente página para revisar el resto." : " Fin del catálogo."}
           </s-paragraph>
         )}
 
         <s-stack direction="block" gap="base">
-          {withoutGuide.map((product) => (
+          {withoutGuideThisPage.map((product) => (
             <s-box
               key={product.id}
               padding="base"
@@ -105,6 +137,30 @@ export default function ProductsWithoutGuide() {
             </s-box>
           ))}
         </s-stack>
+
+        <div style={{ marginTop: "1.5rem" }}>
+          {hasNextPage ? (
+            <Link
+              to={nextHref}
+              style={{
+                display: "inline-block",
+                padding: "0.4rem 0.9rem",
+                borderRadius: "6px",
+                border: "1px solid #c9cccf",
+                background: "#f6f6f7",
+                color: "#1a1a1a",
+                fontSize: "0.85rem",
+                textDecoration: "none",
+              }}
+            >
+              Cargar siguientes 100 productos →
+            </Link>
+          ) : (
+            <s-text>
+              Fin del catálogo — {withoutGuideTotal} de {scannedTotal} productos sin guía en total.
+            </s-text>
+          )}
+        </div>
       </s-section>
 
       <s-section slot="aside" heading="Sobre este informe">
@@ -115,6 +171,11 @@ export default function ProductsWithoutGuide() {
           con él todavía. Revisar las reglas en{" "}
           <s-link href="/app/size-guides">Guías de tallas</s-link>.
         </s-paragraph>
+        {!isFirstPage && (
+          <s-paragraph>
+            <s-link href="/app/products-without-guide">Volver al principio</s-link>
+          </s-paragraph>
+        )}
       </s-section>
     </s-page>
   );

@@ -2,28 +2,31 @@
  * app/routes/app.size-guides.$id_.blocks_.$type.$blockId.tsx
  *
  * Tarea 2.10 (Pieza C, parte 2) — Editor de un bloque de contenido
- * individual. Una sola ruta gestiona los 4 tipos (table/text/image/video),
- * con campos condicionales según :type.
+ * individual. Una sola ruta gestiona los 4 tipos (table/text/image/video).
  *
- * Ruta: /app/size-guides/:id/blocks/:type/:blockId
- * :blockId = "new" → crea un bloque nuevo y lo añade a la lista `blocks` de
- * la guía. Cualquier otro valor (un GID) → edita ese bloque existente.
+ * Pieza G6 (segundo intento, tras confirmar que `resourcePicker` NO sirve
+ * para subir archivos nuevos — solo admite product/variant/collection, error
+ * real confirmado en la práctica): se sustituye por subida de archivo
+ * directa vía la Admin API (`stagedUploadsCreate` + `fileCreate`), el
+ * mecanismo correcto para que una app suba una imagen NUEVA (no elegir entre
+ * las ya existentes, que es lo que hacía resourcePicker).
  *
- * NOMBRE DE ARCHIVO: doble escape `$id_` y `blocks_` — aplicando la lección
- * de la Pieza D: cualquier segmento fijo que venga después de un parámetro
- * dinámico, en el mismo nombre de archivo, se anida por defecto dentro de la
- * página del padre (que no tiene <Outlet>). Sin el escape, esta pantalla no
- * navegaría al hacer clic, igual que pasó con la regla de asignación.
+ * Cómo funciona:
+ * 1. El formulario incluye un <input type="file"> normal (encType
+ *    multipart/form-data).
+ * 2. En la acción: si se envió un archivo, se pide a Shopify una URL de
+ *    subida temporal (`stagedUploadsCreate`), se sube el archivo ahí
+ *    directamente (fetch POST, fuera de la Admin API), y con la URL
+ *    resultante se crea el archivo real en Shopify (`fileCreate`).
+ * 3. El GID del archivo creado se usa como valor del campo `image`
+ *    (file_reference) del bloque — igual que ya confirmamos que funciona al
+ *    duplicar bloques de imagen en la Pieza G3.
  *
- * DECISIONES DE ALCANCE (coste alto de la pieza):
- * - Imagen: solo se editan alt_text y caption desde aquí. El archivo de
- *   imagen en sí (campo `image`) NO se puede cambiar desde este editor —
- *   requeriría un selector de archivos de Shopify (App Bridge resource
- *   picker) que no se ha construido en esta pieza. Para cambiar la imagen,
- *   usar el editor nativo de Shopify (Contenido → Metaobjetos).
- * - Tabla: `headers` y `rows` se editan como JSON en un textarea, no con un
- *   editor visual de filas/columnas — mismo patrón ya usado en las
- *   condiciones de la regla (Pieza D).
+ * ⚠️ PUNTO SIN VERIFICAR: es la primera vez que se usa este flujo de subida
+ * en el proyecto. `stagedUploadsCreate`/`fileCreate` son mutaciones
+ * estándar y bien documentadas de la Admin API (más confianza que la
+ * llamada de resourcePicker que sí falló), pero el flujo completo de 3
+ * pasos encadenados no se ha probado hasta ahora.
  */
 
 import { useEffect } from "react";
@@ -44,7 +47,6 @@ const TYPE_TO_METAOBJECT: Record<string, string> = {
   video: "size_guide_block_video",
 };
 
-/** Extrae texto plano de un rich_text_field (mismo helper que la Pieza B). */
 function extractPlainTextFromRichText(rawValue: string | undefined): string {
   if (!rawValue) return "";
   try {
@@ -83,6 +85,14 @@ const GET_BLOCK_QUERY = `#graphql
       altText: field(key: "alt_text") { value }
       caption: field(key: "caption") { value }
       videoUrl: field(key: "video_url") { value }
+      image: field(key: "image") {
+        reference {
+          ... on MediaImage {
+            id
+            image { url }
+          }
+        }
+      }
     }
   }
 `;
@@ -126,6 +136,90 @@ const UPDATE_GUIDE_BLOCKS_MUTATION = `#graphql
   }
 `;
 
+const STAGED_UPLOADS_CREATE_MUTATION = `#graphql
+  mutation StagedUploadsCreate($input: [StagedUploadInput!]!) {
+    stagedUploadsCreate(input: $input) {
+      stagedTargets {
+        url
+        resourceUrl
+        parameters { name value }
+      }
+      userErrors { field message }
+    }
+  }
+`;
+
+const FILE_CREATE_MUTATION = `#graphql
+  mutation FileCreate($files: [FileCreateInput!]!) {
+    fileCreate(files: $files) {
+      files {
+        id
+        ... on MediaImage {
+          image { url }
+        }
+      }
+      userErrors { field message }
+    }
+  }
+`;
+
+/**
+ * Sube un archivo de imagen nuevo a Shopify y devuelve el GID del archivo
+ * creado, listo para usarse como valor de un campo file_reference.
+ */
+async function uploadImageFile(admin: any, file: File): Promise<{ id: string; url: string | null }> {
+  // 1) Pedir una URL de subida temporal.
+  const stagedResponse = await admin.graphql(STAGED_UPLOADS_CREATE_MUTATION, {
+    variables: {
+      input: [
+        {
+          filename: file.name,
+          mimeType: file.type || "image/jpeg",
+          httpMethod: "POST",
+          resource: "IMAGE",
+        },
+      ],
+    },
+  });
+  const { data: stagedData } = await stagedResponse.json();
+  const stagedErrors = stagedData.stagedUploadsCreate.userErrors;
+  if (stagedErrors.length > 0) {
+    throw new Error(`stagedUploadsCreate: ${JSON.stringify(stagedErrors)}`);
+  }
+  const target = stagedData.stagedUploadsCreate.stagedTargets[0];
+
+  // 2) Subir el archivo a esa URL temporal (fuera de la Admin API).
+  const uploadForm = new FormData();
+  for (const param of target.parameters) {
+    uploadForm.append(param.name, param.value);
+  }
+  uploadForm.append("file", file, file.name);
+
+  const uploadResponse = await fetch(target.url, { method: "POST", body: uploadForm });
+  if (!uploadResponse.ok) {
+    throw new Error(`Fallo al subir el archivo a la URL temporal (status ${uploadResponse.status})`);
+  }
+
+  // 3) Crear el archivo real en Shopify a partir de la URL subida.
+  const fileCreateResponse = await admin.graphql(FILE_CREATE_MUTATION, {
+    variables: {
+      files: [
+        {
+          originalSource: target.resourceUrl,
+          contentType: "IMAGE",
+        },
+      ],
+    },
+  });
+  const { data: fileCreateData } = await fileCreateResponse.json();
+  const fileCreateErrors = fileCreateData.fileCreate.userErrors;
+  if (fileCreateErrors.length > 0) {
+    throw new Error(`fileCreate: ${JSON.stringify(fileCreateErrors)}`);
+  }
+  const createdFile = fileCreateData.fileCreate.files[0];
+  return { id: createdFile.id, url: createdFile.image?.url ?? null };
+}
+
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
   const guideId = decodeURIComponent(params.id!);
@@ -133,7 +227,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const blockId = params.blockId!;
 
   if (blockId === "new") {
-    return { guideId, type, blockId: "new", fields: {} as Record<string, string> };
+    return { guideId, type, blockId: "new", fields: {} as Record<string, string>, imagePreviewUrl: null as string | null };
   }
 
   const decodedBlockId = decodeURIComponent(blockId);
@@ -158,7 +252,13 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     videoUrl: m.videoUrl?.value ?? "",
   };
 
-  return { guideId, type, blockId: decodedBlockId, fields };
+  return {
+    guideId,
+    type,
+    blockId: decodedBlockId,
+    fields,
+    imagePreviewUrl: m.image?.reference?.image?.url ?? null,
+  };
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
@@ -187,6 +287,20 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
       { key: "alt_text", value: String(formData.get("altText") ?? "") },
       { key: "caption", value: String(formData.get("caption") ?? "") },
     ];
+
+    const imageFile = formData.get("imageFile");
+    if (imageFile instanceof File && imageFile.size > 0) {
+      try {
+        const uploaded = await uploadImageFile(admin, imageFile);
+        fields.push({ key: "image", value: uploaded.id });
+      } catch (err) {
+        return {
+          ok: false,
+          errors: [{ message: `Error al subir la imagen: ${err instanceof Error ? err.message : String(err)}` }],
+          created: false,
+        };
+      }
+    }
   } else if (type === "video") {
     fields = [
       { key: "video_url", value: String(formData.get("videoUrl") ?? "") },
@@ -195,22 +309,15 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   }
 
   if (blockId === "new") {
-    // Para "image" en creación, el campo `image` (file_reference) es
-    // obligatorio en la definición y esta pieza no lo rellena (ver
-    // limitación de alcance en la cabecera) — la creación de un bloque de
-    // imagen nuevo puede fallar por eso. Documentado, no un descuido: para
-    // crear un bloque de imagen hay que hacerlo desde el editor nativo y
-    // solo editar alt_text/caption desde aquí después.
     const createResponse = await admin.graphql(CREATE_BLOCK_MUTATION, {
       variables: { metaobject: { type: metaobjectType, fields } },
     });
     const { data: createData } = await createResponse.json();
     const createErrors = createData.metaobjectCreate.userErrors;
-    if (createErrors.length > 0) return { ok: false, errors: createErrors };
+    if (createErrors.length > 0) return { ok: false, errors: createErrors, created: false };
 
     const newBlockId = createData.metaobjectCreate.metaobject.id;
 
-    // Añade el bloque nuevo a la lista `blocks` de la guía.
     const guideBlocksResponse = await admin.graphql(GET_GUIDE_BLOCKS_QUERY, {
       variables: { id: guideId },
     });
@@ -225,48 +332,46 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
     });
     const { data: appendData } = await appendResponse.json();
     const appendErrors = appendData.metaobjectUpdate.userErrors;
-    if (appendErrors.length > 0) return { ok: false, errors: appendErrors };
+    if (appendErrors.length > 0) return { ok: false, errors: appendErrors, created: false };
 
-    return { ok: true, errors: [], newBlockId };
+    return { ok: true, errors: [], created: true, newBlockId };
   }
 
-  // Editar bloque existente.
   const decodedBlockId = decodeURIComponent(blockId);
   const updateResponse = await admin.graphql(UPDATE_BLOCK_MUTATION, {
     variables: { id: decodedBlockId, metaobject: { fields } },
   });
   const { data: updateData } = await updateResponse.json();
   const userErrors = updateData.metaobjectUpdate.userErrors;
-  if (userErrors.length > 0) return { ok: false, errors: userErrors };
+  if (userErrors.length > 0) return { ok: false, errors: userErrors, created: false };
 
-  return { ok: true, errors: [] };
+  return { ok: true, errors: [], created: false };
 };
 
 export default function BlockEditor() {
-  const { guideId, type, blockId, fields } = useLoaderData<typeof loader>();
+  const { guideId, type, blockId, fields, imagePreviewUrl } = useLoaderData<typeof loader>();
   const fetcher = useFetcher<typeof action>();
   const shopify = useAppBridge();
 
   const isSaving = fetcher.state === "submitting";
   const isNew = blockId === "new";
+  const backHref = `/app/size-guides/${encodeURIComponent(guideId)}/blocks`;
 
   useEffect(() => {
     if (!fetcher.data) return;
     if (fetcher.data.ok) {
-      shopify.toast.show(isNew ? "Bloque creado y añadido a la guía" : "Bloque guardado correctamente");
+      shopify.toast.show(fetcher.data.created ? "Bloque creado y añadido a la guía" : "Bloque guardado correctamente");
     } else {
       shopify.toast.show(`Error al guardar: ${JSON.stringify(fetcher.data.errors)}`, {
         isError: true,
       });
     }
-  }, [fetcher.data, shopify, isNew]);
-
-  const backHref = `/app/size-guides/${encodeURIComponent(guideId)}/blocks`;
+  }, [fetcher.data, shopify]);
 
   return (
     <s-page heading={isNew ? "Añadir bloque" : "Editar bloque"}>
       <s-section heading={`Tipo: ${type}`}>
-        <fetcher.Form method="post">
+        <fetcher.Form method="post" encType="multipart/form-data">
           {type === "table" && (
             <>
               <div style={{ marginBottom: "1rem" }}>
@@ -325,13 +430,25 @@ export default function BlockEditor() {
 
           {type === "image" && (
             <>
-              {isNew && (
-                <s-paragraph>
-                  Este editor no permite subir la imagen todavía — crea el
-                  bloque de imagen desde el editor nativo de Shopify primero,
-                  y luego edita aquí su alt_text/caption.
-                </s-paragraph>
-              )}
+              <div style={{ marginBottom: "1rem" }}>
+                <label>
+                  <strong>Imagen</strong>
+                </label>
+                <br />
+                {imagePreviewUrl && (
+                  <img
+                    src={imagePreviewUrl}
+                    alt=""
+                    style={{ maxWidth: "200px", display: "block", marginBottom: "0.5rem", borderRadius: "4px" }}
+                  />
+                )}
+                <input id="imageFile" name="imageFile" type="file" accept="image/*" />
+                <div style={{ fontSize: "0.8rem", color: "#666", marginTop: "0.25rem" }}>
+                  {imagePreviewUrl
+                    ? "Elige un archivo aquí solo si quieres reemplazar la imagen actual."
+                    : "Elige un archivo para subir la imagen de este bloque."}
+                </div>
+              </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label htmlFor="altText">
                   <strong>Alt text</strong>
@@ -369,7 +486,7 @@ export default function BlockEditor() {
           )}
 
           <button type="submit" disabled={isSaving}>
-            {isSaving ? "Guardando..." : isNew ? "Crear y añadir a la guía" : "Guardar"}
+            {isSaving ? "Subiendo/Guardando..." : isNew ? "Crear y añadir a la guía" : "Guardar"}
           </button>
         </fetcher.Form>
       </s-section>

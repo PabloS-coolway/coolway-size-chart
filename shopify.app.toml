@@ -29,9 +29,8 @@ api_version = "2026-10"
 
   # Tarea 2.4 — recálculo masivo al cambiar una regla o guía.
   # NOTA: Shopify exige un "filter" en las suscripciones de metaobjects/* (lo
-  # descubrimos al fallar "shopify app deploy" sin él). La sintaxis exacta del
-  # filtro ("type:size_guide_rule") es la mejor estimación, no verificada
-  # todavía contra un despliegue exitoso — ver docs/bulk-recalculate.md.
+  # descubrimos al fallar "shopify app deploy" sin él). La sintaxis del
+  # filtro ("type:size_guide_rule") ya está confirmada con un deploy exitoso.
   [[webhooks.subscriptions]]
   uri = "/webhooks/metaobjects/update"
   topics = [ "metaobjects/update" ]
@@ -61,10 +60,26 @@ api_version = "2026-10"
   uri = "/webhooks/metaobjects/delete"
   topics = [ "metaobjects/delete" ]
   filter = "type:size_guide"
+
+  # Tarea 2.6 — webhooks obligatorios de cumplimiento (GDPR/CCPA).
+  # NOTA (corregido tras error real de "npm run dev"): estos 3 NO se declaran
+  # como [[webhooks.subscriptions]] normales — Shopify los rechaza ahí con
+  # "The following topic is invalid". Van en su propio bloque dedicado
+  # [webhooks.privacy_compliance], con un campo de URL por webhook en vez de
+  # topics+uri. Ver docs/gdpr-webhooks.md.
+  [webhooks.privacy_compliance]
+  customer_data_request_url = "/webhooks/customers/data_request"
+  customer_deletion_url = "/webhooks/customers/redact"
+  shop_deletion_url = "/webhooks/shop/redact"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products,write_metaobjects,write_metaobject_definitions"
+# write_files añadido en la Pieza G6 (2.10) — necesario para que la mutación
+# fileCreate funcione al subir imágenes nuevas desde el panel propio. Error
+# real confirmado sin este scope: "Access denied for fileCreate field.
+# Required access: write_files access scope, write_themes access scope or
+# write_images access scope."
+scopes = "write_products,write_metaobjects,write_metaobject_definitions,write_files"
 
 [auth]
 redirect_urls = [ "https://example.com/api/auth" ]
