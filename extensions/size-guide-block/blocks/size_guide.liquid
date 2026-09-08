@@ -60,9 +60,20 @@
   {%- assign coolway_imperial_first = true -%}
 {%- endif -%}
 
+{%- comment -%}
+  Tarea 3.7 (change: size-guide-rtl-support): dirección de texto según el
+  IDIOMA real de la visita (request.locale), no el mercado — lista cerrada
+  de idiomas RTL (árabe, hebreo, persa/farsi, urdu). Ver design.md.
+{%- endcomment -%}
+{%- assign coolway_rtl_languages = 'ar,he,fa,ur' | split: ',' -%}
+{%- assign coolway_text_dir = 'ltr' -%}
+{%- if request.locale.iso_code and coolway_rtl_languages contains request.locale.iso_code -%}
+  {%- assign coolway_text_dir = 'rtl' -%}
+{%- endif -%}
+
 {%- assign resolved_guide = product.metafields.custom.resolved_size_guide.value -%}
 
-<div class="coolway-size-guide-block">
+<div class="coolway-size-guide-block" dir="{{ coolway_text_dir }}">
   {%- if resolved_guide -%}
     {%- assign coolway_modal_id = 'coolway-size-guide-modal-' | append: block.id -%}
     <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog" aria-controls="{{ coolway_modal_id }}" data-coolway-size-guide-trigger>Guía de tallas: {{ resolved_guide.title }}</a>
@@ -185,12 +196,15 @@
   .coolway-size-guide-block__modal-close {
     position: absolute;
     top: 0.5rem;
-    right: 0.75rem;
+    inset-inline-end: 0.75rem;
     background: none;
     border: none;
     line-height: 1;
     font-size: 1.75rem;
     cursor: pointer;
+  }
+  .coolway-size-guide-block__modal-panel {
+    text-align: start;
   }
 </style>
 
