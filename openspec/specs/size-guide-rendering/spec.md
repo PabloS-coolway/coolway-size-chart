@@ -65,3 +65,10 @@ Cuando el bloque resuelve un `resolved_guide` con `blocks` no vacío, el sistema
 #### Scenario: Bloque con campos que no resuelven
 - **WHEN** un bloque resuelto no tiene ninguno de los campos distintivos esperados, o un campo obligatorio está vacío
 - **THEN** el sistema SHALL omitir ese bloque concreto sin lanzar ningún error de Liquid visible en la página, y sin afectar al renderizado del resto de bloques
+
+### Requirement: Comportamiento sin regresión para productos sin guía
+Los cambios en la lectura (3.3) y el renderizado (3.4) del contenido de la guía SHALL NOT alterar el comportamiento ya establecido en la 3.2 para un producto sin `resolved_size_guide`: ningún elemento visible ni espacio reservado en el layout del PDP.
+
+#### Scenario: Producto sin guía tras añadir lectura y renderizado real
+- **WHEN** un producto no tiene `product.metafields.custom.resolved_size_guide`
+- **THEN** el bloque SHALL NOT renderizar ningún enlace, tabla, texto, imagen ni vídeo, y el contenedor que Shopify añade al App Block SHALL seguir colapsándose (sin hueco vacío en el layout), exactamente igual que en la 3.2, independientemente de cuánto contenido real gestione ahora el bloque para productos que sí tienen guía
