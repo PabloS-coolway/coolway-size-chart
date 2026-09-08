@@ -177,7 +177,7 @@
   .coolway-size-guide-block__modal {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: 999999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,6 +243,16 @@
     document.querySelectorAll('[data-coolway-size-guide-trigger]').forEach(function (trigger) {
       var modal = document.getElementById(trigger.getAttribute('aria-controls'));
       if (!modal) return;
+
+      // Hallazgo real (3.13): el bloque vive dentro de contenedores del
+      // tema con su propio contexto de apilamiento (p. ej.
+      // `.product-details.sticky-content--desktop`, position: sticky,
+      // z-index: 1) que "atrapa" nuestro z-index alto por debajo del
+      // header del tema. Se mueve el modal a document.body para que
+      // quede fuera de ese contexto y cubra siempre toda la página.
+      if (modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+      }
 
       function openModal(event) {
         event.preventDefault();
