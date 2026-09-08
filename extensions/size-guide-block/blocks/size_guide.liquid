@@ -76,12 +76,13 @@
 <div class="coolway-size-guide-block" dir="{{ coolway_text_dir }}">
   {%- if resolved_guide -%}
     {%- assign coolway_modal_id = 'coolway-size-guide-modal-' | append: block.id -%}
-    <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog" aria-controls="{{ coolway_modal_id }}" data-coolway-size-guide-trigger>Guía de tallas: {{ resolved_guide.title }}</a>
+    {%- assign coolway_size_guide_link_text = 'general.size_guide_link' | t: title: resolved_guide.title -%}
+    <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog" aria-controls="{{ coolway_modal_id }}" data-coolway-size-guide-trigger>{{ coolway_size_guide_link_text }}</a>
 
-    <div class="coolway-size-guide-block__modal" id="{{ coolway_modal_id }}" role="dialog" aria-modal="true" aria-label="Guía de tallas: {{ resolved_guide.title }}" hidden data-coolway-size-guide-modal>
+    <div class="coolway-size-guide-block__modal" id="{{ coolway_modal_id }}" role="dialog" aria-modal="true" aria-label="{{ coolway_size_guide_link_text }}" hidden data-coolway-size-guide-modal>
       <div class="coolway-size-guide-block__modal-backdrop" data-coolway-size-guide-close></div>
       <div class="coolway-size-guide-block__modal-panel">
-        <button type="button" class="coolway-size-guide-block__modal-close" aria-label="Cerrar" data-coolway-size-guide-close>&times;</button>
+        <button type="button" class="coolway-size-guide-block__modal-close" aria-label="{{ 'general.close' | t }}" data-coolway-size-guide-close>&times;</button>
         <div class="coolway-size-guide-block__content">
       {%- if resolved_guide.description.value != blank -%}
         <div class="coolway-size-guide-block__description">
@@ -242,7 +243,7 @@
 
 {% schema %}
 {
-  "name": "Guía de tallas",
+  "name": "t:general.block_name",
   "target": "section"
 }
 {% endschema %}

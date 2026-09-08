@@ -1,0 +1,7 @@
+{
+  "general": {
+    "size_guide_link": "Guide des tailles : {{ title }}",
+    "close": "Fermer",
+    "block_name": "Guide des tailles"
+  }
+}

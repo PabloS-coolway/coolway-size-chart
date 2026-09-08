@@ -1,2 +1,7 @@
 {
+  "general": {
+    "size_guide_link": "Size guide: {{ title }}",
+    "close": "Close",
+    "block_name": "Size guide"
+  }
 }
