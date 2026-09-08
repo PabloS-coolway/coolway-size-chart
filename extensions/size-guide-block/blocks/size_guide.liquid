@@ -70,7 +70,7 @@
     <div class="coolway-size-guide-block__modal" id="{{ coolway_modal_id }}" role="dialog" aria-modal="true" aria-label="Guía de tallas: {{ resolved_guide.title }}" hidden data-coolway-size-guide-modal>
       <div class="coolway-size-guide-block__modal-backdrop" data-coolway-size-guide-close></div>
       <div class="coolway-size-guide-block__modal-panel">
-        <button type="button" class="coolway-size-guide-block__modal-close" aria-label="Cerrar" data-coolway-size-guide-close>Cerrar</button>
+        <button type="button" class="coolway-size-guide-block__modal-close" aria-label="Cerrar" data-coolway-size-guide-close>&times;</button>
         <div class="coolway-size-guide-block__content">
       {%- if resolved_guide.description.value != blank -%}
         <div class="coolway-size-guide-block__description">
@@ -184,12 +184,12 @@
   }
   .coolway-size-guide-block__modal-close {
     position: absolute;
-    top: 0.75rem;
+    top: 0.5rem;
     right: 0.75rem;
     background: none;
-    border: 1px solid currentColor;
-    border-radius: 4px;
-    padding: 0.25rem 0.75rem;
+    border: none;
+    line-height: 1;
+    font-size: 1.75rem;
     cursor: pointer;
   }
 </style>
