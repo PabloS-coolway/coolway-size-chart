@@ -37,10 +37,32 @@ título de la guía sigue en español porque así está escrito ese metaobject
 (confirma que las dos capas de traducción son independientes, como se
 diseñó). Sin regresión en "Nilo Altitude Hike" (sin guía, bloque vacío).
 
+## Validación visual adicional (08-sept-2026): español publicado en `coolway-sandbox`
+A petición del usuario se publicó español en `coolway-sandbox` (Admin →
+Configuración → Idiomas → Agregar idioma → asignar al dominio/market
+"United States" → Publicar), con permiso explícito del usuario para este
+cambio de configuración de cuenta. Validado en vivo sobre "Goal Green
+Forest" cambiando el idioma real de la tienda mediante el selector nativo
+del tema (formulario `#LocalizationForm` → `/localization`, no el
+parámetro `?locale=`, que en este tema no cambia el idioma activo por sí
+solo):
+
+- **Español** (`document.documentElement.lang = "es"`, navegación a
+  `/es/products/...`): enlace del bloque "Guía de tallas: Guía de tallas -
+  Calzado adulto", modal con cabeceras de tabla "Talla EU"/"CM" y botón de
+  cierre con `aria-label="Cerrar"` — confirmado también visualmente
+  (captura de pantalla del modal abierto).
+- **Inglés** (vuelta atrás con el mismo selector, `lang = "en"`): enlace
+  "Size guide: Guía de tallas - Calzado adulto", botón de cierre con
+  `aria-label="Close"` — sin regresión.
+
+Confirma que las traducciones fijas del bloque (3.8) funcionan en las dos
+capas: idioma de tienda real (no solo simulado) y datos del metaobject
+(que permanecen en español porque así está escrito, independientemente
+del idioma de la tienda).
+
 ## Pendiente / fuera de alcance
-Validar visualmente español y francés reales requiere publicar esos
-idiomas en `coolway-sandbox` (Admin → Configuración → Idiomas), que no se
-ha hecho para no alterar la configuración de la tienda de pruebas fuera
-del alcance de esta tarea — los ficheros `es.json`/`es.schema.json` y
-`fr.json`/`fr.schema.json` están escritos y lo activarán en cuanto se
-publiquen esos idiomas (aquí o en cualquier tienda real de Fase 5).
+Francés no se ha publicado ni validado visualmente en `coolway-sandbox`
+(el usuario pidió validar únicamente español e inglés) — el fichero
+`fr.json`/`fr.schema.json` está escrito y se activará en cuanto se
+publique ese idioma (aquí o en cualquier tienda real de Fase 5).
