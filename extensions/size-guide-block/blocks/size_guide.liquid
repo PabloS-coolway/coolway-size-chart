@@ -64,9 +64,14 @@
 
 <div class="coolway-size-guide-block">
   {%- if resolved_guide -%}
-    <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog">Guía de tallas: {{ resolved_guide.title }}</a>
+    {%- assign coolway_modal_id = 'coolway-size-guide-modal-' | append: block.id -%}
+    <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog" aria-controls="{{ coolway_modal_id }}" data-coolway-size-guide-trigger>Guía de tallas: {{ resolved_guide.title }}</a>
 
-    <div class="coolway-size-guide-block__content">
+    <div class="coolway-size-guide-block__modal" id="{{ coolway_modal_id }}" role="dialog" aria-modal="true" aria-label="Guía de tallas: {{ resolved_guide.title }}" hidden data-coolway-size-guide-modal>
+      <div class="coolway-size-guide-block__modal-backdrop" data-coolway-size-guide-close></div>
+      <div class="coolway-size-guide-block__modal-panel">
+        <button type="button" class="coolway-size-guide-block__modal-close" aria-label="Cerrar" data-coolway-size-guide-close>Cerrar</button>
+        <div class="coolway-size-guide-block__content">
       {%- if resolved_guide.description.value != blank -%}
         <div class="coolway-size-guide-block__description">
           {%- render 'coolway-rich-text', value: resolved_guide.description.value -%}
@@ -138,6 +143,8 @@
         {%- endif -%}
 
       {%- endfor -%}
+        </div>
+      </div>
     </div>
   {%- endif -%}
 </div>
@@ -149,7 +156,75 @@
   .coolway-size-guide-block__unit--default {
     font-weight: bold;
   }
+  .coolway-size-guide-block__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .coolway-size-guide-block__modal[hidden] {
+    display: none;
+  }
+  .coolway-size-guide-block__modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .coolway-size-guide-block__modal-panel {
+    position: relative;
+    background: #fff;
+    max-width: 640px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+    border-radius: 4px;
+  }
+  .coolway-size-guide-block__modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+  }
 </style>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-coolway-size-guide-trigger]').forEach(function (trigger) {
+      var modal = document.getElementById(trigger.getAttribute('aria-controls'));
+      if (!modal) return;
+
+      function openModal(event) {
+        event.preventDefault();
+        modal.hidden = false;
+        var closeButton = modal.querySelector('.coolway-size-guide-block__modal-close');
+        if (closeButton) closeButton.focus();
+        document.addEventListener('keydown', onKeydown);
+      }
+
+      function closeModal() {
+        modal.hidden = true;
+        trigger.focus();
+        document.removeEventListener('keydown', onKeydown);
+      }
+
+      function onKeydown(event) {
+        if (event.key === 'Escape') closeModal();
+      }
+
+      trigger.addEventListener('click', openModal);
+      modal.querySelectorAll('[data-coolway-size-guide-close]').forEach(function (closer) {
+        closer.addEventListener('click', closeModal);
+      });
+    });
+  })();
+</script>
 
 {% schema %}
 {
