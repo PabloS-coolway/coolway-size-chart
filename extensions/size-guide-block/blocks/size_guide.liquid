@@ -43,7 +43,22 @@
     contenido Active era la de tabla — sus bloques de imagen/texto estaban
     en Draft. Queda como pendiente de validación cuando haya un bloque de
     ese tipo en estado Active.
+
+  NOTA (hallazgos reales 3.6, ver docs/unit-auto-select.md):
+  - `localization.country.iso_code` es la fuente elegida (ver design.md) para
+    decidir cuál unidad se marca por defecto en tablas con
+    `has_dual_unit_selector`. No se oculta ninguna unidad; solo se marca
+    visualmente cuál es "la del visitante".
+  - Lista cerrada de países de sistema imperial: US, LR, MM. Cualquier otro
+    país (incluido cuando `iso_code` no resuelve) usa cm como unidad por
+    defecto (fallback seguro).
 {%- endcomment -%}
+
+{%- assign coolway_imperial_countries = 'US,LR,MM' | split: ',' -%}
+{%- assign coolway_imperial_first = false -%}
+{%- if localization.country.iso_code and coolway_imperial_countries contains localization.country.iso_code -%}
+  {%- assign coolway_imperial_first = true -%}
+{%- endif -%}
 
 {%- assign resolved_guide = product.metafields.custom.resolved_size_guide.value -%}
 
@@ -67,7 +82,11 @@
             <caption>
               {{ block.label }}
               {%- if block.has_dual_unit_selector -%}
-                ({{ block.unit_primary }} / {{ block.unit_secondary }})
+                {%- if coolway_imperial_first -%}
+                  (<span class="coolway-size-guide-block__unit--default">{{ block.unit_secondary }}</span> / {{ block.unit_primary }})
+                {%- else -%}
+                  (<span class="coolway-size-guide-block__unit--default">{{ block.unit_primary }}</span> / {{ block.unit_secondary }})
+                {%- endif -%}
               {%- elsif block.unit_primary != blank -%}
                 ({{ block.unit_primary }})
               {%- endif -%}
@@ -126,6 +145,9 @@
 <style>
   .shopify-block:has(> .coolway-size-guide-block:empty) {
     display: none;
+  }
+  .coolway-size-guide-block__unit--default {
+    font-weight: bold;
   }
 </style>
 
