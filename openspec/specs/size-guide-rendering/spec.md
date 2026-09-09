@@ -264,6 +264,15 @@ bloque en el DOM.
   incluido el header/menú, moviéndose fuera de ese contexto si hace
   falta
 
+#### Scenario: Dirección RTL/LTR se preserva al mover el modal
+- **GIVEN** el bloque se renderiza con un `dir` concreto (RTL o LTR,
+  3.7) en su contenedor raíz
+- **WHEN** el modal se mueve a `document.body` para cubrir el header
+  del tema (escenario anterior)
+- **THEN** el modal SHALL conservar el mismo `dir` que tenía su
+  contenedor raíz, en vez de heredar el `dir` por defecto de su nueva
+  posición en el DOM
+
 ### Requirement: Estilo visual de la tabla de tallas
 La tabla de tallas SHALL mostrar una barra de grupo con fondo oscuro (a
 todo el ancho) con la etiqueta del bloque y la unidad, cabeceras de
@@ -291,3 +300,27 @@ cabeceras, filas y unidades ya cubiertos por el requisito de
 - **WHEN** se muestra una tabla de tallas
 - **THEN** la barra de grupo y las cabeceras de columna SHALL adaptarse
   a esa dirección sin romper el layout ni perder el tratamiento visual
+
+### Requirement: Estilo visual del aviso de ajuste y del resto de bloques
+La descripción de la guía (`resolved_guide.description`) SHALL mostrarse
+como una caja destacada tipo "aviso" (fondo diferenciado, borde de
+acento), y los bloques de contenido (texto, imagen, vídeo, tabla) SHALL
+mantener un espaciado uniforme entre sí. El texto enriquecido SHALL
+tener un tratamiento tipográfico propio (interlineado, jerarquía de
+encabezados), y las leyendas de imagen/vídeo SHALL distinguirse
+visualmente del resto del texto.
+
+#### Scenario: Guía con descripción
+- **WHEN** una guía tiene `description` con valor
+- **THEN** SHALL mostrarse en una caja destacada (fondo diferenciado y
+  borde de acento) antes del resto del contenido
+
+#### Scenario: Guía con varios bloques de contenido
+- **WHEN** una guía resuelve varios bloques de distinto tipo
+- **THEN** SHALL mantenerse un espaciado uniforme entre ellos,
+  independientemente del tipo de bloque
+
+#### Scenario: Bloque de imagen o vídeo con leyenda
+- **WHEN** un bloque de imagen o vídeo tiene `caption` con valor
+- **THEN** la leyenda SHALL mostrarse con un tratamiento tipográfico
+  diferenciado del resto del texto (tamaño reducido, color atenuado)

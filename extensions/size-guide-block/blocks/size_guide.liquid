@@ -273,6 +273,48 @@
   .coolway-size-guide-block__table tbody td:first-child {
     font-weight: 700;
   }
+  .coolway-size-guide-block__description {
+    background: #f7f7f5;
+    border-inline-start: 4px solid #1a1a1a;
+    border-radius: 6px;
+    padding: 0.85rem 1.1rem;
+    margin-block-end: 1.5rem;
+  }
+  .coolway-size-guide-block__description p {
+    margin: 0;
+  }
+  .coolway-size-guide-block__description p + p {
+    margin-block-start: 0.5rem;
+  }
+  .coolway-size-guide-block__text,
+  .coolway-size-guide-block__image,
+  .coolway-size-guide-block__video {
+    margin-block-end: 1.5rem;
+  }
+  .coolway-size-guide-block__text p,
+  .coolway-size-guide-block__text ul {
+    line-height: 1.6;
+    margin: 0 0 0.75rem;
+  }
+  .coolway-size-guide-block__text li {
+    line-height: 1.6;
+  }
+  .coolway-size-guide-block__text p:last-child,
+  .coolway-size-guide-block__text ul:last-child {
+    margin-block-end: 0;
+  }
+  .coolway-size-guide-block__text strong {
+    display: inline-block;
+    font-size: 1.05rem;
+    margin-block-end: 0.35rem;
+  }
+  .coolway-size-guide-block__image figcaption,
+  .coolway-size-guide-block__video figcaption {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #6b6b6b;
+    margin-block-start: 0.4rem;
+  }
 </style>
 
 <script>
@@ -287,6 +329,16 @@
       // z-index: 1) que "atrapa" nuestro z-index alto por debajo del
       // header del tema. Se mueve el modal a document.body para que
       // quede fuera de ese contexto y cubra siempre toda la página.
+      //
+      // Hallazgo real (encontrado validando 3.12): al mover el modal a
+      // document.body pierde la herencia de `dir` del contenedor raíz
+      // del bloque (RTL de la 3.7), porque `dir` no viaja con el nodo,
+      // se hereda del árbol donde queda insertado. Se copia explícitamente
+      // el `dir` del bloque raíz al propio modal antes/al moverlo.
+      var coolwayRootBlock = trigger.closest('.coolway-size-guide-block');
+      if (coolwayRootBlock) {
+        modal.setAttribute('dir', coolwayRootBlock.getAttribute('dir') || 'ltr');
+      }
       if (modal.parentElement !== document.body) {
         document.body.appendChild(modal);
       }
