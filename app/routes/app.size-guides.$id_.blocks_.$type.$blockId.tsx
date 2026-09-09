@@ -39,6 +39,7 @@ import { useFetcher, useLoaderData } from "react-router";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
+import TableGridEditor from "../components/TableGridEditor";
 
 const TYPE_TO_METAOBJECT: Record<string, string> = {
   table: "size_guide_block_table",
@@ -382,18 +383,15 @@ export default function BlockEditor() {
                 <input id="label" name="label" type="text" defaultValue={fields.label} style={{ width: "100%", padding: "0.5rem" }} />
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <label htmlFor="headers">
-                  <strong>Headers (JSON)</strong>
+                <label>
+                  <strong>Tabla de tallas</strong>
                 </label>
-                <br />
-                <textarea id="headers" name="headers" defaultValue={fields.headers} rows={2} style={{ width: "100%", padding: "0.5rem" }} />
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <label htmlFor="rows">
-                  <strong>Rows (JSON)</strong>
-                </label>
-                <br />
-                <textarea id="rows" name="rows" defaultValue={fields.rows} rows={4} style={{ width: "100%", padding: "0.5rem" }} />
+                <TableGridEditor
+                  headersFieldName="headers"
+                  rowsFieldName="rows"
+                  initialHeadersJson={fields.headers}
+                  initialRowsJson={fields.rows}
+                />
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label htmlFor="unitPrimary">
