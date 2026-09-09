@@ -20,15 +20,20 @@
     {%- when 'paragraph' -%}
       <p>{%- for child in node.children -%}{{ child.value }}{%- endfor -%}</p>
     {%- when 'list' -%}
-      <ul>
+      {%- assign list_tag = 'ul' -%}
+      {%- if node.listType == 'ordered' -%}{%- assign list_tag = 'ol' -%}{%- endif -%}
+      <{{ list_tag }}>
         {%- for item in node.children -%}
           <li>
-            {%- for item_child in item.children -%}
-              {%- for text in item_child.children -%}{{ text.value }}{%- endfor -%}
-            {%- endfor -%}
+            {%- comment -%}
+              Confirmado con la Admin API (2.13, 09-sept-2026): los hijos de
+              `list-item` son nodos inline (text/link) directamente, NO un
+              `paragraph` anidado — corregido aquí junto con el editor.
+            {%- endcomment -%}
+            {%- for text in item.children -%}{{ text.value }}{%- endfor -%}
           </li>
         {%- endfor -%}
-      </ul>
+      </{{ list_tag }}>
     {%- when 'heading' -%}
       <strong>{%- for child in node.children -%}{{ child.value }}{%- endfor -%}</strong>
   {%- endcase -%}

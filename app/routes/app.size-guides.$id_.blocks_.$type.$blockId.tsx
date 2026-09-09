@@ -40,6 +40,7 @@ import { useAppBridge } from "@shopify/app-bridge-react";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
 import TableGridEditor from "../components/TableGridEditor";
+import RichTextEditor from "../components/RichTextEditor";
 
 const TYPE_TO_METAOBJECT: Record<string, string> = {
   table: "size_guide_block_table",
@@ -47,30 +48,6 @@ const TYPE_TO_METAOBJECT: Record<string, string> = {
   image: "size_guide_block_image",
   video: "size_guide_block_video",
 };
-
-function extractPlainTextFromRichText(rawValue: string | undefined): string {
-  if (!rawValue) return "";
-  try {
-    const doc = JSON.parse(rawValue);
-    const parts: string[] = [];
-    function walk(node: any) {
-      if (!node) return;
-      if (typeof node.value === "string") parts.push(node.value);
-      if (Array.isArray(node.children)) node.children.forEach(walk);
-    }
-    walk(doc);
-    return parts.join(" ");
-  } catch {
-    return "";
-  }
-}
-
-function buildRichTextFromPlainText(plainText: string): string {
-  return JSON.stringify({
-    type: "root",
-    children: [{ type: "paragraph", children: [{ type: "text", value: plainText }] }],
-  });
-}
 
 const GET_BLOCK_QUERY = `#graphql
   query GetBlock($id: ID!) {
@@ -247,7 +224,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     unitPrimary: m.unitPrimary?.value ?? "",
     unitSecondary: m.unitSecondary?.value ?? "",
     hasDualUnitSelector: m.hasDualUnitSelector?.value ?? "false",
-    content: extractPlainTextFromRichText(m.content?.value),
+    content: m.content?.value ?? "",
     altText: m.altText?.value ?? "",
     caption: m.caption?.value ?? "",
     videoUrl: m.videoUrl?.value ?? "",
@@ -282,7 +259,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
       { key: "has_dual_unit_selector", value: formData.get("hasDualUnitSelector") === "on" ? "true" : "false" },
     ];
   } else if (type === "text") {
-    fields = [{ key: "content", value: buildRichTextFromPlainText(String(formData.get("content") ?? "")) }];
+    fields = [{ key: "content", value: String(formData.get("content") ?? "") }];
   } else if (type === "image") {
     fields = [
       { key: "alt_text", value: String(formData.get("altText") ?? "") },
@@ -418,11 +395,10 @@ export default function BlockEditor() {
 
           {type === "text" && (
             <div style={{ marginBottom: "1rem" }}>
-              <label htmlFor="content">
-                <strong>Contenido</strong> (texto plano — mismo criterio que la descripción de la guía)
+              <label>
+                <strong>Contenido</strong>
               </label>
-              <br />
-              <textarea id="content" name="content" defaultValue={fields.content} rows={4} style={{ width: "100%", padding: "0.5rem" }} />
+              <RichTextEditor fieldName="content" initialContentJson={fields.content} />
             </div>
           )}
 
