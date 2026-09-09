@@ -114,6 +114,7 @@
                 ({{ block.unit_primary }})
               {%- endif -%}
             </div>
+          <div class="coolway-size-guide-block__table-scroll">
           <table class="coolway-size-guide-block__table">
             <thead>
               <tr>
@@ -132,6 +133,7 @@
               {%- endfor -%}
             </tbody>
           </table>
+          </div>
           </div>
 
         {%- elsif block.content.value != blank -%}
@@ -251,9 +253,22 @@
     font-weight: 700;
     text-align: start;
   }
+  .coolway-size-guide-block__table-scroll {
+    overflow-x: auto;
+  }
   .coolway-size-guide-block__table {
     width: 100%;
+    min-width: max-content;
     border-collapse: collapse;
+  }
+  @media (max-width: 480px) {
+    .coolway-size-guide-block__modal-panel {
+      width: 95%;
+      max-height: 90vh;
+    }
+    .coolway-size-guide-block__content {
+      padding: 1rem;
+    }
   }
   .coolway-size-guide-block__table thead th {
     background: #f2f2f2;
