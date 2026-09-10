@@ -132,6 +132,10 @@ const BLOCK_DEFINITIONS = [
       { key: "has_dual_unit_selector", name: "Has dual unit selector", type: "boolean" },
       { key: "footer_text", name: "Footer text", type: "multi_line_text_field" },
       { key: "hide_table", name: "Hide table", type: "boolean" },
+      // Tarea 2.16 (parte 2) — JSON con el estilo visual de esta tabla
+      // (colores de fila, borde, texto de cabecera/celda/pie, botón de
+      // unidad). Por bloque, no global — cada tabla tiene el suyo.
+      { key: "table_styles", name: "Table styles", type: "json" },
     ],
   },
   {

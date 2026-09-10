@@ -101,7 +101,17 @@
         {%- if block.headers != blank and block.rows != blank and block.hide_table != true -%}
           {%- assign headers = block.headers.value -%}
           {%- assign rows = block.rows.value -%}
-          <div class="coolway-size-guide-block__table-outer">
+          {%- comment -%}
+            Tarea 2.16 (parte 2) — estilos de tabla por bloque. `table_styles`
+            es un campo JSON; igual que headers/rows, Liquid lo da ya
+            parseado como hash accediendo a `.value`. Se vuelca como
+            variables CSS en el propio elemento para no tocar el CSS
+            estático de golpe — cada regla usa `var(--csg-x, <default>)`,
+            así un bloque sin `table_styles` (o creado antes de esta tarea)
+            se ve exactamente igual que antes.
+          {%- endcomment -%}
+          {%- assign coolway_table_styles = block.table_styles.value -%}
+          <div class="coolway-size-guide-block__table-outer" style="--csg-row-even: {{ coolway_table_styles['rowColorEven'] | default: '#ffffff' }}; --csg-row-odd: {{ coolway_table_styles['rowColorOdd'] | default: '#fafafa' }}; --csg-border-color: {{ coolway_table_styles['borderColor'] | default: '#e5e5e5' }}; --csg-border-width: {{ coolway_table_styles['borderWidth'] | default: '1' }}px; --csg-header-color: {{ coolway_table_styles['headerTextColor'] | default: '#1a1a1a' }}; --csg-header-size: {{ coolway_table_styles['headerFontSize'] | default: '13' }}px; --csg-header-weight: {{ coolway_table_styles['headerFontWeight'] | default: '600' }}; --csg-cell-color: {{ coolway_table_styles['cellTextColor'] | default: '#1a1a1a' }}; --csg-cell-size: {{ coolway_table_styles['cellFontSize'] | default: '14' }}px; --csg-footer-color: {{ coolway_table_styles['footerTextColor'] | default: '#6b6b6b' }}; --csg-footer-size: {{ coolway_table_styles['footerFontSize'] | default: '13.6' }}px;">
           <div class="coolway-size-guide-block__table-wrap">
             <div class="coolway-size-guide-block__table-group">
               {{ block.label }}
@@ -251,7 +261,7 @@
   .coolway-size-guide-block__table-wrap {
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #e5e5e5;
+    border: var(--csg-border-width, 1px) solid var(--csg-border-color, #e5e5e5);
   }
   .coolway-size-guide-block__table-group {
     background: #1a1a1a;
@@ -281,16 +291,24 @@
     background: #f2f2f2;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: var(--csg-header-size, 13px);
+    font-weight: var(--csg-header-weight, 600);
+    color: var(--csg-header-color, #1a1a1a);
     text-align: start;
     padding: 0.6rem 1.25rem;
+    border-block-end: var(--csg-border-width, 1px) solid var(--csg-border-color, #e5e5e5);
   }
   .coolway-size-guide-block__table tbody td {
     padding: 0.6rem 1.25rem;
+    font-size: var(--csg-cell-size, 14px);
+    color: var(--csg-cell-color, #1a1a1a);
+    border-block-end: var(--csg-border-width, 1px) solid var(--csg-border-color, #e5e5e5);
+  }
+  .coolway-size-guide-block__table tbody tr:nth-child(odd) {
+    background: var(--csg-row-even, #ffffff);
   }
   .coolway-size-guide-block__table tbody tr:nth-child(even) {
-    background: #fafafa;
+    background: var(--csg-row-odd, #fafafa);
   }
   .coolway-size-guide-block__table tbody td:first-child {
     font-weight: 700;
@@ -339,9 +357,9 @@
   }
 
   .coolway-size-guide-block__table-footer {
-    font-size: 0.85rem;
+    font-size: var(--csg-footer-size, 0.85rem);
     font-style: italic;
-    color: #6b6b6b;
+    color: var(--csg-footer-color, #6b6b6b);
     margin-block-start: 5px;
     margin-block-end: 0;
   }

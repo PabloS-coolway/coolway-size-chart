@@ -216,8 +216,15 @@ function renderBlockNode(node: RTNode): string {
   return "";
 }
 
-/** Deserializa el JSON rich_text_field a HTML editable. */
-function richTextJsonToHtml(raw: string | undefined): string {
+/**
+ * Deserializa el JSON rich_text_field a HTML editable.
+ *
+ * Exportado (tarea "Preview de guía") para reutilizarlo tal cual en el
+ * modal de vista previa del editor — mismo HTML que ya se generaba aquí
+ * para hidratar el contentEditable, ahora también usado en modo solo
+ * lectura.
+ */
+export function richTextJsonToHtml(raw: string | undefined): string {
   if (!raw) return "<p><br></p>";
   try {
     const doc = JSON.parse(raw);
