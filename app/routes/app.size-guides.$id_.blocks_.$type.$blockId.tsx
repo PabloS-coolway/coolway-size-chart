@@ -59,6 +59,8 @@ const GET_BLOCK_QUERY = `#graphql
       unitPrimary: field(key: "unit_primary") { value }
       unitSecondary: field(key: "unit_secondary") { value }
       hasDualUnitSelector: field(key: "has_dual_unit_selector") { value }
+      footerText: field(key: "footer_text") { value }
+      hideTable: field(key: "hide_table") { value }
       content: field(key: "content") { value }
       altText: field(key: "alt_text") { value }
       caption: field(key: "caption") { value }
@@ -224,6 +226,8 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     unitPrimary: m.unitPrimary?.value ?? "",
     unitSecondary: m.unitSecondary?.value ?? "",
     hasDualUnitSelector: m.hasDualUnitSelector?.value ?? "false",
+    footerText: m.footerText?.value ?? "",
+    hideTable: m.hideTable?.value ?? "false",
     content: m.content?.value ?? "",
     altText: m.altText?.value ?? "",
     caption: m.caption?.value ?? "",
@@ -257,6 +261,8 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
       { key: "unit_primary", value: String(formData.get("unitPrimary") ?? "") },
       { key: "unit_secondary", value: String(formData.get("unitSecondary") ?? "") },
       { key: "has_dual_unit_selector", value: formData.get("hasDualUnitSelector") === "on" ? "true" : "false" },
+      { key: "footer_text", value: String(formData.get("footerText") ?? "") },
+      { key: "hide_table", value: formData.get("hideTable") === "on" ? "true" : "false" },
     ];
   } else if (type === "text") {
     fields = [{ key: "content", value: String(formData.get("content") ?? "") }];
@@ -388,6 +394,25 @@ export default function BlockEditor() {
                 <label>
                   <input type="checkbox" name="hasDualUnitSelector" defaultChecked={fields.hasDualUnitSelector === "true"} />{" "}
                   <strong>Has dual unit selector</strong>
+                </label>
+              </div>
+              <div style={{ marginBottom: "1rem" }}>
+                <label htmlFor="footerText">
+                  <strong>Footer text</strong>
+                </label>
+                <br />
+                <textarea
+                  id="footerText"
+                  name="footerText"
+                  defaultValue={fields.footerText}
+                  rows={2}
+                  style={{ width: "100%", padding: "0.5rem" }}
+                />
+              </div>
+              <div style={{ marginBottom: "1rem" }}>
+                <label>
+                  <input type="checkbox" name="hideTable" defaultChecked={fields.hideTable === "true"} />{" "}
+                  <strong>Hide table</strong>
                 </label>
               </div>
             </>

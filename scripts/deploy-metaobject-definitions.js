@@ -130,6 +130,8 @@ const BLOCK_DEFINITIONS = [
       { key: "unit_primary", name: "Unit primary", type: "single_line_text_field" },
       { key: "unit_secondary", name: "Unit secondary", type: "single_line_text_field" },
       { key: "has_dual_unit_selector", name: "Has dual unit selector", type: "boolean" },
+      { key: "footer_text", name: "Footer text", type: "multi_line_text_field" },
+      { key: "hide_table", name: "Hide table", type: "boolean" },
     ],
   },
   {
