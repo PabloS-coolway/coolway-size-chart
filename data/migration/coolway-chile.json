@@ -1,5 +1,5 @@
 {
-  "_comment": "Manifiesto de migración Fase 5.2 — Coolway Chile (tienda piloto). Generado a partir del inventario de la 0.1 (hoja '0.1.3 Coolway Chile'). Los campos marcados \"TODO\" no están en ese inventario (solo recoge metadatos: nombre, tipo de bloque, lógica de match, nº de columnas y de productos, no el contenido real de cada tabla ni los IDs/handles exactos de las colecciones) y deben rellenarse transcribiendo desde el panel de Kiwi antes de ejecutar el script contra la tienda real. No se ha inventado ningún valor.",
+  "_comment": "Manifiesto de migración Fase 5.2 — Coolway Chile (tienda piloto). Datos de tabla del export de atención al cliente de Kiwi. Bloques de texto/imagen y condiciones de regla revisados directamente en el panel de Kiwi (Admin real de coolway-chile, 22-sept-2026) — ya no quedan TODOs. Imagen: mismo diagrama en KIZUNA y GOAL, capturado del panel de Kiwi (no hay export posible de imágenes) y guardado en data/migration/assets/coolway-chile-como-medir-pie.png; falta subirla a Shopify Files (fileCreate) antes de fijar el GID real del bloque `image` en el momento de ejecutar la migración real (5.3).",
   "guides": [
     {
       "legacyKiwiId": "KIZUNA",
@@ -7,35 +7,67 @@
       "priority": 0,
       "status": "ACTIVE",
       "blocks": [
-        { "type": "text", "content": "TODO: transcribir el texto introductorio de la guía KIZUNA desde Kiwi." },
-        {
-          "type": "table",
-          "label": "Mujer",
-          "unitPrimary": "CM",
-          "headers": ["EU", "US", "UK", "CM"],
-          "rows": [
-            ["TODO", "TODO", "TODO", "TODO"]
-          ],
-          "hasDualUnitSelector": false
-        },
+        { "type": "text", "content": "La mayoría de nuestros clientes en Chile elige una talla más que su talla habitual. Si estás entre dos tallas, elegí la mayor." },
         {
           "type": "table",
           "label": "Hombre",
           "unitPrimary": "CM",
           "headers": ["EU", "US", "UK", "CM"],
           "rows": [
-            ["TODO", "TODO", "TODO", "TODO"]
+            ["40", "6", "6.5", "26"],
+            ["41", "7", "7", "26.7"],
+            ["42", "8", "8", "27.3"],
+            ["43", "9", "9", "28"],
+            ["44", "10", "9.5", "28.7"],
+            ["45", "11", "10", "29.3"],
+            ["46", "12", "11", "30"]
           ],
           "hasDualUnitSelector": false
         },
-        { "type": "text", "content": "TODO: transcribir el texto de cierre de la guía KIZUNA desde Kiwi." },
-        { "type": "image", "image": "TODO: GID del archivo tras subirlo con uploadImageFile (app/lib/size-guide-block-helpers.ts)", "altText": "TODO" }
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": ["EU", "US", "UK", "CM"],
+          "rows": [
+            ["36", "5", "4", "23.4"],
+            ["37", "6", "5", "24"],
+            ["38", "7", "5.5", "24.7"],
+            ["39", "8", "6", "25.3"],
+            ["40", "9", "7.5", "26"],
+            ["41", "10", "8", "26.7"],
+            ["42", "11", "8.5", "27.3"]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "¿Cómo medir tu pie?\n1. Apoyá el talón contra la pared.\n2. Marcá la punta del dedo más largo.\n3. Medí la distancia en centímetros.\n4. Sumá 0,5 cm para mayor comodidad"
+        },
+        {
+          "type": "image",
+          "image": "PENDIENTE_SUBIR: data/migration/assets/coolway-chile-como-medir-pie.png — subir con uploadImageFile (app/lib/size-guide-block-helpers.ts) al ejecutar la migración real y poner aquí el GID resultante.",
+          "altText": "Diagrama de cómo medir el pie con una regla"
+        }
       ],
       "rule": {
         "rootOperator": "ANY",
         "conditions": [
-          { "field": "collection", "operator": "equals", "value": "TODO: 1 de las 6 colecciones de KIZUNA está nombrada en Kiwi (no ID numérico) — identificar cuál es en el panel de Kiwi antes de migrar; las otras 5 (solo ID numérico) se ignoran, ver decisión 0.1/5.0 — no conectan con ninguna colección real." }
-        ]
+          { "field": "collection", "operator": "equals", "value": "Coolway Kizuna Mujer" },
+          { "field": "collection", "operator": "equals", "value": "Coolway Bolk Mujer" },
+          { "field": "collection", "operator": "equals", "value": "Coolway Bolk Hombre" },
+          { "field": "collection", "operator": "equals", "value": "Coolway Kiro Mujer" },
+          { "field": "collection", "operator": "equals", "value": "Coolway Thai Hombre" },
+          { "field": "collection", "operator": "equals", "value": "Coolway Thai Mujer" },
+          { "field": "product", "operator": "equals", "value": "Baresi Ash Grey" },
+          { "field": "product", "operator": "equals", "value": "Baresi Light Pink" },
+          { "field": "product", "operator": "equals", "value": "Duck Grey Anthracite" },
+          { "field": "product", "operator": "equals", "value": "Duck Ice Pink" },
+          { "field": "product", "operator": "equals", "value": "Duck Pink Crayon" },
+          { "field": "product", "operator": "equals", "value": "Duck Washed Black" },
+          { "field": "product", "operator": "equals", "value": "Duck Washed Black (variante 2)" }
+        ],
+        "_nota": "Verificado en vivo en el panel de Kiwi (22-sept-2026): la regla real de KIZUNA es mucho más amplia de lo que documentaba la 0.1 (Match ANY con 6 colecciones nombradas + 7 condiciones de producto, no solo 1 colección nombrada). Además de estas 13 condiciones legibles, la regla incluye 8 condiciones más por ID numérico de colección (637230416215, 637229334871, 652003672407, 652003279191, 637230088535, 637230514519, 637230547287, 637230580005) que se ignoran deliberadamente al migrar, por la conclusión ya cerrada en 5.0 (esos IDs no conectan con ninguna colección real). 'Duck Washed Black' aparece dos veces en el panel de Kiwi como dos condiciones de producto distintas (probablemente dos productos/variantes con el mismo nombre) — se han mantenido ambas entradas tal cual, distinguidas con '(variante 2)' solo para no perder la cuenta; al migrar habrá que resolver el product ID real de cada una por separado."
       }
     },
     {
@@ -44,37 +76,57 @@
       "priority": 0,
       "status": "ACTIVE",
       "blocks": [
-        { "type": "text", "content": "TODO: transcribir el texto introductorio de la guía GOAL desde Kiwi." },
-        {
-          "type": "table",
-          "label": "Mujer",
-          "unitPrimary": "CM",
-          "headers": ["EU", "US", "UK", "CM"],
-          "rows": [
-            ["TODO", "TODO", "TODO", "TODO"]
-          ],
-          "hasDualUnitSelector": false
-        },
+        { "type": "text", "content": "La mayoría de nuestros clientes en Chile elige una talla más que su talla habitual." },
         {
           "type": "table",
           "label": "Hombre",
           "unitPrimary": "CM",
-          "headers": ["EU", "US", "UK", "CM"],
+          "headers": ["CM", "EU", "US", "UK"],
           "rows": [
-            ["TODO", "TODO", "TODO", "TODO"]
+            ["26.6", "40", "6", "6.5"],
+            ["27.3", "41", "7", "7"],
+            ["28", "42", "8", "8"],
+            ["28.6", "43", "9", "9"],
+            ["29.3", "44", "10", "9.5"],
+            ["30", "45", "11", "10"],
+            ["30.6", "46", "12", "11"]
           ],
           "hasDualUnitSelector": false
         },
-        { "type": "text", "content": "TODO: transcribir el texto de cierre de la guía GOAL desde Kiwi." },
-        { "type": "image", "image": "TODO: GID del archivo tras subirlo con uploadImageFile (app/lib/size-guide-block-helpers.ts)", "altText": "TODO" }
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": ["CM", "EU", "US", "UK"],
+          "rows": [
+            ["24", "36", "5", "4"],
+            ["24.7", "37", "6", "5"],
+            ["25.3", "38", "7", "5.5"],
+            ["26", "39", "8", "6"],
+            ["26.2", "40", "9", "7.5"],
+            ["27.3", "41", "10", "8"],
+            ["28", "42", "11", "8.5"]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "¿Cómo medir tu pie?\n1. Apoyá el talón contra la pared.\n2. Marcá la punta del dedo más largo.\n3. Medí la distancia en centímetros.\n4. Sumá 0,5 cm para mayor comodidad."
+        },
+        {
+          "type": "image",
+          "image": "PENDIENTE_SUBIR: data/migration/assets/coolway-chile-como-medir-pie.png — mismo diagrama que KIZUNA; subir con uploadImageFile al ejecutar la migración real y poner aquí el GID resultante (puede reutilizarse el mismo GID que KIZUNA una vez subido).",
+          "altText": "Diagrama de cómo medir el pie con una regla"
+        }
       ],
       "rule": {
         "rootOperator": "ANY",
         "conditions": [
-          { "field": "collection", "operator": "equals", "value": "TODO: GID/handle de la 1ª de las 2 colecciones de GOAL (correctamente nombradas en Kiwi, sin incidencia — ver 0.1)" },
-          { "field": "collection", "operator": "equals", "value": "TODO: GID/handle de la 2ª de las 2 colecciones de GOAL" }
+          { "field": "collection", "operator": "equals", "value": "Coolway Goal Mujer" },
+          { "field": "collection", "operator": "equals", "value": "Coolway Goal Hombre" }
         ]
       }
     }
-  ]
+  ],
+  "_fuera_de_alcance": "3 guías presentes en 'All Charts' de Kiwi (Baresi, GOAL clone, MUJER) NO están en 'Currently Published' — no publicadas, coincide con que la 0.1 solo inventarió las 2 guías publicadas de Chile (KIZUNA, GOAL). Quedan fuera de esta migración a propósito."
 }
