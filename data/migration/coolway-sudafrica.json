@@ -1,0 +1,678 @@
+{
+  "_comment": "Generado automáticamente por scripts/build-guide-manifest-from-kiwi-export.js desde /mnt/user-data/uploads/Coolway Charts/Coolway Charts/South Africa/Published/size-chart-exports-2026-08-03T16-02-10.csv (22-sept-2026). Bloques de tabla completos; texto/imagen/regla marcados \"TODO\" — Kiwi confirmó que no puede exportarlos.",
+  "guides": [
+    {
+      "legacyKiwiId": "GOAL ROSE",
+      "title": "GOAL ROSE",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL ROSE\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "24",
+          "headers": [
+            "24",
+            "4",
+            "36"
+          ],
+          "rows": [
+            [
+              "24.7",
+              "5",
+              "37"
+            ],
+            [
+              "25.3",
+              "5.5",
+              "38"
+            ],
+            [
+              "26",
+              "6",
+              "39"
+            ],
+            [
+              "26.6",
+              "7",
+              "40"
+            ],
+            [
+              "27.3",
+              "8",
+              "41"
+            ],
+            [
+              "28",
+              "8.5",
+              "42"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL ROSE\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"GOAL ROSE\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"GOAL ROSE\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Size Chart GOAL men",
+      "title": "Size Chart GOAL men",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Size Chart GOAL men\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "26.4",
+          "headers": [
+            "26.4",
+            "6.5",
+            "40"
+          ],
+          "rows": [
+            [
+              "27.3",
+              "7",
+              "41"
+            ],
+            [
+              "28",
+              "8",
+              "42"
+            ],
+            [
+              "28.6",
+              "9",
+              "43"
+            ],
+            [
+              "29.3",
+              "9.5",
+              "44"
+            ],
+            [
+              "30",
+              "10",
+              "45"
+            ],
+            [
+              "30.6",
+              "11",
+              "46"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "24",
+          "headers": [
+            "24",
+            "4",
+            "36"
+          ],
+          "rows": [
+            [
+              "24.7",
+              "5",
+              "37"
+            ],
+            [
+              "25.3",
+              "5.5",
+              "38"
+            ],
+            [
+              "26",
+              "6",
+              "39"
+            ],
+            [
+              "26.4",
+              "7",
+              "40"
+            ],
+            [
+              "27.3",
+              "8",
+              "41"
+            ],
+            [
+              "28",
+              "8.5",
+              "42"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Size Chart GOAL men\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Size Chart GOAL men\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Size Chart GOAL men\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Size Chart GOAL women",
+      "title": "Size Chart GOAL women",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Size Chart GOAL women\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "26.4",
+          "headers": [
+            "26.4",
+            "6.5",
+            "40"
+          ],
+          "rows": [
+            [
+              "27.3",
+              "7",
+              "41"
+            ],
+            [
+              "28",
+              "8",
+              "42"
+            ],
+            [
+              "28.6",
+              "9",
+              "43"
+            ],
+            [
+              "29.3",
+              "9.5",
+              "44"
+            ],
+            [
+              "30",
+              "10",
+              "45"
+            ],
+            [
+              "30.6",
+              "11",
+              "46"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "24",
+          "headers": [
+            "24",
+            "4",
+            "36"
+          ],
+          "rows": [
+            [
+              "24.7",
+              "5",
+              "37"
+            ],
+            [
+              "25.3",
+              "5.5",
+              "38"
+            ],
+            [
+              "26",
+              "6",
+              "39"
+            ],
+            [
+              "26.4",
+              "7",
+              "40"
+            ],
+            [
+              "27.3",
+              "8",
+              "41"
+            ],
+            [
+              "28",
+              "8.5",
+              "42"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Size Chart GOAL women\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Size Chart GOAL women\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Size Chart GOAL women\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "dark leo",
+      "title": "dark leo",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"dark leo\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "24",
+          "headers": [
+            "24",
+            "4",
+            "36"
+          ],
+          "rows": [
+            [
+              "24.7",
+              "5",
+              "37"
+            ],
+            [
+              "25.3",
+              "5.5",
+              "38"
+            ],
+            [
+              "26",
+              "6",
+              "39"
+            ],
+            [
+              "26.6",
+              "7",
+              "40"
+            ],
+            [
+              "27.3",
+              "8",
+              "41"
+            ],
+            [
+              "28",
+              "8.5",
+              "42"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"dark leo\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"dark leo\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"dark leo\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "2003 MEN",
+      "title": "2003 MEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 MEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "26.6"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.6"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 MEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"2003 MEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"2003 MEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "2003 WOMEN",
+      "title": "2003 WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "23.4"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.6"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"2003 WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"2003 WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Size Chart REST",
+      "title": "Size Chart REST",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Size Chart REST\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "26",
+          "headers": [
+            "26",
+            "6.5",
+            "40"
+          ],
+          "rows": [
+            [
+              "26.7",
+              "7",
+              "41"
+            ],
+            [
+              "27.3",
+              "8",
+              "42"
+            ],
+            [
+              "28",
+              "9",
+              "43"
+            ],
+            [
+              "28.7",
+              "9.5",
+              "44"
+            ],
+            [
+              "29.3",
+              "10",
+              "45"
+            ],
+            [
+              "30",
+              "11",
+              "46"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "23.4",
+          "headers": [
+            "23.4",
+            "4",
+            "36"
+          ],
+          "rows": [
+            [
+              "24",
+              "5",
+              "37"
+            ],
+            [
+              "24.7",
+              "5.5",
+              "38"
+            ],
+            [
+              "25.3",
+              "6",
+              "39"
+            ],
+            [
+              "26",
+              "7",
+              "40"
+            ],
+            [
+              "26.7",
+              "8",
+              "41"
+            ],
+            [
+              "27.3",
+              "8.5",
+              "42"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Size Chart REST\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Size Chart REST\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Size Chart REST\" — no viene en ningún export."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "_comment": "Manifiesto de migración Fase 5.2 — Coolway Chile (tienda piloto). Generado a partir del inventario de la 0.1 (hoja '0.1.3 Coolway Chile'). Los campos marcados \"TODO\" no están en ese inventario (solo recoge metadatos: nombre, tipo de bloque, lógica de match, nº de columnas y de productos, no el contenido real de cada tabla ni los IDs/handles exactos de las colecciones) y deben rellenarse transcribiendo desde el panel de Kiwi antes de ejecutar el script contra la tienda real. No se ha inventado ningún valor.",
+  "guides": [
+    {
+      "legacyKiwiId": "KIZUNA",
+      "title": "KIZUNA",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        { "type": "text", "content": "TODO: transcribir el texto introductorio de la guía KIZUNA desde Kiwi." },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": ["EU", "US", "UK", "CM"],
+          "rows": [
+            ["TODO", "TODO", "TODO", "TODO"]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": ["EU", "US", "UK", "CM"],
+          "rows": [
+            ["TODO", "TODO", "TODO", "TODO"]
+          ],
+          "hasDualUnitSelector": false
+        },
+        { "type": "text", "content": "TODO: transcribir el texto de cierre de la guía KIZUNA desde Kiwi." },
+        { "type": "image", "image": "TODO: GID del archivo tras subirlo con uploadImageFile (app/lib/size-guide-block-helpers.ts)", "altText": "TODO" }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          { "field": "collection", "operator": "equals", "value": "TODO: 1 de las 6 colecciones de KIZUNA está nombrada en Kiwi (no ID numérico) — identificar cuál es en el panel de Kiwi antes de migrar; las otras 5 (solo ID numérico) se ignoran, ver decisión 0.1/5.0 — no conectan con ninguna colección real." }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "GOAL",
+      "title": "GOAL",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        { "type": "text", "content": "TODO: transcribir el texto introductorio de la guía GOAL desde Kiwi." },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": ["EU", "US", "UK", "CM"],
+          "rows": [
+            ["TODO", "TODO", "TODO", "TODO"]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": ["EU", "US", "UK", "CM"],
+          "rows": [
+            ["TODO", "TODO", "TODO", "TODO"]
+          ],
+          "hasDualUnitSelector": false
+        },
+        { "type": "text", "content": "TODO: transcribir el texto de cierre de la guía GOAL desde Kiwi." },
+        { "type": "image", "image": "TODO: GID del archivo tras subirlo con uploadImageFile (app/lib/size-guide-block-helpers.ts)", "altText": "TODO" }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          { "field": "collection", "operator": "equals", "value": "TODO: GID/handle de la 1ª de las 2 colecciones de GOAL (correctamente nombradas en Kiwi, sin incidencia — ver 0.1)" },
+          { "field": "collection", "operator": "equals", "value": "TODO: GID/handle de la 2ª de las 2 colecciones de GOAL" }
+        ]
+      }
+    }
+  ]
+}

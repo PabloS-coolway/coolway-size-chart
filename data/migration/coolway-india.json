@@ -1,0 +1,181 @@
+{
+  "_comment": "Generado automáticamente por scripts/build-guide-manifest-from-kiwi-export.js desde /mnt/user-data/uploads/Coolway Charts/Coolway Charts/India/Published/size-chart-exports-2026-08-03T16-00-49.csv (22-sept-2026). Bloques de tabla completos; texto/imagen/regla marcados \"TODO\" — Kiwi confirmó que no puede exportarlos.",
+  "guides": [
+    {
+      "legacyKiwiId": "Men",
+      "title": "Men",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Men\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "41",
+          "headers": [
+            "41",
+            "272",
+            "88",
+            "6",
+            "248"
+          ],
+          "rows": [
+            [
+              "42",
+              "279",
+              "90",
+              "7",
+              "255"
+            ],
+            [
+              "43",
+              "285",
+              "92",
+              "8",
+              "261"
+            ],
+            [
+              "44",
+              "292",
+              "94",
+              "9",
+              "268"
+            ],
+            [
+              "45",
+              "299",
+              "95",
+              "10",
+              "275"
+            ],
+            [
+              "46",
+              "305",
+              "97",
+              "11",
+              "281"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Men\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Men\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Men\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Women",
+      "title": "Women",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Women\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "36",
+          "headers": [
+            "36",
+            "239",
+            "80",
+            "2",
+            ""
+          ],
+          "rows": [
+            [
+              "37",
+              "245",
+              "82",
+              "3",
+              "236"
+            ],
+            [
+              "38",
+              "252",
+              "83",
+              "4",
+              "243"
+            ],
+            [
+              "39",
+              "259",
+              "85",
+              "5",
+              "249"
+            ],
+            [
+              "40",
+              "265",
+              "87",
+              "6",
+              "256"
+            ],
+            [
+              "41",
+              "272",
+              "89",
+              "7",
+              "262"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Women\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Women\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Women\" — no viene en ningún export."
+          }
+        ]
+      }
+    }
+  ]
+}

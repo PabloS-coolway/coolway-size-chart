@@ -1,0 +1,267 @@
+{
+  "_comment": "Generado automáticamente por scripts/build-guide-manifest-from-kiwi-export.js desde /mnt/user-data/uploads/Coolway Charts/Coolway Charts/Escandanavia/Published/size-chart-exports-2026-08-03T15-58-07.csv (22-sept-2026). Bloques de tabla completos; texto/imagen/regla marcados \"TODO\" — Kiwi confirmó que no puede exportarlos.",
+  "guides": [
+    {
+      "legacyKiwiId": "Rest",
+      "title": "Rest",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Rest\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "23.4",
+          "headers": [
+            "23.4",
+            "36",
+            "5",
+            "4"
+          ],
+          "rows": [
+            [
+              "24",
+              "37",
+              "6",
+              "5"
+            ],
+            [
+              "24.7",
+              "38",
+              "7",
+              "5.5"
+            ],
+            [
+              "25.3",
+              "39",
+              "8",
+              "6"
+            ],
+            [
+              "26",
+              "40",
+              "9",
+              "7.5"
+            ],
+            [
+              "26.7",
+              "41",
+              "10",
+              "8"
+            ],
+            [
+              "27.3",
+              "42",
+              "11",
+              "8.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "26",
+          "headers": [
+            "26",
+            "40",
+            "6",
+            "6.5"
+          ],
+          "rows": [
+            [
+              "26.7",
+              "41",
+              "7",
+              "7"
+            ],
+            [
+              "27.3",
+              "42",
+              "8",
+              "8"
+            ],
+            [
+              "28",
+              "43",
+              "9",
+              "9"
+            ],
+            [
+              "28.7",
+              "44",
+              "10",
+              "9.5"
+            ],
+            [
+              "29.3",
+              "45",
+              "11",
+              "10"
+            ],
+            [
+              "30",
+              "46",
+              "12",
+              "11"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Rest\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Rest\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Rest\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "GOAL",
+      "title": "GOAL",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "24",
+          "headers": [
+            "24",
+            "36",
+            "5",
+            "4"
+          ],
+          "rows": [
+            [
+              "24.7",
+              "37",
+              "6",
+              "5"
+            ],
+            [
+              "25.3",
+              "38",
+              "7",
+              "5.5"
+            ],
+            [
+              "26",
+              "39",
+              "8",
+              "6"
+            ],
+            [
+              "26.4",
+              "40",
+              "9",
+              "7.5"
+            ],
+            [
+              "27.3",
+              "41",
+              "10",
+              "8"
+            ],
+            [
+              "28",
+              "42",
+              "11",
+              "8.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "26.4",
+          "headers": [
+            "26.4",
+            "40",
+            "6",
+            "6.5"
+          ],
+          "rows": [
+            [
+              "27.3",
+              "41",
+              "7",
+              "7"
+            ],
+            [
+              "28",
+              "42",
+              "8",
+              "8"
+            ],
+            [
+              "28.6",
+              "43",
+              "9",
+              "9"
+            ],
+            [
+              "29.3",
+              "44",
+              "10",
+              "9.5"
+            ],
+            [
+              "30",
+              "45",
+              "11",
+              "10"
+            ],
+            [
+              "30.6",
+              "46",
+              "12",
+              "11"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"GOAL\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"GOAL\" — no viene en ningún export."
+          }
+        ]
+      }
+    }
+  ]
+}

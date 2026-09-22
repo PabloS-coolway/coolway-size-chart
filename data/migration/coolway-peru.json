@@ -1,0 +1,239 @@
+{
+  "_comment": "Generado automáticamente por scripts/build-guide-manifest-from-kiwi-export.js desde /mnt/user-data/uploads/Coolway Charts/Coolway Charts/Peru/Published/size-chart-exports-2026-08-03T16-01-18.csv (22-sept-2026). Bloques de tabla completos; texto/imagen/regla marcados \"TODO\" — Kiwi confirmó que no puede exportarlos.",
+  "guides": [
+    {
+      "legacyKiwiId": "SIZE CHART REST",
+      "title": "SIZE CHART REST",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SIZE CHART REST\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "36",
+          "headers": [
+            "36",
+            "4",
+            "24"
+          ],
+          "rows": [
+            [
+              "37",
+              "5",
+              "24.7"
+            ],
+            [
+              "38",
+              "6",
+              "25.3"
+            ],
+            [
+              "39",
+              "7",
+              "26"
+            ],
+            [
+              "40",
+              "8",
+              "26.4"
+            ],
+            [
+              "41",
+              "9",
+              "27.3"
+            ],
+            [
+              "42",
+              "9.5",
+              "28"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "40",
+          "headers": [
+            "40",
+            "8",
+            "26.4"
+          ],
+          "rows": [
+            [
+              "41",
+              "9",
+              "27.3"
+            ],
+            [
+              "42",
+              "9.5",
+              "28"
+            ],
+            [
+              "43",
+              "10",
+              "28.6"
+            ],
+            [
+              "44",
+              "11",
+              "29.3"
+            ],
+            [
+              "45",
+              "12",
+              "30"
+            ],
+            [
+              "46",
+              "13",
+              "30.6"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SIZE CHART REST\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"SIZE CHART REST\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"SIZE CHART REST\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "SIZE CHART GOAL",
+      "title": "SIZE CHART GOAL",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SIZE CHART GOAL\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "36",
+          "headers": [
+            "36",
+            "4",
+            "24"
+          ],
+          "rows": [
+            [
+              "37",
+              "5",
+              "24.7"
+            ],
+            [
+              "38",
+              "6",
+              "25.3"
+            ],
+            [
+              "39",
+              "7",
+              "26"
+            ],
+            [
+              "40",
+              "8",
+              "26.4"
+            ],
+            [
+              "41",
+              "9",
+              "27.3"
+            ],
+            [
+              "42",
+              "9.5",
+              "28"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "40",
+          "headers": [
+            "40",
+            "8",
+            "26.4"
+          ],
+          "rows": [
+            [
+              "41",
+              "9",
+              "27.3"
+            ],
+            [
+              "42",
+              "9.5",
+              "28"
+            ],
+            [
+              "43",
+              "10",
+              "28.6"
+            ],
+            [
+              "44",
+              "11",
+              "29.3"
+            ],
+            [
+              "45",
+              "12",
+              "30"
+            ],
+            [
+              "46",
+              "13",
+              "30.6"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SIZE CHART GOAL\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"SIZE CHART GOAL\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"SIZE CHART GOAL\" — no viene en ningún export."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3051 @@
+{
+  "_comment": "Generado automáticamente por scripts/build-guide-manifest-from-kiwi-export.js desde /mnt/user-data/uploads/Coolway Charts/Coolway Charts/EU/Currently Published/size-chart-exports-2026-08-03T16-00-08.csv (22-sept-2026). Bloques de tabla completos; texto/imagen/regla marcados \"TODO\" — Kiwi confirmó que no puede exportarlos.",
+  "guides": [
+    {
+      "legacyKiwiId": "GOAL WOMEN",
+      "title": "GOAL WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "24"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24.7"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "25.3"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "26"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26.4"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "27.3"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "28"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"GOAL WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"GOAL WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "GOAL MEN",
+      "title": "GOAL MEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL MEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26.6"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "27.3"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "28"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28.6"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "29.3"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "30"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30.6"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL MEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"GOAL MEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"GOAL MEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Football",
+      "title": "Football",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Football\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "BODY LENGTH",
+          "headers": [
+            "BODY LENGTH",
+            "67,5",
+            "69",
+            "70,5",
+            "72"
+          ],
+          "rows": [
+            [
+              "CHEST",
+              "57,5",
+              "60",
+              "62,5",
+              "65"
+            ],
+            [
+              "SLEEVE",
+              "23,5",
+              "24",
+              "24,5",
+              "25"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Football\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Football\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Football\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "CLASSIC TEE",
+      "title": "CLASSIC TEE",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"CLASSIC TEE\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "25.59",
+            "25.98",
+            "26.38",
+            "26.77"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "22.44",
+              "23.43",
+              "24.41",
+              "25.39"
+            ],
+            [
+              "Sleeve",
+              "9.65",
+              "9.84",
+              "10.04",
+              "10.24"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"CLASSIC TEE\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"CLASSIC TEE\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"CLASSIC TEE\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Trace Pant",
+      "title": "Trace Pant",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Trace Pant\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "S",
+          "headers": [
+            "S",
+            "32",
+            "105",
+            "23"
+          ],
+          "rows": [
+            [
+              "M",
+              "33",
+              "106.5",
+              "24"
+            ],
+            [
+              "L",
+              "35",
+              "108",
+              "25"
+            ],
+            [
+              "XL",
+              "37",
+              "109.5",
+              "26"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Trace Pant\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Trace Pant\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Trace Pant\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "RULOPANT",
+      "title": "RULOPANT",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"RULOPANT\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "S",
+          "headers": [
+            "S",
+            "32",
+            "102,5",
+            "19.75"
+          ],
+          "rows": [
+            [
+              "M",
+              "34",
+              "103",
+              "20.5"
+            ],
+            [
+              "L",
+              "36",
+              "103.5",
+              "21.25"
+            ],
+            [
+              "XL",
+              "38",
+              "104",
+              "25"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"RULOPANT\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"RULOPANT\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"RULOPANT\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "SPLIT TEE",
+      "title": "SPLIT TEE",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SPLIT TEE\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "S",
+          "headers": [
+            "S",
+            "65.5",
+            "59.5",
+            "76"
+          ],
+          "rows": [
+            [
+              "M",
+              "67",
+              "62",
+              "77"
+            ],
+            [
+              "L",
+              "68.5",
+              "64.5",
+              "78"
+            ],
+            [
+              "XL",
+              "70",
+              "67",
+              "25"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SPLIT TEE\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"SPLIT TEE\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"SPLIT TEE\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "DUAL TEES",
+      "title": "DUAL TEES",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"DUAL TEES\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "S",
+          "headers": [
+            "S",
+            "67.5",
+            "57.5",
+            "23.5"
+          ],
+          "rows": [
+            [
+              "M",
+              "69",
+              "60",
+              "24"
+            ],
+            [
+              "L",
+              "70.5",
+              "62.5",
+              "24.5"
+            ],
+            [
+              "XL",
+              "72",
+              "65",
+              "25"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"DUAL TEES\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"DUAL TEES\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"DUAL TEES\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "KIZUNA MEN",
+      "title": "KIZUNA MEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KIZUNA MEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "26.6"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.6"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KIZUNA MEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"KIZUNA MEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"KIZUNA MEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Nilo Men",
+      "title": "Nilo Men",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Nilo Men\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "26.7"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.6"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Nilo Men\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Nilo Men\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Nilo Men\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Nilo women",
+      "title": "Nilo women",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Nilo women\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "23.4"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.7"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Nilo women\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Nilo women\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Nilo women\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "BOLK/MOKA MEN",
+      "title": "BOLK/MOKA MEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BOLK/MOKA MEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "40",
+          "headers": [
+            "40",
+            "6",
+            "6",
+            "26.2"
+          ],
+          "rows": [
+            [
+              "41",
+              "7",
+              "7",
+              "26.9"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.5"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28.2"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.8"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.5"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BOLK/MOKA MEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"BOLK/MOKA MEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"BOLK/MOKA MEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "BOLK/MOKA WOMEN",
+      "title": "BOLK/MOKA WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BOLK/MOKA WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "36",
+          "headers": [
+            "36",
+            "5",
+            "4",
+            "23.5"
+          ],
+          "rows": [
+            [
+              "37",
+              "6",
+              "5",
+              "24.2"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.9"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.5"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26.2"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.9"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BOLK/MOKA WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"BOLK/MOKA WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"BOLK/MOKA WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Switzer Men",
+      "title": "Switzer Men",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Switzer Men\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26.6"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "27.3"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "28"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28.6"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "29.3"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "30"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30.6"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Switzer Men\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Switzer Men\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Switzer Men\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Switzer Women",
+      "title": "Switzer Women",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Switzer Women\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "24"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24.7"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "25.3"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "26"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26.4"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "27.3"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "28"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Switzer Women\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Switzer Women\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Switzer Women\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "KIRO WOMEN",
+      "title": "KIRO WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KIRO WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "23.4"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.7"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KIRO WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"KIRO WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"KIRO WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "KIZUNA WOMEN",
+      "title": "KIZUNA WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KIZUNA WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "23.4"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.7"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KIZUNA WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"KIZUNA WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"KIZUNA WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "2003 WOMEN",
+      "title": "2003 WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "23.4"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.6"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"2003 WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"2003 WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "2003 MEN",
+      "title": "2003 MEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 MEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "26.6"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.6"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003 MEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"2003 MEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"2003 MEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "MEN",
+      "title": "MEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"MEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "26.7"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.7"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"MEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"MEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"MEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "WOMEN",
+      "title": "WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "23.4"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.7"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "ZIP HOODIE",
+      "title": "ZIP HOODIE",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"ZIP HOODIE\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "24.02",
+            "24.80",
+            "25.59",
+            "26.38"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "24.80",
+              "25.59",
+              "26.38",
+              "27.17"
+            ],
+            [
+              "Sleeve",
+              "21.65",
+              "22.44",
+              "23.23",
+              "24.02"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"ZIP HOODIE\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"ZIP HOODIE\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"ZIP HOODIE\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "CHANDAL",
+      "title": "CHANDAL",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"CHANDAL\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Waist",
+          "headers": [
+            "Waist",
+            "13.39",
+            "13.78",
+            "14.17"
+          ],
+          "rows": [
+            [
+              "Body Length",
+              "28.35",
+              "29.13",
+              "29.92"
+            ],
+            [
+              "Bottom Width",
+              "12.60",
+              "12.99",
+              "13.39"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"CHANDAL\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"CHANDAL\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"CHANDAL\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "FRAME",
+      "title": "FRAME",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"FRAME\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "26.38",
+            "26.77",
+            "27.17",
+            "27.56"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "23.43",
+              "24.41",
+              "25.39",
+              "26.38"
+            ],
+            [
+              "Sleeve",
+              "23.23",
+              "23.43",
+              "23.62",
+              "23.82"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"FRAME\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"FRAME\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"FRAME\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "POLO",
+      "title": "POLO",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"POLO\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "25.59",
+            "26.38",
+            "27.17",
+            "27.95"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "23.62",
+              "24.41",
+              "25.20",
+              "25.98"
+            ],
+            [
+              "Sleeve",
+              "20.87",
+              "21.65",
+              "22.44",
+              "23.23"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"POLO\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"POLO\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"POLO\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "ICONIC TEE",
+      "title": "ICONIC TEE",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"ICONIC TEE\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "25.59",
+            "26.38",
+            "27.17",
+            "27.95"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "22.05",
+              "22.83",
+              "23.62",
+              "24.41"
+            ],
+            [
+              "Sleeve",
+              "9.06",
+              "9.45",
+              "9.84",
+              "10.24"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"ICONIC TEE\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"ICONIC TEE\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"ICONIC TEE\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "WASHED HOODIE",
+      "title": "WASHED HOODIE",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"WASHED HOODIE\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "25.98",
+            "26.77",
+            "27.56",
+            "28.35"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "24.41",
+              "25.20",
+              "25.98",
+              "26.77"
+            ],
+            [
+              "Sleeve",
+              "21.65",
+              "22.44",
+              "23.23",
+              "24.02"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"WASHED HOODIE\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"WASHED HOODIE\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"WASHED HOODIE\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "KNIT JUMPER",
+      "title": "KNIT JUMPER",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KNIT JUMPER\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "22.64",
+            "23.23",
+            "23.82",
+            "24.41"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "26.38",
+              "27.17",
+              "27.95",
+              "28.74"
+            ],
+            [
+              "Sleeve",
+              "26.77",
+              "27.17",
+              "27.56",
+              "27.95"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"KNIT JUMPER\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"KNIT JUMPER\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"KNIT JUMPER\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "ZIP KNIT",
+      "title": "ZIP KNIT",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"ZIP KNIT\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "23.43",
+            "24.02",
+            "24.61",
+            "25.20"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "20.47",
+              "21.26",
+              "22.05",
+              "22.83"
+            ],
+            [
+              "Sleeve",
+              "29.13",
+              "29.53",
+              "29.92",
+              "30.31"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"ZIP KNIT\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"ZIP KNIT\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"ZIP KNIT\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "DOUBLE SLEEVE",
+      "title": "DOUBLE SLEEVE",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"DOUBLE SLEEVE\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "25.79",
+            "26.57",
+            "27.36",
+            "28.15"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "22.44",
+              "23.23",
+              "24.02",
+              "24.80"
+            ],
+            [
+              "Sleeve",
+              "22.83",
+              "23.62",
+              "24.41",
+              "25.20"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"DOUBLE SLEEVE\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"DOUBLE SLEEVE\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"DOUBLE SLEEVE\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "WASHED JEANS",
+      "title": "WASHED JEANS",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"WASHED JEANS\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Waist",
+          "headers": [
+            "Waist",
+            "14.17",
+            "14.96",
+            "15.75",
+            "16.54"
+          ],
+          "rows": [
+            [
+              "Body Length",
+              "40.94",
+              "41.73",
+              "42.52",
+              "43.31"
+            ],
+            [
+              "Bottom Width",
+              "11.02",
+              "11.42",
+              "11.81",
+              "12.20"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"WASHED JEANS\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"WASHED JEANS\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"WASHED JEANS\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "VARSITY JACKET",
+      "title": "VARSITY JACKET",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"VARSITY JACKET\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "25.79",
+            "26.57",
+            "27.36",
+            "28.15"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "22.44",
+              "23.23",
+              "24.02",
+              "24.80"
+            ],
+            [
+              "Sleeve",
+              "22.83",
+              "23.62",
+              "24.41",
+              "25.20"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"VARSITY JACKET\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"VARSITY JACKET\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"VARSITY JACKET\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Windbreaker",
+      "title": "Windbreaker",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Windbreaker\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "25.98",
+            "26.77",
+            "27.56",
+            "28.35"
+          ],
+          "rows": [
+            [
+              "Chest",
+              "25.20",
+              "25.98",
+              "26.77",
+              "27.56"
+            ],
+            [
+              "Sleeve",
+              "30.31",
+              "30.91",
+              "31.50",
+              "32.09"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Windbreaker\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Windbreaker\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Windbreaker\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Hoodie Roomy SYA clone",
+      "title": "Hoodie Roomy SYA clone",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Hoodie Roomy SYA clone\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "65",
+            "67",
+            "69",
+            "71"
+          ],
+          "rows": [
+            [
+              " Chest",
+              "66",
+              "68",
+              "70",
+              "72"
+            ],
+            [
+              " Sleeve",
+              "55.5",
+              "56.5",
+              "57.5",
+              "58.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Hoodie Roomy SYA clone\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Hoodie Roomy SYA clone\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Hoodie Roomy SYA clone\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "BECKS WOMEN",
+      "title": "BECKS WOMEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BECKS WOMEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Mujer",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "36",
+              "5",
+              "4",
+              "23.4"
+            ],
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.7"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BECKS WOMEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"BECKS WOMEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"BECKS WOMEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "BECKS MEN",
+      "title": "BECKS MEN",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BECKS MEN\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Hombre",
+          "unitPrimary": "CM",
+          "headers": [
+            "EU",
+            "US",
+            "UK",
+            "CM"
+          ],
+          "rows": [
+            [
+              "40",
+              "6",
+              "6.5",
+              "26"
+            ],
+            [
+              "41",
+              "7",
+              "7",
+              "26.7"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.7"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"BECKS MEN\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"BECKS MEN\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"BECKS MEN\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Cropped Dealer Drop",
+      "title": "Cropped Dealer Drop",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Cropped Dealer Drop\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "US/UK Size",
+          "unitPrimary": "Size on label",
+          "headers": [
+            "Size on label",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "rows": [],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body LENGTH",
+          "headers": [
+            "Body LENGTH",
+            "67.5",
+            "69.5",
+            "71.5",
+            "73.5"
+          ],
+          "rows": [
+            [
+              "chest",
+              "57.5",
+              "59.5",
+              "61.5",
+              "63.5"
+            ],
+            [
+              "Sleeve",
+              "23",
+              "23.5",
+              "24",
+              "24.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Cropped Dealer Drop\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Cropped Dealer Drop\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Cropped Dealer Drop\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "track jacket",
+      "title": "track jacket",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"track jacket\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "US/UK Size",
+          "unitPrimary": "Size on label",
+          "headers": [
+            "Size on label",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "rows": [],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "body LENGTH",
+          "headers": [
+            "body LENGTH",
+            "68",
+            "69",
+            "70",
+            "71"
+          ],
+          "rows": [
+            [
+              "chest",
+              "56",
+              "58",
+              "60",
+              "62"
+            ],
+            [
+              "Sleeve",
+              "75",
+              "76",
+              "77",
+              "78"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"track jacket\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"track jacket\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"track jacket\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Hoodie Roomy SYA",
+      "title": "Hoodie Roomy SYA",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Hoodie Roomy SYA\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "Body Length",
+          "headers": [
+            "Body Length",
+            "65",
+            "67",
+            "69",
+            "71"
+          ],
+          "rows": [
+            [
+              " Chest",
+              "66",
+              "68",
+              "70",
+              "72"
+            ],
+            [
+              " Sleeve",
+              "55.5",
+              "56.5",
+              "57.5",
+              "58.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Hoodie Roomy SYA\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Hoodie Roomy SYA\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Hoodie Roomy SYA\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Straight",
+      "title": "Straight",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Straight\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "US/UK Size",
+          "unitPrimary": "Size on label",
+          "headers": [
+            "Size on label",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "rows": [],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "BODY LENGTH",
+          "headers": [
+            "BODY LENGTH",
+            "69",
+            "71",
+            "73",
+            "75"
+          ],
+          "rows": [
+            [
+              "CHEST",
+              "66",
+              "68",
+              "70",
+              "72"
+            ],
+            [
+              "Sleeve",
+              "63.5",
+              "64.5",
+              "65.5",
+              "66.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Straight\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Straight\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Straight\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "strike",
+      "title": "strike",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"strike\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "US/UK Size",
+          "unitPrimary": "Size on label",
+          "headers": [
+            "Size on label",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "rows": [],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": "body LENGTH",
+          "headers": [
+            "body LENGTH",
+            "69.5",
+            "71.5",
+            "73.5",
+            "75.5"
+          ],
+          "rows": [
+            [
+              "chest",
+              "58",
+              "60",
+              "62",
+              "64"
+            ],
+            [
+              "Sleeve",
+              "23",
+              "23.5",
+              "24",
+              "24.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"strike\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"strike\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"strike\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "Embossed",
+      "title": "Embossed",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Embossed\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "US/UK Size",
+          "unitPrimary": "Size on label",
+          "headers": [
+            "Size on label",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "rows": [],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "Size",
+          "unitPrimary": " body LENGTH",
+          "headers": [
+            " body LENGTH",
+            "69",
+            "71",
+            "73",
+            "75"
+          ],
+          "rows": [
+            [
+              "chest",
+              "56.5",
+              "58.5",
+              "60.5",
+              "62.5"
+            ],
+            [
+              "Sleeve",
+              "63.5",
+              "64.5",
+              "65.5",
+              "66.5"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"Embossed\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"Embossed\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"Embossed\" — no viene en ningún export."
+          }
+        ]
+      }
+    }
+  ]
+}

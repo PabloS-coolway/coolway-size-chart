@@ -1,0 +1,267 @@
+{
+  "_comment": "Generado automáticamente por scripts/build-guide-manifest-from-kiwi-export.js desde /mnt/user-data/uploads/Coolway Charts/Coolway Charts/Australia/Currently Published/size-chart-exports-2026-08-03T15-54-28.csv (22-sept-2026). Bloques de tabla completos; texto/imagen/regla marcados \"TODO\" — Kiwi confirmó que no puede exportarlos.",
+  "guides": [
+    {
+      "legacyKiwiId": "GOAL SIze chart",
+      "title": "GOAL SIze chart",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL SIze chart\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "24",
+          "headers": [
+            "24",
+            "5",
+            "4",
+            "36"
+          ],
+          "rows": [
+            [
+              "24.7",
+              "6",
+              "5",
+              "37"
+            ],
+            [
+              "25.3",
+              "7",
+              "5.5",
+              "38"
+            ],
+            [
+              "26",
+              "8",
+              "6",
+              "39"
+            ],
+            [
+              "26.4",
+              "9",
+              "7",
+              "40"
+            ],
+            [
+              "27.3",
+              "10",
+              "8",
+              "41"
+            ],
+            [
+              "28",
+              "11",
+              "8.5",
+              "42"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "26.4",
+          "headers": [
+            "26.4",
+            "6",
+            "6.5",
+            "40"
+          ],
+          "rows": [
+            [
+              "27.3",
+              "7",
+              "7",
+              "41"
+            ],
+            [
+              "28",
+              "8",
+              "8",
+              "42"
+            ],
+            [
+              "28.6",
+              "9",
+              "9",
+              "43"
+            ],
+            [
+              "29.3",
+              "10",
+              "9.5",
+              "44"
+            ],
+            [
+              "30",
+              "11",
+              "10",
+              "45"
+            ],
+            [
+              "30.6",
+              "12",
+              "11",
+              "46"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"GOAL SIze chart\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"GOAL SIze chart\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"GOAL SIze chart\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "SIze chart REST",
+      "title": "SIze chart REST",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SIze chart REST\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "23.4",
+          "headers": [
+            "23.4",
+            "5",
+            "4",
+            "36"
+          ],
+          "rows": [
+            [
+              "24",
+              "6",
+              "5",
+              "37"
+            ],
+            [
+              "24.7",
+              "7",
+              "5.5",
+              "38"
+            ],
+            [
+              "25.3",
+              "8",
+              "6",
+              "39"
+            ],
+            [
+              "26",
+              "9",
+              "7.5",
+              "40"
+            ],
+            [
+              "26.7",
+              "10",
+              "8",
+              "41"
+            ],
+            [
+              "27.3",
+              "11",
+              "8.5",
+              "42"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "CM",
+          "unitPrimary": "26",
+          "headers": [
+            "26",
+            "6",
+            "6.5",
+            "40"
+          ],
+          "rows": [
+            [
+              "26.7",
+              "7",
+              "7",
+              "41"
+            ],
+            [
+              "27.3",
+              "8",
+              "8",
+              "42"
+            ],
+            [
+              "28",
+              "9",
+              "9",
+              "43"
+            ],
+            [
+              "28.7",
+              "10",
+              "9.5",
+              "44"
+            ],
+            [
+              "29.3",
+              "11",
+              "10",
+              "45"
+            ],
+            [
+              "30",
+              "12",
+              "11",
+              "46"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"SIze chart REST\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"SIze chart REST\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"SIze chart REST\" — no viene en ningún export."
+          }
+        ]
+      }
+    }
+  ]
+}

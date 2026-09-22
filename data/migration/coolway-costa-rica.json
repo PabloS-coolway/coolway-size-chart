@@ -1,0 +1,267 @@
+{
+  "_comment": "Generado automáticamente por scripts/build-guide-manifest-from-kiwi-export.js desde /mnt/user-data/uploads/Coolway Charts/Coolway Charts/Costa Rica/Published/size-chart-exports-2026-08-03T15-56-48.csv (22-sept-2026). Bloques de tabla completos; texto/imagen/regla marcados \"TODO\" — Kiwi confirmó que no puede exportarlos.",
+  "guides": [
+    {
+      "legacyKiwiId": "2003",
+      "title": "2003",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "40",
+          "headers": [
+            "40",
+            "6",
+            "6.5",
+            "26"
+          ],
+          "rows": [
+            [
+              "41",
+              "7",
+              "7",
+              "26.6"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.6"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "36",
+          "headers": [
+            "36",
+            "5",
+            "4",
+            "23.4"
+          ],
+          "rows": [
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.6"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"2003\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"2003\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"2003\" — no viene en ningún export."
+          }
+        ]
+      }
+    },
+    {
+      "legacyKiwiId": "RESTO",
+      "title": "RESTO",
+      "priority": 0,
+      "status": "ACTIVE",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"RESTO\" lleva un bloque de texto introductorio — Kiwi no exporta texto/imagen bajo ninguna forma (confirmado por su atención al cliente, 22-sept-2026)."
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "40",
+          "headers": [
+            "40",
+            "6",
+            "6.5",
+            "26"
+          ],
+          "rows": [
+            [
+              "41",
+              "7",
+              "7",
+              "26.7"
+            ],
+            [
+              "42",
+              "8",
+              "8",
+              "27.3"
+            ],
+            [
+              "43",
+              "9",
+              "9",
+              "28"
+            ],
+            [
+              "44",
+              "10",
+              "9.5",
+              "28.7"
+            ],
+            [
+              "45",
+              "11",
+              "10",
+              "29.3"
+            ],
+            [
+              "46",
+              "12",
+              "11",
+              "30"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "table",
+          "label": "EU",
+          "unitPrimary": "36",
+          "headers": [
+            "36",
+            "5",
+            "4",
+            "23.4"
+          ],
+          "rows": [
+            [
+              "37",
+              "6",
+              "5",
+              "24"
+            ],
+            [
+              "38",
+              "7",
+              "5.5",
+              "24.7"
+            ],
+            [
+              "39",
+              "8",
+              "6",
+              "25.3"
+            ],
+            [
+              "40",
+              "9",
+              "7.5",
+              "26"
+            ],
+            [
+              "41",
+              "10",
+              "8",
+              "26.7"
+            ],
+            [
+              "42",
+              "11",
+              "8.5",
+              "27.3"
+            ]
+          ],
+          "hasDualUnitSelector": false
+        },
+        {
+          "type": "text",
+          "content": "TODO: confirmar en el panel de Kiwi si \"RESTO\" lleva un bloque de texto de cierre."
+        },
+        {
+          "type": "image",
+          "image": "TODO: confirmar en Kiwi si \"RESTO\" lleva imagen; si la lleva, subirla con uploadImageFile (app/lib/size-guide-block-helpers.ts) y poner aquí el GID.",
+          "altText": "TODO"
+        }
+      ],
+      "rule": {
+        "rootOperator": "ANY",
+        "conditions": [
+          {
+            "field": "collection",
+            "operator": "equals",
+            "value": "TODO: identificar en el panel de Kiwi las colecciones de la regla de \"RESTO\" — no viene en ningún export."
+          }
+        ]
+      }
+    }
+  ]
+}
