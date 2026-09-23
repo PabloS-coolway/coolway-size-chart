@@ -8,9 +8,16 @@
   -> text con `.value`), así que aquí se recorre a mano, sin ningún filtro
   de parseo (no existe `parse_json` en el Liquid de Shopify).
 
-  Cobertura deliberadamente mínima (párrafos y listas, texto plano sin
-  negrita/cursiva) — suficiente para el requisito de esta tarea; ampliar
-  marks (bold/italic/link) queda fuera de alcance de la 3.4.
+  Los marks bold/italic viajan como atributos booleanos del propio nodo
+  `text` (`{"type":"text","value":"...","bold":true}`), y Liquid ya
+  devuelve `.value` con el HTML de esos marks aplicado — no hace falta
+  tratarlos aparte. `link`, en cambio, NO es un mark de texto: es su
+  propio tipo de nodo, sin `.value` propio, que envuelve nodos `text`
+  hijos y lleva la URL en `.url` (confirmado vía Admin API, 23-sept-2026:
+  `{"type":"link","url":"https://...","children":[{"type":"text","value":"..."}]}`).
+  Por eso, sin tratarlo aparte, un enlace desaparecía por completo del
+  front (el `.value` de un nodo `link` es blank) aunque sí se viera bien
+  en el Preview interno de la app.
 
   Uso: {% render 'coolway-rich-text', value: resolved_guide.description.value %}
 {%- endcomment -%}
@@ -18,7 +25,7 @@
 {%- for node in value.children -%}
   {%- case node.type -%}
     {%- when 'paragraph' -%}
-      <p>{%- for child in node.children -%}{{ child.value }}{%- endfor -%}</p>
+      <p>{%- render 'coolway-rich-text-inline', children: node.children -%}</p>
     {%- when 'list' -%}
       {%- assign list_tag = 'ul' -%}
       {%- if node.listType == 'ordered' -%}{%- assign list_tag = 'ol' -%}{%- endif -%}
@@ -30,11 +37,11 @@
               `list-item` son nodos inline (text/link) directamente, NO un
               `paragraph` anidado — corregido aquí junto con el editor.
             {%- endcomment -%}
-            {%- for text in item.children -%}{{ text.value }}{%- endfor -%}
+            {%- render 'coolway-rich-text-inline', children: item.children -%}
           </li>
         {%- endfor -%}
       </{{ list_tag }}>
     {%- when 'heading' -%}
-      <strong>{%- for child in node.children -%}{{ child.value }}{%- endfor -%}</strong>
+      <strong>{%- render 'coolway-rich-text-inline', children: node.children -%}</strong>
   {%- endcase -%}
 {%- endfor -%}

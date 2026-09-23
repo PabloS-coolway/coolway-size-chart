@@ -1,0 +1,19 @@
+{%- comment -%}
+  Render de los nodos inline de un rich_text_field (texto y enlaces).
+
+  Recibe `children`: la lista de nodos inline de un párrafo, list-item o
+  heading. Cada nodo es o bien `text` (con `.value` ya trayendo el HTML de
+  bold/italic aplicado por Liquid) o bien `link` (nodo propio, sin `.value`,
+  que envuelve nodos `text` hijos y lleva la URL en `.url`).
+
+  Extraído de coolway-rich-text.liquid para no repetir este `case` en los
+  tres sitios (paragraph, list-item, heading) que iteran children inline.
+{%- endcomment -%}
+
+{%- for child in children -%}
+  {%- if child.type == 'link' -%}
+    <a href="{{ child.url }}">{%- for text in child.children -%}{{ text.value }}{%- endfor -%}</a>
+  {%- else -%}
+    {{ child.value }}
+  {%- endif -%}
+{%- endfor -%}
