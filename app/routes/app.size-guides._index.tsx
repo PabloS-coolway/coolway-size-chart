@@ -349,7 +349,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     for (const block of originalBlocks) {
       const createBlockResponse = await admin.graphql(CREATE_METAOBJECT_MUTATION, {
         variables: {
-          metaobject: { type: block.type, fields: buildBlockCopyFields(block) },
+          metaobject: {
+            type: block.type,
+            fields: buildBlockCopyFields(block),
+            // Los bloques de contenido deben nacer siempre Activos, aunque la
+            // guía copiada nazca en Borrador a propósito (ver arriba). Si no,
+            // desaparecen silenciosamente de `resolved_guide.blocks.value` en
+            // Liquid en cuanto se active la guía.
+            capabilities: { publishable: { status: "ACTIVE" } },
+          },
         },
       });
       const { data: createBlockData } = await createBlockResponse.json();

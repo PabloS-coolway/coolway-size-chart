@@ -294,7 +294,18 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 
   if (blockId === "new") {
     const createResponse = await admin.graphql(CREATE_BLOCK_MUTATION, {
-      variables: { metaobject: { type: metaobjectType, fields } },
+      variables: {
+        metaobject: {
+          type: metaobjectType,
+          fields,
+          // Los metaobjects nuevos se crean en Borrador por defecto si no se
+          // indica lo contrario. Los bloques de contenido deben nacer Activos
+          // para que `resolved_guide.blocks.value` (Liquid) los incluya de
+          // inmediato — de lo contrario desaparecen silenciosamente del front
+          // aunque sí se vean en el Preview interno de la app.
+          capabilities: { publishable: { status: "ACTIVE" } },
+        },
+      },
     });
     const { data: createData } = await createResponse.json();
     const createErrors = createData.metaobjectCreate.userErrors;
