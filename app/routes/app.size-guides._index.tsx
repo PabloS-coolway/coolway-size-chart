@@ -209,6 +209,13 @@ const primaryButtonStyle: React.CSSProperties = {
   color: "#fff",
 };
 
+const createButtonStyle: React.CSSProperties = {
+  ...buttonBaseStyle,
+  border: "1px solid #c9cccf",
+  background: "#e3e5e7",
+  color: "#1a1a1a",
+};
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
   const url = new URL(request.url);
@@ -509,7 +516,7 @@ export default function SizeGuidesDashboard() {
       <s-section heading={`${guides.length} guía${guides.length === 1 ? "" : "s"}`}>
         <Form method="post" style={{ marginBottom: "1rem" }}>
           <input type="hidden" name="intent" value="create" />
-          <button type="submit" style={primaryButtonStyle}>
+          <button type="submit" style={createButtonStyle}>
             Crear guía nueva
           </button>
         </Form>
