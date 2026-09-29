@@ -1,0 +1,16 @@
+# Postgres local para desarrollo (la app ya no usa SQLite). Arranque: docker compose up -d
+# DATABASE_URL en .env: postgresql://sizechart:sizechart@localhost:5546/sizechart
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: coolway-size-chart-db
+    environment:
+      POSTGRES_USER: sizechart
+      POSTGRES_PASSWORD: sizechart
+      POSTGRES_DB: sizechart
+    ports:
+      - "5546:5432"
+    volumes:
+      - sizechart-db:/var/lib/postgresql/data
+volumes:
+  sizechart-db:

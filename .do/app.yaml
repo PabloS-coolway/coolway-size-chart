@@ -1,0 +1,47 @@
+# DigitalOcean App Platform · la app de guía de tallas (panel embebido + OAuth + webhooks).
+#
+#   doctl apps create --spec .do/app.yaml           # primera vez
+#   doctl apps update <APP_ID> --spec .do/app.yaml  # cambios posteriores
+#
+# Se despliega sola al mergear en main. El Theme App Extension NO vive aquí: va con `shopify app deploy`.
+# Secretos (en el panel de DO o con doctl, nunca aquí): SHOPIFY_API_SECRET, DATABASE_URL.
+# Base de datos: `sizechart` en el cluster gestionado `atencion-db` (ams3), usuario `sizechart`.
+
+name: coolway-size-chart
+region: ams
+
+services:
+  - name: web
+    dockerfile_path: Dockerfile
+    source_dir: /
+    github:
+      repo: PabloS-coolway/coolway-size-chart
+      branch: main
+      deploy_on_push: true
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    routes:
+      - path: /
+    health_check:
+      http_path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+      # client_id de shopify.app.toml (público).
+      - key: SHOPIFY_API_KEY
+        value: 64029b531d09105987061455b642191b
+        scope: RUN_AND_BUILD_TIME
+      - key: SHOPIFY_API_SECRET
+        scope: RUN_TIME
+        type: SECRET
+      - key: SHOPIFY_APP_URL
+        value: ${APP_URL}
+        scope: RUN_TIME
+      # Igual que [access_scopes] de shopify.app.toml.
+      - key: SCOPES
+        value: write_products,write_metaobjects,write_metaobject_definitions,write_files
+        scope: RUN_TIME
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        type: SECRET

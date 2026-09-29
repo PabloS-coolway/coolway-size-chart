@@ -2,11 +2,14 @@
 
 client_id = "64029b531d09105987061455b642191b"
 name = "coolway-size-chart"
-application_url = "https://example.com"
+application_url = "https://coolway-size-chart-am9fl.ondigitalocean.app"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = true
+# false: con la app ya en producción (DigitalOcean), `shopify app dev` NO debe cambiar estas URLs al túnel
+# local — dejaría la app rota en todas las tiendas mientras dure la prueba. Para desarrollar, usar una app
+# de desarrollo aparte: `shopify app config link` → shopify.app.dev.toml, y `shopify app dev -c dev`.
+automatically_update_urls_on_dev = false
 
 [webhooks]
 api_version = "2026-07"
@@ -82,7 +85,11 @@ api_version = "2026-07"
 scopes = "write_products,write_metaobjects,write_metaobject_definitions,write_files"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [
+  "https://coolway-size-chart-am9fl.ondigitalocean.app/auth/callback",
+  "https://coolway-size-chart-am9fl.ondigitalocean.app/auth/shopify/callback",
+  "https://coolway-size-chart-am9fl.ondigitalocean.app/api/auth/callback"
+]
 
 [product.metafields.app.demo_info]
 type = "single_line_text_field"
