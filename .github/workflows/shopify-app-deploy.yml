@@ -63,13 +63,24 @@ jobs:
           SHOPIFY_APP_AUTOMATION_TOKEN: ${{ secrets.SHOPIFY_APP_AUTOMATION_TOKEN }}
           COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
           MENSAJE: ${{ inputs.mensaje }}
-        # --allow-updates y NUNCA --allow-deletes: borrar configuración o extensiones borra también
+          SOLO_CREAR: ${{ inputs.solo_crear_version }}
+        # Las tres banderas de modo son EXCLUYENTES entre sí — el propio CLI lo dice en su ayuda:
+        # `[--no-release | --allow-updates | --allow-deletes]`. Pasar dos aborta el comando. Hay que
+        # elegir una, y en un entorno no interactivo es obligatorio pasar alguna.
+        #
+        # `--allow-deletes` no se usa NUNCA aquí: borrar configuración o extensiones borra también
         # los datos que tengan en las tiendas. Si algún día hay que borrar algo de verdad, se hace
-        # en una ejecución aparte y a conciencia, no en el camino de todos los días.
+        # aparte y a conciencia, no en el camino de todos los días.
+        #
+        # Los valores del formulario entran por el entorno, no interpolados en el shell: así un
+        # mensaje con comillas o con `$(...)` es texto y no se ejecuta.
         run: |
-          shopify app deploy \
-            --allow-updates \
-            ${{ inputs.solo_crear_version && '--no-release' || '' }} \
+          if [ "$SOLO_CREAR" = "true" ]; then
+            MODO=--no-release      # crea la versión y NO la suelta a ninguna tienda
+          else
+            MODO=--allow-updates   # crea la versión y la publica
+          fi
+          shopify app deploy "$MODO" \
             --source-control-url "$COMMIT_URL" \
             --message "$MENSAJE"
 
