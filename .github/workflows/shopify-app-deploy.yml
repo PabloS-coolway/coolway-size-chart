@@ -41,8 +41,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          # El mismo rango que declara package.json ("engines").
-          node-version: '22.12'
+          # NO el mínimo que declara package.json (">=22.12"): ese rango se quedó corto. La
+          # dependencia `@shopify/polaris-types@1.0.7` exige `node >=22.18.0`, y como el `.npmrc`
+          # lleva `engine-strict=true`, npm no avisa — falla el `npm ci` entero (EBADENGINE).
+          # 22.18.0 es además la versión con la que se desarrolla, así que CI y portátil coinciden.
+          node-version: '22.18.0'
           cache: npm
 
       - name: Instalar dependencias
