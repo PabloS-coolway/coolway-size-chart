@@ -27,7 +27,7 @@ import type {
   LoaderFunctionArgs,
   HeadersFunction,
 } from "react-router";
-import { Form, Link, useFetcher, useLoaderData } from "react-router";
+import { Form, Link, redirect, useFetcher, useLoaderData } from "react-router";
 import { useEffect } from "react";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { boundary } from "@shopify/shopify-app-react-router/server";
@@ -311,6 +311,27 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const intent = String(formData.get("intent") ?? "");
   const guideId = String(formData.get("guideId") ?? "");
 
+  if (intent === "create") {
+    const createGuideResponse = await admin.graphql(CREATE_METAOBJECT_MUTATION, {
+      variables: {
+        metaobject: {
+          type: "size_guide",
+          fields: [
+            { key: "title", value: "Nueva guía sin título" },
+            { key: "description", value: "" },
+            { key: "priority", value: "0" },
+          ],
+          capabilities: { publishable: { status: "DRAFT" } },
+        },
+      },
+    });
+    const { data: createGuideData } = await createGuideResponse.json();
+    const guideErrors = createGuideData.metaobjectCreate.userErrors;
+    if (guideErrors.length > 0) return { ok: false, errors: guideErrors };
+    const newGuideId = createGuideData.metaobjectCreate.metaobject.id;
+    return redirect(`/app/size-guides/${encodeURIComponent(newGuideId)}`);
+  }
+
   if (intent === "delete") {
     const response = await admin.graphql(DELETE_GUIDE_MUTATION, { variables: { id: guideId } });
     const { data } = await response.json();
@@ -486,6 +507,12 @@ export default function SizeGuidesDashboard() {
   return (
     <s-page heading="Guías de tallas">
       <s-section heading={`${guides.length} guía${guides.length === 1 ? "" : "s"}`}>
+        <Form method="post" style={{ marginBottom: "1rem" }}>
+          <input type="hidden" name="intent" value="create" />
+          <button type="submit" style={primaryButtonStyle}>
+            Crear guía nueva
+          </button>
+        </Form>
         <Form method="get" style={{ marginBottom: "0.5rem" }}>
           <input
             key={query}
