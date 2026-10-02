@@ -376,7 +376,19 @@ async function handleSaveBlock(admin: any, guideId: string, formData: FormData) 
 
   if (blockId === "new") {
     const createResponse = await admin.graphql(CREATE_BLOCK_MUTATION, {
-      variables: { metaobject: { type: metaobjectType, fields } },
+      variables: {
+        metaobject: {
+          type: metaobjectType,
+          fields,
+          // Igual que en la duplicación de guías (ver size-guides._index.tsx):
+          // los bloques de contenido deben nacer siempre Activos. Shopify los
+          // crea en Draft por defecto si no se especifica, y un bloque en
+          // Draft desaparece silenciosamente de `resolved_guide.blocks.value`
+          // en el front (ver nota 3.4 en blocks/size_guide.liquid) aunque el
+          // editor del panel sí lo muestre en el preview.
+          capabilities: { publishable: { status: "ACTIVE" } },
+        },
+      },
     });
     const { data: createData } = await createResponse.json();
     const createErrors = createData.metaobjectCreate.userErrors;
@@ -397,7 +409,14 @@ async function handleSaveBlock(admin: any, guideId: string, formData: FormData) 
   }
 
   const updateResponse = await admin.graphql(UPDATE_BLOCK_MUTATION, {
-    variables: { id: blockId, metaobject: { fields } },
+    variables: {
+      id: blockId,
+      // Se fija también aquí "ACTIVE" (no solo al crear): así, un bloque que
+      // ya hubiera quedado en Draft por el bug anterior se autocorrige en
+      // cuanto alguien lo vuelve a abrir y pulsa "Guardar bloque", sin tener
+      // que tocar nada manualmente contra producción.
+      metaobject: { fields, capabilities: { publishable: { status: "ACTIVE" } } },
+    },
   });
   const { data: updateData } = await updateResponse.json();
   const userErrors = updateData.metaobjectUpdate.userErrors;
