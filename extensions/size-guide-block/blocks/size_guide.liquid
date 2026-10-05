@@ -76,7 +76,7 @@
 <div class="coolway-size-guide-block" dir="{{ coolway_text_dir }}">
   {%- if resolved_guide -%}
     {%- assign coolway_modal_id = 'coolway-size-guide-modal-' | append: block.id -%}
-    {%- assign coolway_size_guide_link_text = 'general.size_guide_link' | t: title: resolved_guide.title -%}
+    {%- assign coolway_size_guide_link_text = 'general.block_name' | t -%}
     <a href="#" class="coolway-size-guide-block__trigger" aria-haspopup="dialog" aria-controls="{{ coolway_modal_id }}" data-coolway-size-guide-trigger>{{ coolway_size_guide_link_text }}</a>
 
     <div class="coolway-size-guide-block__modal" id="{{ coolway_modal_id }}" role="dialog" aria-modal="true" aria-label="{{ coolway_size_guide_link_text }}" hidden data-coolway-size-guide-modal>
@@ -91,9 +91,13 @@
         </div>
         <div class="coolway-size-guide-block__content">
       {%- if resolved_guide.description.value != blank -%}
-        <div class="coolway-size-guide-block__description">
+        {%- capture coolway_description_html -%}
           {%- render 'coolway-rich-text', value: resolved_guide.description.value -%}
-        </div>
+        {%- endcapture -%}
+        {%- assign coolway_description_text = coolway_description_html | strip_html | strip -%}
+        {%- if coolway_description_text != blank -%}
+          <div class="coolway-size-guide-block__description">{{ coolway_description_html }}</div>
+        {%- endif -%}
       {%- endif -%}
 
       {%- for block in resolved_guide.blocks.value -%}
@@ -197,7 +201,7 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     color: rgba(255, 255, 255, 0.94);
-    font-family: inherit;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
     font-style: normal;
     font-variant-numeric: tabular-nums;
   }
@@ -207,7 +211,7 @@
   .coolway-size-guide-block__modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(8, 8, 10, 0.024);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(6px) saturate(104%) brightness(1.01);
     -webkit-backdrop-filter: blur(6px) saturate(104%) brightness(1.01);
   }
@@ -440,7 +444,7 @@
       align-items: flex-end;
     }
     .coolway-size-guide-block__modal-backdrop {
-      background: rgba(8, 8, 10, 0.02);
+      background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(5px) saturate(103%) brightness(1.01);
       -webkit-backdrop-filter: blur(5px) saturate(103%) brightness(1.01);
     }
