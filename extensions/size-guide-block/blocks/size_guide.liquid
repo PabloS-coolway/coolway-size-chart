@@ -87,7 +87,7 @@
             <span class="coolway-size-guide-block__modal-title">{{ product.title }}</span>
             <span class="coolway-size-guide-block__modal-subtitle">{{ 'general.block_name' | t }}</span>
           </div>
-          <button type="button" class="coolway-size-guide-block__modal-close" aria-label="{{ 'general.close' | t }}" data-coolway-size-guide-close>&times;</button>
+          <button type="button" class="coolway-size-guide-block__modal-close" aria-label="{{ 'general.close' | t }}" data-coolway-size-guide-close></button>
         </div>
         <div class="coolway-size-guide-block__content">
       {%- if resolved_guide.description.value != blank -%}
@@ -101,54 +101,47 @@
         {%- if block.headers != blank and block.rows != blank and block.hide_table != true -%}
           {%- assign headers = block.headers.value -%}
           {%- assign rows = block.rows.value -%}
-          {%- comment -%}
-            Tarea 2.16 (parte 2) — estilos de tabla por bloque. `table_styles`
-            es un campo JSON; igual que headers/rows, Liquid lo da ya
-            parseado como hash accediendo a `.value`. Se vuelca como
-            variables CSS en el propio elemento para no tocar el CSS
-            estático de golpe — cada regla usa `var(--csg-x, <default>)`,
-            así un bloque sin `table_styles` (o creado antes de esta tarea)
-            se ve exactamente igual que antes.
-          {%- endcomment -%}
-          {%- assign coolway_table_styles = block.table_styles.value -%}
-          <div class="coolway-size-guide-block__table-outer" style="--csg-row-even: {{ coolway_table_styles['rowColorEven'] | default: '#ffffff' }}; --csg-row-odd: {{ coolway_table_styles['rowColorOdd'] | default: '#fafafa' }}; --csg-border-color: {{ coolway_table_styles['borderColor'] | default: '#e5e5e5' }}; --csg-border-width: {{ coolway_table_styles['borderWidth'] | default: '1' }}px; --csg-header-color: {{ coolway_table_styles['headerTextColor'] | default: '#1a1a1a' }}; --csg-header-size: {{ coolway_table_styles['headerFontSize'] | default: '13' }}px; --csg-header-weight: {{ coolway_table_styles['headerFontWeight'] | default: '600' }}; --csg-cell-color: {{ coolway_table_styles['cellTextColor'] | default: '#1a1a1a' }}; --csg-cell-size: {{ coolway_table_styles['cellFontSize'] | default: '14' }}px; --csg-footer-color: {{ coolway_table_styles['footerTextColor'] | default: '#6b6b6b' }}; --csg-footer-size: {{ coolway_table_styles['footerFontSize'] | default: '13.6' }}px;">
-          <div class="coolway-size-guide-block__table-wrap">
-            <div class="coolway-size-guide-block__table-group">
-              {{ block.label }}
-              {%- if block.has_dual_unit_selector -%}
-                {%- if coolway_imperial_first -%}
-                  (<span class="coolway-size-guide-block__unit--default">{{ block.unit_secondary }}</span> / {{ block.unit_primary }})
-                {%- else -%}
-                  (<span class="coolway-size-guide-block__unit--default">{{ block.unit_primary }}</span> / {{ block.unit_secondary }})
-                {%- endif -%}
-              {%- elsif block.unit_primary != blank -%}
-                ({{ block.unit_primary }})
+          {%- capture coolway_group_label -%}
+            {{ block.label }}
+            {%- if block.has_dual_unit_selector -%}
+              {%- if coolway_imperial_first %} (<span class="coolway-size-guide-block__unit--default">{{ block.unit_secondary }}</span> / {{ block.unit_primary }})
+              {%- else %} (<span class="coolway-size-guide-block__unit--default">{{ block.unit_primary }}</span> / {{ block.unit_secondary }})
               {%- endif -%}
+            {%- elsif block.unit_primary != blank %} ({{ block.unit_primary }})
+            {%- endif -%}
+          {%- endcapture -%}
+          <div class="coolway-size-guide-block__table-outer">
+            <div class="coolway-size-guide-block__table-wrap">
+              <div class="coolway-size-guide-block__table-scroll">
+                <table class="coolway-size-guide-block__table">
+                  <thead>
+                    {%- assign coolway_group_stripped = coolway_group_label | strip -%}
+                    {%- if coolway_group_stripped != blank -%}
+                      <tr class="coolway-size-guide-block__table-group-row">
+                        <th colspan="{{ headers.size }}">{{ coolway_group_stripped }}</th>
+                      </tr>
+                    {%- endif -%}
+                    <tr class="coolway-size-guide-block__table-header-row">
+                      {%- for header in headers -%}
+                        <th>{{ header }}</th>
+                      {%- endfor -%}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%- for row in rows -%}
+                      <tr>
+                        {%- for cell in row -%}
+                          <td>{{ cell }}</td>
+                        {%- endfor -%}
+                      </tr>
+                    {%- endfor -%}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          <div class="coolway-size-guide-block__table-scroll">
-          <table class="coolway-size-guide-block__table">
-            <thead>
-              <tr>
-                {%- for header in headers -%}
-                  <th>{{ header }}</th>
-                {%- endfor -%}
-              </tr>
-            </thead>
-            <tbody>
-              {%- for row in rows -%}
-                <tr>
-                  {%- for cell in row -%}
-                    <td>{{ cell }}</td>
-                  {%- endfor -%}
-                </tr>
-              {%- endfor -%}
-            </tbody>
-          </table>
-          </div>
-          </div>
-          {%- if block.footer_text != blank -%}
-            <p class="coolway-size-guide-block__table-footer">{{ block.footer_text }}</p>
-          {%- endif -%}
+            {%- if block.footer_text != blank -%}
+              <p class="coolway-size-guide-block__table-footer">{{ block.footer_text }}</p>
+            {%- endif -%}
           </div>
 
         {%- elsif block.content.value != blank -%}
@@ -191,8 +184,9 @@
     display: none;
   }
   .coolway-size-guide-block__unit--default {
-    font-weight: bold;
+    font-weight: 700;
   }
+  /* ---- Modal: réplica del estilo "glass" de Kiwi en coolway.com ---- */
   .coolway-size-guide-block__modal {
     position: fixed;
     inset: 0;
@@ -200,6 +194,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color: rgba(255, 255, 255, 0.94);
+    font-family: inherit;
+    font-style: normal;
+    font-variant-numeric: tabular-nums;
   }
   .coolway-size-guide-block__modal[hidden] {
     display: none;
@@ -207,161 +207,248 @@
   .coolway-size-guide-block__modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(8, 8, 10, 0.024);
+    backdrop-filter: blur(6px) saturate(104%) brightness(1.01);
+    -webkit-backdrop-filter: blur(6px) saturate(104%) brightness(1.01);
   }
   .coolway-size-guide-block__modal-panel {
     position: relative;
-    background: #fff;
-    max-width: 640px;
-    width: 90%;
-    max-height: 85vh;
-    overflow-y: auto;
-    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    width: min(720px, calc(100vw - 56px));
+    max-height: calc(100dvh - 20px);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.18), transparent 38%),
+      linear-gradient(145deg, rgba(68, 68, 74, 0.66), rgba(34, 34, 39, 0.56));
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.16), 0 22px 64px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(28px) saturate(126%) brightness(1.08);
+    -webkit-backdrop-filter: blur(28px) saturate(126%) brightness(1.08);
     text-align: start;
   }
   .coolway-size-guide-block__modal-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    background: #1a1a1a;
-    color: #fff;
-    padding: 1rem 1.5rem;
-    border-radius: 8px 8px 0 0;
+    position: relative;
+    flex: 0 0 auto;
+    min-height: 80px;
+    padding: 22px 78px 18px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px 18px 0 0;
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(22px) saturate(135%);
+    -webkit-backdrop-filter: blur(22px) saturate(135%);
   }
   .coolway-size-guide-block__modal-header-text {
-    display: flex;
-    flex-direction: column;
+    display: block;
   }
   .coolway-size-guide-block__modal-title {
-    font-weight: 700;
-    font-size: 1.1rem;
+    display: block;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.96);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
   }
   .coolway-size-guide-block__modal-subtitle {
-    font-size: 0.85rem;
-    opacity: 0.8;
+    display: block;
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.35;
+    opacity: 1;
   }
   .coolway-size-guide-block__modal-close {
-    background: none;
-    border: none;
-    color: #fff;
-    line-height: 1;
-    font-size: 1.75rem;
+    position: absolute;
+    top: 21px;
+    right: 22px;
+    display: block;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.13);
+    color: transparent;
+    font-size: 0;
     cursor: pointer;
-    flex-shrink: 0;
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
   }
+  .coolway-size-guide-block__modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .coolway-size-guide-block__modal-close::before,
+  .coolway-size-guide-block__modal-close::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 12px;
+    width: 18px;
+    height: 1.5px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .coolway-size-guide-block__modal-close::before { transform: rotate(45deg); }
+  .coolway-size-guide-block__modal-close::after { transform: rotate(-45deg); }
   .coolway-size-guide-block__content {
-    padding: 1.5rem;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 26px 30px 28px;
+    color: rgba(255, 255, 255, 0.9);
   }
+  .coolway-size-guide-block__description {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.09);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    backdrop-filter: blur(18px) saturate(130%);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+  }
+  .coolway-size-guide-block__description p,
+  .coolway-size-guide-block__text p { margin: 0 0 0.6em; }
+  .coolway-size-guide-block__description p:last-child,
+  .coolway-size-guide-block__text p:last-child { margin-bottom: 0; }
+  .coolway-size-guide-block__description *,
+  .coolway-size-guide-block__text *,
+  .coolway-size-guide-block__table-footer,
+  .coolway-size-guide-block figcaption { color: inherit; }
   .coolway-size-guide-block__table-outer {
-    margin-block-end: 1.5rem;
+    margin-bottom: 20px;
   }
   .coolway-size-guide-block__table-wrap {
-    border-radius: 8px;
     overflow: hidden;
-    border: var(--csg-border-width, 1px) solid var(--csg-border-color, #e5e5e5);
-  }
-  .coolway-size-guide-block__table-group {
-    background: #1a1a1a;
-    color: #fff;
-    padding: 0.75rem 1.25rem;
-    font-weight: 700;
-    text-align: start;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.067);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 14px 36px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(22px) saturate(130%);
+    -webkit-backdrop-filter: blur(22px) saturate(130%);
   }
   .coolway-size-guide-block__table-scroll {
     overflow-x: auto;
   }
   .coolway-size-guide-block__table {
     width: 100%;
-    min-width: max-content;
+    min-width: 0;
     border-collapse: collapse;
+    background: transparent;
   }
-  @media (max-width: 480px) {
-    .coolway-size-guide-block__modal-panel {
-      width: 95%;
-      max-height: 90vh;
-    }
-    .coolway-size-guide-block__content {
-      padding: 1rem;
-    }
+  .coolway-size-guide-block__table th,
+  .coolway-size-guide-block__table td {
+    height: 42px;
+    padding: 0 10px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.075);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
   }
-  .coolway-size-guide-block__table thead th {
-    background: #f2f2f2;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: var(--csg-header-size, 13px);
-    font-weight: var(--csg-header-weight, 600);
-    color: var(--csg-header-color, #1a1a1a);
-    text-align: start;
-    padding: 0.6rem 1.25rem;
-    border-block-end: var(--csg-border-width, 1px) solid var(--csg-border-color, #e5e5e5);
+  .coolway-size-guide-block__table tr > :last-child { border-right: 0; }
+  .coolway-size-guide-block__table tbody tr:last-child td { border-bottom: 0; }
+  .coolway-size-guide-block__table-group-row th {
+    height: 38px;
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.97);
+    font-size: 12px;
+    font-weight: 500;
   }
-  .coolway-size-guide-block__table tbody td {
-    padding: 0.6rem 1.25rem;
-    font-size: var(--csg-cell-size, 14px);
-    color: var(--csg-cell-color, #1a1a1a);
-    border-block-end: var(--csg-border-width, 1px) solid var(--csg-border-color, #e5e5e5);
-  }
-  .coolway-size-guide-block__table tbody tr:nth-child(odd) {
-    background: var(--csg-row-even, #ffffff);
-  }
-  .coolway-size-guide-block__table tbody tr:nth-child(even) {
-    background: var(--csg-row-odd, #fafafa);
+  .coolway-size-guide-block__table-header-row th {
+    background: rgba(255, 255, 255, 0.094);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.015em;
   }
   .coolway-size-guide-block__table tbody td:first-child {
-    font-weight: 700;
+    color: rgba(255, 255, 255, 0.96);
+    font-weight: 500;
   }
-  .coolway-size-guide-block__description {
-    background: #f7f7f5;
-    border-inline-start: 4px solid #1a1a1a;
-    border-radius: 6px;
-    padding: 0.85rem 1.1rem;
-    margin-block-end: 1.5rem;
+  .coolway-size-guide-block__table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.96);
   }
-  .coolway-size-guide-block__description p {
-    margin: 0;
+  .coolway-size-guide-block__table-footer {
+    margin: 10px 4px 0;
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 12px;
+    line-height: 1.4;
   }
-  .coolway-size-guide-block__description p + p {
-    margin-block-start: 0.5rem;
+  .coolway-size-guide-block__text {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.09);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    line-height: 1.45;
   }
-  .coolway-size-guide-block__text,
   .coolway-size-guide-block__image,
   .coolway-size-guide-block__video {
-    margin-block-end: 1.5rem;
+    margin: 0 0 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.067);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 14px 36px rgba(0, 0, 0, 0.1);
   }
-  .coolway-size-guide-block__text p,
-  .coolway-size-guide-block__text ul {
-    line-height: 1.6;
-    margin: 0 0 0.75rem;
-  }
-  .coolway-size-guide-block__text li {
-    line-height: 1.6;
-  }
-  .coolway-size-guide-block__text p:last-child,
-  .coolway-size-guide-block__text ul:last-child {
-    margin-block-end: 0;
-  }
-  .coolway-size-guide-block__text strong {
-    display: inline-block;
-    font-size: 1.05rem;
-    margin-block-end: 0.35rem;
+  .coolway-size-guide-block__image img,
+  .coolway-size-guide-block__video video {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   .coolway-size-guide-block__image figcaption,
   .coolway-size-guide-block__video figcaption {
-    font-size: 0.85rem;
-    font-style: italic;
-    color: #6b6b6b;
-    margin-block-start: 0.4rem;
+    padding: 10px 14px;
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 12px;
+    line-height: 1.4;
   }
-
-  .coolway-size-guide-block__table-footer {
-    font-size: var(--csg-footer-size, 0.85rem);
-    font-style: italic;
-    color: var(--csg-footer-color, #6b6b6b);
-    margin-block-start: 5px;
-    margin-block-end: 0;
+  .coolway-size-guide-block__content > :last-child { margin-bottom: 0; }
+  @media (max-width: 640px) {
+    .coolway-size-guide-block__modal {
+      align-items: flex-end;
+    }
+    .coolway-size-guide-block__modal-backdrop {
+      background: rgba(8, 8, 10, 0.02);
+      backdrop-filter: blur(5px) saturate(103%) brightness(1.01);
+      -webkit-backdrop-filter: blur(5px) saturate(103%) brightness(1.01);
+    }
+    .coolway-size-guide-block__modal-panel {
+      width: 100%;
+      max-height: 91dvh;
+      border-radius: 18px 18px 0 0;
+    }
+    .coolway-size-guide-block__modal-header {
+      padding: 20px 68px 18px 22px;
+    }
+    .coolway-size-guide-block__modal-title { font-size: 16px; }
+    .coolway-size-guide-block__modal-close { top: 17px; right: 16px; }
+    .coolway-size-guide-block__content {
+      padding: 18px 16px calc(24px + env(safe-area-inset-bottom));
+    }
+    .coolway-size-guide-block__description,
+    .coolway-size-guide-block__text { margin-bottom: 15px; padding: 12px 14px; border-radius: 16px; }
+    .coolway-size-guide-block__table th,
+    .coolway-size-guide-block__table td { font-size: 12px; padding: 0 6px; }
+    .coolway-size-guide-block__table-header-row th { font-size: 10px; }
   }
 </style>
 
