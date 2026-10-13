@@ -1,32 +1,72 @@
+# coolway-sdd: v2
+# Configuración de OpenSpec con la capa Coolway. La genera /sdd:iniciar y la pone al día /sdd:actualizar.
+# - Lo marcado «Coolway» es común a todos los repos: no lo edites aquí, cámbialo en PabloS-coolway/coolway-sdd.
+# - Lo marcado «Este repo» es de este proyecto: edítalo libremente (actualizar lo respeta).
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  ## Coolway (común)
+  Grupo Yorga / Coolway: marca de calzado con tiendas Shopify por país (EU, US, CL, MX, AU, AE…), cada una con su
+  moneda, y herramientas internas propias. Los cambios los pide el negocio (marketing, atención al cliente,
+  operaciones, dirección) y se gestionan en Tareas Yorga (https://tareas-yorga-ewv2n.ondigitalocean.app) con una
+  clave de tarea, p. ej. COOL-212.
+  - Idioma: todo en español (artefactos, código, comentarios, commits, PR). Mantén en inglés solo los
+    encabezados estructurales de OpenSpec y las palabras SHALL/MUST.
+  - Cada cambio nace de una tarea: el nombre del cambio empieza por su clave en minúsculas (cool-212-…) y la
+    rama, los commits y el PR llevan la clave (COOL-212) para que Tareas los enlace.
+  - Quien lee las propuestas no siempre es técnico: el porqué y los criterios de aceptación en lenguaje de
+    negocio, sin jerga; lo técnico va en design.md.
+  - main se despliega sola en muchos repos: nada llega a main sin PR revisado por Pablo.
+  - Shopify: los metafields se definen POR TIENDA (la misma función puede tener otra clave en cada una); una
+    moneda por tienda (no sumar importes de tiendas distintas); lo que se toca en el admin de una tienda no
+    pasa solo a las demás.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  ## Este repo
+  coolway-size-chart: app propia de Shopify que sustituye a Kiwi Size Chart. El equipo crea y asigna guías de
+  tallas desde un panel dentro del admin, y la ficha de producto las muestra en un modal (Theme App Extension).
+  - Stack: React Router 7 + @shopify/shopify-app-react-router (Node 22.18), Prisma sobre Postgres, Polaris.
+    Panel y servidor en app/; bloque de tema en extensions/size-guide-block/; datos en metaobjects
+    (definiciones en scripts/deploy-metaobject-definitions.js); migración desde Kiwi en scripts/ y data/.
+  - Pruebas: npm test (vitest), npm run typecheck, npm run lint. Local: docker compose up -d (Postgres) y
+    npm run dev contra la dev store coolway-sandbox.
+  - Despliegue: el servidor web va a DigitalOcean App Platform (.do/app.yaml) y se despliega solo al mergear en
+    main. La app y la extensión se publican con `shopify app deploy` desde GitHub Actions (lanzado a mano,
+    entorno «produccion»), nunca desde un portátil; después se instala por olas: coolway-sandbox → piloto →
+    3 tiendas → resto.
+  - Secretos: SHOPIFY_API_SECRET y DATABASE_URL en DigitalOcean; SHOPIFY_APP_AUTOMATION_TOKEN en los secretos
+    de GitHub; .env local ignorado (plantilla en .env.example).
+  - Admin API pineada en 2026-07 (shopify.app.toml y app/shopify.server.ts). Reglas duras en CLAUDE.md.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+rules:
+  proposal:
+    - "Coolway: empieza con una línea «Tarea: <CLAVE> — <título>» con el enlace a la tarea en Tareas Yorga."
+    - "Coolway: incluye una sección «Criterios de aceptación» con 3–7 frases que el negocio pueda comprobar sin leer código (qué ve o qué pasa, en qué tienda o mercado)."
+    - "Coolway: incluye «Fuera de alcance» con lo que se ha decidido NO hacer."
+    - "Coolway: en Impact, nombra las tiendas, mercados o herramientas afectadas y quién lo notará (clientes, atención al cliente, marketing…)."
+  specs:
+    - "Coolway: los escenarios usan casos reales del negocio (tienda, mercado, moneda, método de pago, producto) en vez de ejemplos genéricos."
+    - "Los nombres de tipos de metaobject y claves de metafield siguen la convención del CLAUDE.md (snake_case, namespace coolway_size_guide) y no se renombran una vez hay datos reales: si cambia la forma, se crea una versión nueva."
+  design:
+    - "Coolway: incluye «Despliegue y vuelta atrás»: cómo se pone en producción, en qué orden si hay varios repos o tiendas, y cómo se deshace si algo va mal."
+    - "Coolway: si hay datos o secretos, di dónde viven (variables de entorno en DigitalOcean, .env ignorado en local) y nunca los pongas en el repo."
+    - "Todo GraphQL usa la versión de Admin API pineada (2026-07); cambiarla es una decisión explícita y documentada aquí, no un efecto secundario."
+    - "Las definiciones de metaobjects y metafields solo cambian con el script idempotente (npm run deploy:metaobjects), nunca a mano en el admin."
+  tasks:
+    - "Coolway: la primera tarea es crear la rama con la clave (feat/<CLAVE>-<descripcion> o fix/<CLAVE>-<descripcion>)."
+    - "Coolway: cada tarea dice cómo se verifica (test, comando, comprobación en preview o en la tienda)."
+    - "Coolway: el último grupo es «Verificación con el negocio»: comprobar cada criterio de aceptación de la propuesta y dejar el resultado en la tarea de Tareas Yorga."
+    - "Coolway: si algún criterio solo se puede comprobar en producción (caso B), las tareas de despliegue y verificación van después de una tarea «Merge del PR» y lo dicen."
+    - "Lo exploratorio y la verificación técnica se hacen en la dev store coolway-sandbox o en preview de tema; nunca en una tienda de producción."
+    - "Si el cambio llega a las tiendas, el despliegue sigue el orden piloto → 3 tiendas → resto con parada humana entre olas; nunca las 14 a la vez."
+
+operations:
+  apply:
+    guidance:
+      - "Coolway: trabaja en la rama con la clave de la tarea, nunca en main; commits pequeños con la clave en el mensaje."
+      - "Coolway: antes de cada commit, pasa las comprobaciones del repo (tests, typecheck, lint) y no sigas en rojo."
+      - "Coolway: no despliegues a producción ni toques el admin de una tienda en vivo sin OK explícito de Pablo."
+      - "Coolway: lo que se despliega sale siempre de main, nunca de una rama: si para verificar hay que desplegar (caso B), primero se mergea el PR."
+  archive:
+    guidance:
+      - "Coolway: archiva solo con todas las tareas hechas y los criterios de aceptación verificados. Caso A (se pueden verificar antes del merge: tests, preview, entorno de pruebas): archiva en la MISMA rama y PR, como último paso antes del merge. Caso B (solo se pueden verificar en producción): el PR se mergea con el cambio abierto, se despliega desde main y se archiva después en un PR corto."
+      - "Coolway: al archivar, resume en la tarea de Tareas Yorga qué especificaciones quedaron vivas; se mueve a completada cuando el PR se mergea."
