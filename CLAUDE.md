@@ -68,6 +68,7 @@ Cualquier dominio que no esté en esta tabla (y confirmado como tal) se trata co
 
 - **Shopify Dev MCP** conectado y activo: todo GraphQL y Liquid generado se valida contra los schemas reales antes de que el código llegue al repositorio.
 - **OpenSpec** inicializado en este repo (`openspec/`): ningún desarrollo relevante empieza sin una spec — se propone con `/opsx:propose "idea"` antes de escribir código, y cada cambio produce un delta de spec.
+- Este repo trabaja con SDD de Coolway: cambios con `/sdd:nueva <CLAVE>`; especificaciones vivas en `openspec/specs/`.
 - El agente nunca despliega a tienda de producción (repetido aquí a propósito — es la regla más importante de este archivo).
 - Todo cambio pasa por PR con revisión humana.
 - El trabajo exploratorio ocurre siempre en dev store.
